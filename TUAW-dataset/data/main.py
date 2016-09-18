@@ -1,5 +1,5 @@
 from stemming import *
-from nltk.tokenize import word_tokenize, RegexpTokenizer
+from nltk.tokenize import RegexpTokenizer
 import csv 
 import nltk
 import time
@@ -12,16 +12,29 @@ def normalizer(l):
 
     return l
 
+def _callback(matches):
+    id = matches.group(1)
+    try:
+        return unichr(int(id))
+    except:
+        return id
+
+def decode_unicode_references(data):
+    return re.sub("and#(\d+)(;|(?=\s))|&#(\d+)(;|(?=\s))", _callback, data)
+
+
 with open('sandeep.csv','rb',) as readfile,open('postprocessing.csv','wb')as writefile:
     reader = csv.reader(readfile, skipinitialspace=False,delimiter=',', quoting=csv.QUOTE_NONE)
     writer = csv.writer(writefile,delimiter=' ',quotechar=' ',quoting=csv.QUOTE_MINIMAL)
     count = 0
-    ite = 0 
+    ite = 0
+    tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+') 
     for row in reader:
         ite = ite + 1
         ultraList = []
-
-        title = word_tokenize(row[0])
+                
+        title = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[0]))
+        title = tokenizer.tokenize(str(title))
         ultraList.append(normalizer(title))
 
         date = row[1].split()
@@ -33,20 +46,20 @@ with open('sandeep.csv','rb',) as readfile,open('postprocessing.csv','wb')as wri
             ultraList.append(secs)
         except Exception:
             ultraList.append(date)
-            count = count + 1
-            print count, ite
 
 
-        blogger = row[2].split()
+        blogger = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[2]))
+        blogger = tokenizer.tokenize(str(blogger))
         ultraList.append(blogger)
-        
-        
-        categories = row[3].split()    
-        categories = row[3].split(':&:')
-        categories = map(lambda x: x.strip(), categories)
+
+        if not row[3]:
+            categories = row[3].split()
+        else:
+            categories = row[3].split(':&:')
         ultraList.append(normalizer(categories))
-        
-        post = row[4].split()
+
+        post = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[4]))
+        post = tokenizer.tokenize(str(post))
         ultraList.append(normalizer(post))
 
         #postlen
@@ -77,4 +90,7 @@ with open('sandeep.csv','rb',) as readfile,open('postprocessing.csv','wb')as wri
         
         permalink = row[10]
         ultraList.append(permalink)
+
+
+    
         writer.writerow(ultraList)

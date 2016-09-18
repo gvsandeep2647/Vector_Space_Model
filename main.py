@@ -52,8 +52,11 @@ with open('posts.csv','rb',) as readfile,open('postprocessing.csv','wb')as write
         blogger = tokenizer.tokenize(str(blogger))
         ultraList.append(blogger)
 
-        categories = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[3]))
-        categories = tokenizer.tokenize(str(categories))
+        if not row[3]:
+        	categories = row[3].split()
+        else:
+        	categories = row[3].split(':&:')
+        
         ultraList.append(normalizer(categories))
 
         post = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[4]))
