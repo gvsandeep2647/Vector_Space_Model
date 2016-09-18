@@ -1,5 +1,5 @@
 from stemming import *
-from nltk.tokenize import word_tokenize
+from nltk.tokenize import RegexpTokenizer
 import csv 
 import nltk
 import time
@@ -29,11 +29,10 @@ with open('posts.csv','rb',) as readfile,open('postprocessing.csv','wb')as write
 
     for row in reader:
         ultraList = []
+        tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+')
         
-
-        title = re.sub('[^a-zA-Z0-9 ]','',decode_unicode_references(row[0]))
-        title = word_tokenize(str(title))
-
+        title = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[0]))
+        title = tokenizer.tokenize(str(title))
         ultraList.append(normalizer(title))
         
         date = row[1].split()
@@ -46,15 +45,20 @@ with open('posts.csv','rb',) as readfile,open('postprocessing.csv','wb')as write
         except Exception:
             ultraList.append(date)
 
-        blogger = re.sub('[^a-zA-Z0-9 ]','',decode_unicode_references(row[2]))
-        blogger = word_tokenize(str(blogger))
+        blogger = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[2]))
+        blogger = tokenizer.tokenize(str(blogger))
         ultraList.append(blogger)
-        
-        categories = row[3].split()
+
+        categories = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[3]))
+        categories = tokenizer.tokenize(str(categories))
         ultraList.append(normalizer(categories))
+
+        post = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[4]))
         
-        post = re.sub('[^a-zA-Z0-9 ]','',decode_unicode_references(row[4]))
-        post = (word_tokenize(str(post)))
+        post = tokenizer.tokenize(str(post))
+        
+        
+
         ultraList.append(normalizer(post))
         #postlen
         outlinks = row[6].split()
