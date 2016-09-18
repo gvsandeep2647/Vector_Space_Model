@@ -7,10 +7,10 @@ import re
 PS = PorterStemmer()
 
 def normalizer(l):
-	for i in range(0,len(l)):
-		l[i] = PS.stem(l[i],0,len(l[i])-1)
+    for i in range(0,len(l)):
+        l[i] = PS.stem(l[i],0,len(l[i])-1)
 
-	return l
+    return l
 
 def _callback(matches):
 	id = matches.group(1)
@@ -24,17 +24,19 @@ def decode_unicode_references(data):
 
 
 with open('posts.csv','rb',) as readfile,open('postprocessing.csv','wb')as writefile:
-    reader = csv.reader(readfile,delimiter=',',quotechar=' ')
+    reader = csv.reader(readfile, skipinitialspace=False,delimiter=',', quoting=csv.QUOTE_NONE)
     writer = csv.writer(writefile,delimiter=' ',quotechar=' ',quoting=csv.QUOTE_MINIMAL)
-
+    count = 0
+    ite = 0 
     for row in reader:
+        ite = ite + 1
         ultraList = []
-        tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+')
-        
+
+        tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+')        
         title = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[0]))
         title = tokenizer.tokenize(str(title))
         ultraList.append(normalizer(title))
-        
+
         date = row[1].split()
         try :
             date[3] = date[3][:-2]
@@ -44,6 +46,7 @@ with open('posts.csv','rb',) as readfile,open('postprocessing.csv','wb')as write
             ultraList.append(secs)
         except Exception:
             ultraList.append(date)
+
 
         blogger = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[2]))
         blogger = tokenizer.tokenize(str(blogger))
@@ -60,17 +63,33 @@ with open('posts.csv','rb',) as readfile,open('postprocessing.csv','wb')as write
         
 
         ultraList.append(normalizer(post))
+
         #postlen
-        outlinks = row[6].split()
+
+        outlinks = row[6]
+        try:
+            outlinks = int(outlinks)
+        except Exception:
+            print "Inconsistent Data Value of Outlinks"
         ultraList.append(outlinks)
         
-        inlinks = row[7].split()
+        inlinks = row[7]
+        try:
+            inlinks = int(inlinks)
+        except Exception:
+            print "Inconsistent Data Value of Inlinks : "
         ultraList.append(inlinks)
         
-        commentNo = row[8].split()
+        commentNo = row[8]
+        commentNo = commentNo.strip()
+        try:
+            commentNo = int(commentNo)
+        except:
+            print "Inconsistent Data Value of CommentNo : "
         ultraList.append(commentNo)
+        
         #commentURL
-        permalink = row[10].split()
+        
+        permalink = row[10]
         ultraList.append(permalink)
         writer.writerow(ultraList)
-
