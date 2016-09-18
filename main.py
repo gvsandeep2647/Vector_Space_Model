@@ -30,8 +30,12 @@ with open('posts.csv','rb',) as readfile,open('postprocessing.csv','wb')as write
     for row in reader:
         ultraList = []
         
+<<<<<<< HEAD
         title = re.sub('[^a-zA-Z0-9 ]','',decode_unicode_references(row[0]))
         title = word_tokenize(str(title))
+=======
+        title = word_tokenize(row[0])
+>>>>>>> 359205cbb03525622360eaa69b2b7d84a5ac174a
         ultraList.append(normalizer(title))
         
         date = row[1].split()
