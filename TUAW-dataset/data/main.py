@@ -16,7 +16,9 @@ with open('posts.csv','rb',) as readfile,open('postprocessing.csv','wb')as write
     reader = csv.reader(readfile,delimiter=',',quotechar=' ')
     writer = csv.writer(writefile,delimiter=' ',quotechar=' ',quoting=csv.QUOTE_MINIMAL)
     count = 0
+    ite = 0 
     for row in reader:
+    	ite = ite + 1
         ultraList = []
 
         row[0] = re.sub('\W+',' ', row[0] )
@@ -34,7 +36,7 @@ with open('posts.csv','rb',) as readfile,open('postprocessing.csv','wb')as write
         except Exception:
             ultraList.append(date)
             count = count + 1
-            print count
+            print count, ite
 
 
         blogger = row[2].split()
