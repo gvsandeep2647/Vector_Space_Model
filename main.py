@@ -12,6 +12,17 @@ def normalizer(l):
 
 	return l
 
+def _callback(matches):
+	id = matches.group(1)
+	try:
+		return unichr(int(id))
+	except:
+		return id
+
+def decode_unicode_references(data):
+	return re.sub("and#(\d+)(;|(?=\s))|&#(\d+)(;|(?=\s))", _callback, data)
+
+
 with open('posts.csv','rb',) as readfile,open('postprocessing.csv','wb')as writefile:
     reader = csv.reader(readfile,delimiter=',',quotechar=' ')
     writer = csv.writer(writefile,delimiter=' ',quotechar=' ',quoting=csv.QUOTE_MINIMAL)
@@ -19,8 +30,8 @@ with open('posts.csv','rb',) as readfile,open('postprocessing.csv','wb')as write
     for row in reader:
         ultraList = []
         
-        row[0] = re.sub('\W+',' ', row[0] )
-        title = word_tokenize(row[0])
+        title = re.sub('[^a-zA-Z0-9 ]','',decode_unicode_references(row[0]))
+        title = word_tokenize(str(title))
         ultraList.append(normalizer(title))
         
         date = row[1].split()
@@ -32,13 +43,16 @@ with open('posts.csv','rb',) as readfile,open('postprocessing.csv','wb')as write
             ultraList.append(secs)
         except Exception:
             ultraList.append(date)
-        blogger = row[2].split()
+
+        blogger = re.sub('[^a-zA-Z0-9 ]','',decode_unicode_references(row[2]))
+        blogger = word_tokenize(str(blogger))
         ultraList.append(blogger)
         
         categories = row[3].split()
         ultraList.append(normalizer(categories))
         
-        post = row[4].split()
+        post = re.sub('[^a-zA-Z0-9 ]','',decode_unicode_references(row[4]))
+        post = (word_tokenize(str(post)))
         ultraList.append(normalizer(post))
         #postlen
         outlinks = row[6].split()
