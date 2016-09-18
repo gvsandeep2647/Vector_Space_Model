@@ -19,7 +19,6 @@ with open('posts.csv','rb',) as readfile,open('postprocessing.csv','wb')as write
     for row in reader:
         ultraList = []
         
-        row[0] = re.sub('\W+',' ', row[0] )
         title = word_tokenize(row[0])
         ultraList.append(normalizer(title))
         
