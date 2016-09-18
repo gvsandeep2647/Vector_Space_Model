@@ -1,7 +1,7 @@
 from stemming import *
+from nltk.tokenize import word_tokenize
 import csv 
 import nltk
-from BeautifulSoup import BeautifulStoneSoup
 PS = PorterStemmer()
 
 def normalizer(l):
@@ -10,7 +10,6 @@ def normalizer(l):
 
 	return l
 
-
 with open('posts.csv','rb',) as readfile,open('postprocessing.csv','wb')as writefile:
     reader = csv.reader(readfile,delimiter=',',quotechar=' ')
     writer = csv.writer(writefile,delimiter=' ',quotechar=' ',quoting=csv.QUOTE_MINIMAL)
@@ -18,7 +17,7 @@ with open('posts.csv','rb',) as readfile,open('postprocessing.csv','wb')as write
     for row in reader:
         #print row
         ultraList = []
-        title = row[0].split()
+        title = word_tokenize(row[0])
         ultraList.append(normalizer(title))
         date = row[1].split()
         ultraList.append(date)
