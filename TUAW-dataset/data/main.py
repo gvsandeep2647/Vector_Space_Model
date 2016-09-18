@@ -12,7 +12,7 @@ def normalizer(l):
 
 	return l
 
-with open('posts.csv','rb',) as readfile,open('postprocessing.csv','wb')as writefile:
+with open('sandeep.csv','rb',) as readfile,open('postprocessing.csv','wb')as writefile:
     reader = csv.reader(readfile,delimiter=',',quotechar=' ')
     writer = csv.writer(writefile,delimiter=' ',quotechar=' ',quoting=csv.QUOTE_MINIMAL)
     count = 0
