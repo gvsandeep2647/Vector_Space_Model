@@ -35,6 +35,7 @@ with open('sandeep.csv','rb',) as readfile,open('postprocessing.csv','wb')as wri
                 
         title = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[0]))
         title = tokenizer.tokenize(str(title))
+        title = [x.strip(' ') for x in title]
         ultraList.append(normalizer(title))
 
         date = row[1].split()
@@ -50,16 +51,20 @@ with open('sandeep.csv','rb',) as readfile,open('postprocessing.csv','wb')as wri
 
         blogger = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[2]))
         blogger = tokenizer.tokenize(str(blogger))
+        blogger = [x.strip(' ') for x in blogger]
         ultraList.append(blogger)
 
         if not row[3]:
             categories = row[3].split()
+            categories = [x.strip(' ') for x in categories]
         else:
             categories = row[3].split(':&:')
+            categories = [x.strip(' ') for x in categories]
         ultraList.append(normalizer(categories))
 
         post = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[4]))
         post = tokenizer.tokenize(str(post))
+        post = [x.strip(' ') for x in post]
         ultraList.append(normalizer(post))
 
         #postlen
@@ -92,5 +97,4 @@ with open('sandeep.csv','rb',) as readfile,open('postprocessing.csv','wb')as wri
         ultraList.append(permalink)
 
 
-    
         writer.writerow(ultraList)

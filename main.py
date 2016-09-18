@@ -13,28 +13,29 @@ def normalizer(l):
     return l
 
 def _callback(matches):
-	id = matches.group(1)
-	try:
-		return unichr(int(id))
-	except:
-		return id
+    id = matches.group(1)
+    try:
+        return unichr(int(id))
+    except:
+        return id
 
 def decode_unicode_references(data):
-	return re.sub("and#(\d+)(;|(?=\s))|&#(\d+)(;|(?=\s))", _callback, data)
+    return re.sub("and#(\d+)(;|(?=\s))|&#(\d+)(;|(?=\s))", _callback, data)
 
 
 with open('posts.csv','rb',) as readfile,open('postprocessing.csv','wb')as writefile:
     reader = csv.reader(readfile, skipinitialspace=False,delimiter=',', quoting=csv.QUOTE_NONE)
     writer = csv.writer(writefile,delimiter=' ',quotechar=' ',quoting=csv.QUOTE_MINIMAL)
     count = 0
-    ite = 0 
+    ite = 0
+    tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+') 
     for row in reader:
         ite = ite + 1
         ultraList = []
-
-        tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+')        
+                
         title = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[0]))
         title = tokenizer.tokenize(str(title))
+        title = [x.strip(' ') for x in title]
         ultraList.append(normalizer(title))
 
         date = row[1].split()
@@ -50,21 +51,20 @@ with open('posts.csv','rb',) as readfile,open('postprocessing.csv','wb')as write
 
         blogger = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[2]))
         blogger = tokenizer.tokenize(str(blogger))
+        blogger = [x.strip(' ') for x in blogger]
         ultraList.append(blogger)
 
         if not row[3]:
-        	categories = row[3].split()
+            categories = row[3].split()
+            categories = [x.strip(' ') for x in categories]
         else:
-        	categories = row[3].split(':&:')
-        
+            categories = row[3].split(':&:')
+            categories = [x.strip(' ') for x in categories]
         ultraList.append(normalizer(categories))
 
         post = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[4]))
-        
         post = tokenizer.tokenize(str(post))
-        
-        
-
+        post = [x.strip(' ') for x in post]
         ultraList.append(normalizer(post))
 
         #postlen
@@ -95,4 +95,6 @@ with open('posts.csv','rb',) as readfile,open('postprocessing.csv','wb')as write
         
         permalink = row[10]
         ultraList.append(permalink)
+
+
         writer.writerow(ultraList)
