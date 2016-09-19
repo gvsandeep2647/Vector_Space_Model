@@ -23,12 +23,11 @@ def index1(l,d,k):
 
 	for i in temp:
 		if i[0] in d:
-			#pass
-			d[i[0]] = d[i[0]].append([i[1],i[2]])
+			pass
+			#d[i[0]] = d[i[0]].append([i[1],i[2]])
 		else:
 			d[i[0]] = [i[1],i[2]]
-	for key in d:
-		print key,d[key] 
+	print d['isight']
 
 for row in megaList:
 	for j in row[0]:
