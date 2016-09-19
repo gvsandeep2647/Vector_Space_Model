@@ -22,10 +22,9 @@ def _callback(matches):
 def decode_unicode_references(data):
     return re.sub("and#(\d+)(;|(?=\s))|&#(\d+)(;|(?=\s))", _callback, data)
 
-
-with open('sandeep.csv','rb',) as readfile,open('postprocessing.csv','wb')as writefile:
+megaList = [] 
+with open('sandeep.csv','rb',) as readfile:
     reader = csv.reader(readfile, skipinitialspace=False,delimiter=',', quoting=csv.QUOTE_NONE)
-    writer = csv.writer(writefile,delimiter=' ',quotechar=' ',quoting=csv.QUOTE_MINIMAL)
     count = 0
     ite = 0
     tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+') 
@@ -97,4 +96,7 @@ with open('sandeep.csv','rb',) as readfile,open('postprocessing.csv','wb')as wri
         ultraList.append(permalink)
 
 
-        writer.writerow(ultraList)
+        megaList.append(ultraList)
+
+
+

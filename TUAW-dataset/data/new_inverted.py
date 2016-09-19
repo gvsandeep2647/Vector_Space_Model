@@ -1,5 +1,10 @@
 from main import megaList
+import time
 from collections import defaultdict
+
+start_time = time.time()
+
+
 ultraTitle = []
 ultraBlogger = []
 ultraCategories = []
@@ -39,7 +44,6 @@ for row in megaList:
 ultraTitle = make_unique(ultraTitle)
 dictTitle = {}
 dictTitle = index1(ultraTitle,dictTitle,0)
-print dictTitle
 
 ultraBlogger = make_unique(ultraBlogger)
 dictBlogger = {}
@@ -52,4 +56,6 @@ dictCategories = index1(ultraCategories,dictCategories,3)
 ultraPost = make_unique(ultraPost)
 dictPost = {}
 dictPost = index1(ultraPost,dictPost,4)
+
+print "--- %s seconds ---" % (time.time() - start_time)
 
