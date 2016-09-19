@@ -25,7 +25,7 @@ def decode_unicode_references(data):
 
 with open('posts.csv','rb',) as readfile,open('postprocessing.csv','wb')as writefile:
     reader = csv.reader(readfile, skipinitialspace=False,delimiter=',', quoting=csv.QUOTE_NONE)
-    writer = csv.writer(writefile,delimiter=' ',quotechar=' ',quoting=csv.QUOTE_MINIMAL)
+    writer = csv.writer(writefile,delimiter='|',quotechar=' ',quoting=csv.QUOTE_MINIMAL)
     count = 0
     ite = 0
     tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+') 
