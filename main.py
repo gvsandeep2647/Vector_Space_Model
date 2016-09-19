@@ -13,7 +13,7 @@
 
   Working of main.py:
     1. The entire corpus is read and each row is stored as a list.
-    2. Each list is broken down to it's attributes and appropriate tokenization and normalization is apllied.
+    2. Each list is broken down to it's attributes and appropriate tokenization and normalization is applied.
     3. The title,blogger's name and post is stripped of some special characters and then is stemmed using Porter's Stemming Algorithm
     4. Date is converted to a floating point timestamp
     5. Postlength and Comment URL have been ignored in the final processed dataset as they add no value to the corpus
@@ -64,6 +64,13 @@ def _callback(matches):
 def decode_unicode_references(data):
     return re.sub("and#(\d+)(;|(?=\s))|&#(\d+)(;|(?=\s))", _callback, data)
 
+def escape(data):
+    """HTML-escape the text in `t`."""
+    return (data
+        .replace("andamp", "&").replace("andlt", "<").replace("andgt", ">")
+        .replace("and#39", "'").replace('andquot', '"')
+        )
+
 megaList = []  # 
 with open('posts.csv','rb',) as readfile:
     reader = csv.reader(readfile, skipinitialspace=False,delimiter=',', quoting=csv.QUOTE_NONE)
@@ -75,7 +82,7 @@ with open('posts.csv','rb',) as readfile:
         ite = ite + 1
         ultraList = []
                 
-        title = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[0]))
+        title = re.sub('[^\x00-\x7F]','',escape(decode_unicode_references(row[0])))
         title = tokenizer.tokenize(str(title))
         title = [x.strip('-.?/') for x in title]  
         ultraList.append(normalizer(title))
@@ -91,7 +98,7 @@ with open('posts.csv','rb',) as readfile:
             ultraList.append(date)
 
 
-        blogger = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[2]))
+        blogger = re.sub('[^\x00-\x7F]','',escape(decode_unicode_references(row[2])))
         blogger = tokenizer.tokenize(str(blogger))
         blogger = [x.strip('-.?/') for x in blogger]
         blogger = filter(None,blogger)
@@ -105,7 +112,7 @@ with open('posts.csv','rb',) as readfile:
         catergoies = filter(None,categories)
         ultraList.append(normalizer(categories))
 
-        post = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[4]))
+        post = re.sub('[^\x00-\x7F]','',escape(decode_unicode_references(row[4])))
         post = tokenizer.tokenize(str(post))
         post = [x.strip('-.?/;') for x in post]
         post = filter(None,post)
