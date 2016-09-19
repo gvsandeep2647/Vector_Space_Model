@@ -24,6 +24,7 @@ def index1(l,d,k):
 				megaTemp.append(temp)
 	for i in megaTemp:
 		d[i[0]] = i[1]
+
 	return d
 
 for row in megaList:
@@ -39,7 +40,6 @@ for row in megaList:
 ultraTitle = make_unique(ultraTitle)
 dictTitle = {}
 dictTitle = index1(ultraTitle,dictTitle,0)
-print dictTitle
 
 ultraBlogger = make_unique(ultraBlogger)
 dictBlogger = {}

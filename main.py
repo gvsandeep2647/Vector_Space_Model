@@ -35,7 +35,7 @@ with open('posts.csv','rb',) as readfile:
                 
         title = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[0]))
         title = tokenizer.tokenize(str(title))
-        title = [x.strip(' ') for x in title]
+        title = [x.strip('-.?/') for x in title]  
         ultraList.append(normalizer(title))
 
         date = row[1].split()
@@ -51,20 +51,22 @@ with open('posts.csv','rb',) as readfile:
 
         blogger = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[2]))
         blogger = tokenizer.tokenize(str(blogger))
-        blogger = [x.strip(' ') for x in blogger]
+        blogger = [x.strip('-.?/') for x in blogger]
+        blogger = filter(None,blogger)
         ultraList.append(blogger)
 
         if not row[3]:
-            categories = row[3].split()
-            categories = [x.strip(' ') for x in categories]
+            categories = row[3].split()    
         else:
             categories = row[3].split(':&:')
-            categories = [x.strip(' ') for x in categories]
+        categories = [x.strip(' ') for x in categories]
+        catergoies = filter(None,categories)
         ultraList.append(normalizer(categories))
 
         post = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[4]))
         post = tokenizer.tokenize(str(post))
-        post = [x.strip(' ') for x in post]
+        post = [x.strip('-.?/;') for x in post]
+        post = filter(None,post)
         ultraList.append(normalizer(post))
 
         #postlen
@@ -96,8 +98,4 @@ with open('posts.csv','rb',) as readfile:
         permalink = row[10]
         ultraList.append(permalink)
 
-
         megaList.append(ultraList)
-
-
-
