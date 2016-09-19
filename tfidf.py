@@ -13,10 +13,10 @@ tf_title = {}
 tf_blogger = {}
 tf_categories = {}
 tf_post = {}
-N = len(megaList)
 
 
-def calc_tf_idf(tf,idf,org):
+
+def calc_tf_idf(tf,idf,org,N): 		#tf-dict to hold tf values, idf-dict to hold idf values, org-positional index dict, N-no of total documents
 	for key,val in org.iteritems():
 		raw_tf = {}
 		idf[key] = (log((float(N)/len(val.keys())),10))		#idf value for token 'key'
@@ -31,8 +31,8 @@ def calc_tf_idf(tf,idf,org):
 #test['hello'] = {'1':[2,5,6,8],'2':[3,7,9,10],'4':[1]}
 #test['world'] = {'2':[1],'4':[3,6]}
 #calc_tf_idf(tf_title,idf_title, test)
-calc_tf_idf(tf_title,idf_title, dictTitle)
-calc_tf_idf(tf_blogger,idf_blogger, dictBlogger)
-calc_tf_idf(tf_categories,idf_categories,dictCategories)
-calc_tf_idf(tf_post, idf_post, dictPost)
+calc_tf_idf(tf_title,idf_title, dictTitle, len(megaList))
+calc_tf_idf(tf_blogger,idf_blogger, dictBlogger, len(megaList))
+calc_tf_idf(tf_categories,idf_categories,dictCategories, len(megaList))
+calc_tf_idf(tf_post, idf_post, dictPost, len(megaList))
 
