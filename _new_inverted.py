@@ -26,21 +26,6 @@ def index1(l,d,k):
 		d[i[0]] = i[1]
 
 	return d
-def position_index(placeholder):
-	position = {}
-	for word in placeholder: 	#word is the key of the dictionary here
-		position[word] = {}
-		for n in position[word]:
-			if position[word][n] > 0: #checking if the word occurs in the document or not
-				if megaList[n].find(word)>=0:
-					position[word][n] = []
-					for m in xrange(len(megaList[n])):
-						if megaList[n].find(word,m)>=0:
-							position[word][n].append(megaList[n].find(word,m))
-					position[word][megaList[n]] = list(set(position[word][megaList[n]]))
-	return position						
-		
-	
 
 for row in megaList:
 	for j in row[0]:
@@ -55,20 +40,16 @@ for row in megaList:
 ultraTitle = make_unique(ultraTitle)
 dictTitle = {}
 dictTitle = index1(ultraTitle,dictTitle,0)
-dicttitleposindex = position_index(dictTitle)
-print dicttitleposindex
 
 ultraBlogger = make_unique(ultraBlogger)
 dictBlogger = {}
 dictBlogger = index1(ultraBlogger,dictBlogger,2)
-dictblogposindex = position_index(dictBlogger)
 
 ultraCategories = make_unique(ultraCategories)
 dictCategories = {}
 dictCategories = index1(ultraCategories,dictCategories,3)
-dictcatposindex = position_index(dictCategories)
 
 ultraPost = make_unique(ultraPost)
 dictPost = {}
 dictPost = index1(ultraPost,dictPost,4)
-dictpostposindex = position_index(dictPost)
+
