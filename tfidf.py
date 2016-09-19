@@ -2,10 +2,13 @@ from new_inverted import dictTitle, dictBlogger, dictCategories, dictPost
 from main import megaList
 from math import log
 
+#dictionaries to hold idf values for tokens in title, blogger, categories and post 
 idf_title = {}
 idf_blogger = {}
 idf_categories = {}
 idf_post = {}
+
+#dictionaries to hold tf values for tokens in title, blogger, categories and post for each document
 tf_title = {}
 tf_blogger = {}
 tf_categories = {}
@@ -16,10 +19,10 @@ N = len(megaList)
 def calc_tf_idf(tf,idf,org):
 	for key,val in org.iteritems():
 		raw_tf = {}
-		idf[key] = (log((float(N)/len(val.keys())),10))
+		idf[key] = (log((float(N)/len(val.keys())),10))		#idf value for token 'key'
 		for doc_key,doc_val in val.iteritems():
 			if len(doc_val)>0:
-				raw_tf[doc_key] = 1 + log(len(doc_val),10)
+				raw_tf[doc_key] = 1 + log(len(doc_val),10)		#tf value for token 'key' and document 'doc_key'
 			else:
 				raw_tf[doc_key] = 0
 		tf[key] = raw_tf
