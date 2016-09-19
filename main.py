@@ -23,7 +23,7 @@ def decode_unicode_references(data):
     return re.sub("and#(\d+)(;|(?=\s))|&#(\d+)(;|(?=\s))", _callback, data)
 
 megaList = [] 
-with open('posts.csv','rb',) as readfile,open('postprocessing.csv','wb')as writefile:
+with open('posts.csv','rb',) as readfile:
     reader = csv.reader(readfile, skipinitialspace=False,delimiter=',', quoting=csv.QUOTE_NONE)
     count = 0
     ite = 0
