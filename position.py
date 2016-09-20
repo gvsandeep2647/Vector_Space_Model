@@ -6,6 +6,7 @@ sentence3 = "Quid est igitur, inquit, quod requiras?"
 sentence4 = "Nam bonum ex quo appellatum sit, nescio, praepositum ex eo credo,"
 forindex1 = set()
 forindex1 = sentence1.split() + sentence2.split() + sentence3.split() + sentence4.split() 
+print forindex1
 
 def position_index(placeholder):
 	position = {}
@@ -35,7 +36,7 @@ def position_index(placeholder):
 				if sentence4.find(word,n)>=0:
 					position[word]['sentence4'].append(sentence4.find(word,n)) 
 			position[word]['sentence4'] = list(set(position[word]['sentence4']))
-	print position
+	#print position
 #print forindex1
 #print forindex1
 position_index(forindex1)

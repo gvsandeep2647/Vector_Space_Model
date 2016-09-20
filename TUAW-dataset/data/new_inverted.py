@@ -1,10 +1,5 @@
 from main import megaList
-import time
 from collections import defaultdict
-
-start_time = time.time()
-
-
 ultraTitle = []
 ultraBlogger = []
 ultraCategories = []
@@ -17,19 +12,18 @@ def make_unique(l):
 
 
 def index1(l,d,k):
-	megaTemp = []
-	for i in range(0,len(l)):
-		temp = [0,0]
-		temp1 = [0]*len(megaList)
-		temp[1] = temp1
-		for j in range(0,len(megaList)):
-			if l[i] in megaList[j][k]:
-				temp[0] = l[i]
-				temp[1][j] = megaList[j][k].count(l[i])
-				megaTemp.append(temp)
-	for i in megaTemp:
-		d[i[0]] = i[1]
-	return d
+	occurences = {}
+	for word in l:
+		d = {}
+		for i in xrange(len(megaList)):
+			temp = [j for j,val in enumerate(megaList[i][k]) if val==word]
+			#print megaList[i][k]
+			if temp :
+				d[i+1] = temp
+		occurences[word] = d
+	
+	for key in occurences:
+		print key,occurences[key]
 
 for row in megaList:
 	for j in row[0]:
@@ -47,15 +41,13 @@ dictTitle = index1(ultraTitle,dictTitle,0)
 
 ultraBlogger = make_unique(ultraBlogger)
 dictBlogger = {}
-dictBlogger = index1(ultraBlogger,dictBlogger,2)
+#dictBlogger = index1(ultraBlogger,dictBlogger,2)
 
 ultraCategories = make_unique(ultraCategories)
 dictCategories = {}
-dictCategories = index1(ultraCategories,dictCategories,3)
+#dictCategories = index1(ultraCategories,dictCategories,3)
 
 ultraPost = make_unique(ultraPost)
 dictPost = {}
-dictPost = index1(ultraPost,dictPost,4)
-
-print "--- %s seconds ---" % (time.time() - start_time)
+#dictPost = index1(ultraPost,dictPost,4)
 
