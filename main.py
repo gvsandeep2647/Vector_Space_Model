@@ -85,7 +85,7 @@ with open('posts.csv','rb',) as readfile:
         ultraList = [] #One Row of the CSV File
                 
         #title will finally hold the normalized list of words of the row's title.
-        title = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[0]))
+        title = re.sub('[^\x00-\x7F]','',escape(decode_unicode_references(row[0])))
         title = tokenizer.tokenize(str(title))
         title = [x.strip('-.?/') for x in title]  
         ultraList.append(normalizer(title))
@@ -102,13 +102,14 @@ with open('posts.csv','rb',) as readfile:
             ultraList.append(date)
 
         #blogger will finally hold the normalized list of words of the row's blogger.
-        blogger = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[2]))
+        blogger = re.sub('[^\x00-\x7F]','',escape(decode_unicode_references(row[2])))
         blogger = tokenizer.tokenize(str(blogger))
         blogger = [x.strip('-.?/') for x in blogger]
         blogger = filter(None,blogger)
         ultraList.append(blogger)
 
         #categories will finally hold the normalized list of words of the row's categories.
+        categories = re.sub('[^\x00-\x7F]','',escape(decode_unicode_references(row[3])))
         if not row[3]:
             categories = row[3].split()    
         else:
@@ -118,7 +119,7 @@ with open('posts.csv','rb',) as readfile:
         ultraList.append(normalizer(categories))
 
         #posts will finally hold the normalized list of words of the row's posts.
-        post = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[4]))
+        post = re.sub('[^\x00-\x7F]','',escape(decode_unicode_references(row[4])))
         post = tokenizer.tokenize(str(post))
         post = [x.strip('-.?/;') for x in post]
         post = filter(None,post)
