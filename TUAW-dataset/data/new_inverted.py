@@ -17,13 +17,11 @@ def index1(l,d,k):
 		d = {}
 		for i in xrange(len(megaList)):
 			temp = [j for j,val in enumerate(megaList[i][k]) if val==word]
-			#print megaList[i][k]
 			if temp :
 				d[i+1] = temp
 		occurences[word] = d
 	
-	for key in occurences:
-		print key,occurences[key]
+	return occurences
 
 for row in megaList:
 	for j in row[0]:
@@ -38,16 +36,17 @@ for row in megaList:
 ultraTitle = make_unique(ultraTitle)
 dictTitle = {}
 dictTitle = index1(ultraTitle,dictTitle,0)
+print dictTitle
 
 ultraBlogger = make_unique(ultraBlogger)
 dictBlogger = {}
-#dictBlogger = index1(ultraBlogger,dictBlogger,2)
+dictBlogger = index1(ultraBlogger,dictBlogger,2)
 
 ultraCategories = make_unique(ultraCategories)
 dictCategories = {}
-#dictCategories = index1(ultraCategories,dictCategories,3)
+dictCategories = index1(ultraCategories,dictCategories,3)
 
 ultraPost = make_unique(ultraPost)
 dictPost = {}
-#dictPost = index1(ultraPost,dictPost,4)
+dictPost = index1(ultraPost,dictPost,4)
 

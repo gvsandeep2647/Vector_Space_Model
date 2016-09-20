@@ -27,12 +27,10 @@ def calc_tf_idf(tf,idf,org,N): 		#tf-dict to hold tf values, idf-dict to hold id
 				raw_tf[doc_key] = 0
 		tf[key] = raw_tf
 
-#test = {}
-#test['hello'] = {'1':[2,5,6,8],'2':[3,7,9,10],'4':[1]}
-#test['world'] = {'2':[1],'4':[3,6]}
-#calc_tf_idf(tf_title,idf_title, test)
 calc_tf_idf(tf_title,idf_title, dictTitle, len(megaList))
 calc_tf_idf(tf_blogger,idf_blogger, dictBlogger, len(megaList))
 calc_tf_idf(tf_categories,idf_categories,dictCategories, len(megaList))
 calc_tf_idf(tf_post, idf_post, dictPost, len(megaList))
+print idf_post
+print tf_post
 
