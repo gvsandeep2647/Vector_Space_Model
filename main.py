@@ -88,6 +88,7 @@ with open('posts.csv','rb',) as readfile:
         title = re.sub('[^\x00-\x7F]','',escape(decode_unicode_references(row[0])))
         title = tokenizer.tokenize(str(title))
         title = [x.strip('-.?/') for x in title]  
+        title = filter(None,title)
         ultraList.append(normalizer(title))
         
         #date will finally hold a UNIX friendly timestamp
