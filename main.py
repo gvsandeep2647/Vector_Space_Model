@@ -70,6 +70,13 @@ def _callback(matches):
 def decode_unicode_references(data):
     return re.sub("and#(\d+)(;|(?=\s))|&#(\d+)(;|(?=\s))", _callback, data)
 
+def escape(data):
+    """HTML-escape the text in `t`."""
+    return (data
+        .replace("andamp", "&").replace("andlt", "<").replace("andgt", ">")
+        .replace("and#39", "'").replace('andquot', '"')
+        )
+
 megaList = []  # Will hold the corpus
 with open('posts.csv','rb',) as readfile:
     reader = csv.reader(readfile, skipinitialspace=False,delimiter=',', quoting=csv.QUOTE_NONE)
