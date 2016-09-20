@@ -31,6 +31,5 @@ calc_tf_idf(tf_title,idf_title, dictTitle, len(megaList))
 calc_tf_idf(tf_blogger,idf_blogger, dictBlogger, len(megaList))
 calc_tf_idf(tf_categories,idf_categories,dictCategories, len(megaList))
 calc_tf_idf(tf_post, idf_post, dictPost, len(megaList))
-print idf_post
-print tf_post
+
 
