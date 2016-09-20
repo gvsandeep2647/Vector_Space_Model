@@ -1,10 +1,12 @@
 from Tkinter import *
 from new_inverted import ultraCategories
+
 query = ""
+selection =""
 
 def show_entry_fields():
+   global query
    query = (e1.get())
-   print query
 
 root = Tk()
 
@@ -24,14 +26,15 @@ midFrame = Frame(root)
 midFrame.pack(side=TOP)
 
 def sel():
-   selection = ultraCategories[int(str(var.get()))]
-   print selection
+	global selection
+   	selection = ultraCategories[int(str(var.get()))]
 
 var = IntVar()
 for i in xrange(len(ultraCategories)):
 	if i :
 		i = Radiobutton(midFrame,text=ultraCategories[i],variable=var,value=i,command=sel)
 		i.pack(side = LEFT)
+
 
 bottomFrame = Frame(root)
 bottomFrame.pack(side=TOP)
