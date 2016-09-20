@@ -30,14 +30,16 @@ def position_index(placeholder):
 	position = {}
 	for word in placeholder: 	#word is the key of the dictionary here
 		position[word] = {}
-		for n in position[word]:
-			if position[word][n] > 0: #checking if the word occurs in the document or not
-				if megaList[n].find(word)>=0:
-					position[word][n] = []
-					for m in xrange(len(megaList[n])):
-						if megaList[n].find(word,m)>=0:
-							position[word][n].append(megaList[n].find(word,m))
-					position[word][megaList[n]] = list(set(position[word][megaList[n]]))
+		#print position[word][0]
+		for n in placeholder[word]:
+						
+			if placeholder[word][n] > 0: #checking if the word occurs in the document or not
+				position[word][n] = []
+				for m in xrange(len(megaList[n][0])):	
+					#print megaList[n][k][m]
+					if megaList[n][0][m] == word:
+						position[word][n].append(m)
+				#position[word][megaList[n]] = list(set(position[word][megaList[n][0]]))
 	return position						
 		
 	
@@ -56,6 +58,8 @@ ultraTitle = make_unique(ultraTitle)
 dictTitle = {}
 dictTitle = index1(ultraTitle,dictTitle,0)
 dicttitleposindex = position_index(dictTitle)
+#print megaList
+#print dictTitle
 print dicttitleposindex
 
 ultraBlogger = make_unique(ultraBlogger)
