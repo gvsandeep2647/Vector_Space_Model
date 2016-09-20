@@ -29,12 +29,12 @@ def sel():
 
 var = IntVar()
 for i in xrange(len(ultraCategories)):
-	i = Radiobutton(midFrame,text=ultraCategories[i],variable=var,value=i,command=sel)
-	i.pack(side = LEFT)
+	if i :
+		i = Radiobutton(midFrame,text=ultraCategories[i],variable=var,value=i,command=sel)
+		i.pack(side = LEFT)
 
 bottomFrame = Frame(root)
 bottomFrame.pack(side=TOP)
 searchButton = Button(bottomFrame,text='Submit', command=show_entry_fields)
 searchButton.pack(side = TOP)
-print query
 root.mainloop()
