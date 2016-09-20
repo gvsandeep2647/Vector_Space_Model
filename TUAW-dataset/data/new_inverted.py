@@ -33,20 +33,21 @@ for row in megaList:
 	for j in row[4]:
 		ultraPost.append(j)
 
-ultraTitle = make_unique(ultraTitle)
-dictTitle = {}
-dictTitle = index1(ultraTitle,dictTitle,0)
-print dictTitle
+# ultraTitle = make_unique(ultraTitle)
+# dictTitle = {}
+# dictTitle = index1(ultraTitle,dictTitle,0)
 
-ultraBlogger = make_unique(ultraBlogger)
-dictBlogger = {}
-dictBlogger = index1(ultraBlogger,dictBlogger,2)
+# ultraBlogger = make_unique(ultraBlogger)
+# dictBlogger = {}
+# dictBlogger = index1(ultraBlogger,dictBlogger,2)
+
+# ultraPost = make_unique(ultraPost)
+# dictPost = {}
+# dictPost = index1(ultraPost,dictPost,4)
 
 ultraCategories = make_unique(ultraCategories)
 dictCategories = {}
 dictCategories = index1(ultraCategories,dictCategories,3)
 
-ultraPost = make_unique(ultraPost)
-dictPost = {}
-dictPost = index1(ultraPost,dictPost,4)
+
 

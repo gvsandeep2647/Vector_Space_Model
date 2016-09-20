@@ -35,6 +35,7 @@ import csv
     A package used for reading the csv files into the python programs
 ''' 
 import math
+import time
 import re
 '''
     Facilitates implementing regular expression based splitting 
@@ -107,7 +108,7 @@ with open('sandeep.csv','rb',) as readfile:
             categories = row[3].split(':&:')
         categories = [x.strip(' ') for x in categories]
         catergoies = filter(None,categories)
-        ultraList.append(normalizer(categories))
+        ultraList.append(categories)
 
         #posts will finally hold the normalized list of words of the row's posts.
         post = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[4]))
