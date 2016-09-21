@@ -28,12 +28,13 @@ midFrame.pack(side=TOP)
 def sel():
 	global selection
    	selection = ultraCategories[int(str(var.get()))]
-
+count = 0
 var = IntVar()
 for i in xrange(len(ultraCategories)):
 	if i :
+		count = count + 1 
 		i = Radiobutton(midFrame,text=ultraCategories[i],variable=var,value=i,command=sel)
-		i.pack(side = LEFT)
+		i.grid(row=count/10, column = count%10, sticky = W)
 
 
 bottomFrame = Frame(root)
