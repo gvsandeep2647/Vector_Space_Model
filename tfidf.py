@@ -46,8 +46,6 @@ def normalize_doc(k):
 	for i in xrange(len(megaList)):
 		temp = []
 		l = 0.0
-		print '\n\n\n'
-		print i+1
 		for word in megaList[i][k]:
 			if word not in temp:
 				temp.append(word)
@@ -57,8 +55,6 @@ def normalize_doc(k):
 			elif k == 2:
 				l = l + pow(tf_blogger[word][i+1],2)
 			elif k == 4:
-				print word
-				print tf_post[word]
 				l = l + pow(tf_post[word][i+1],2)
 		l = sqrt(l)
 		for word in temp:

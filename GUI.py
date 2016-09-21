@@ -59,9 +59,29 @@ def process_query():
 	normalize_query(wt_blogger)
 	normalize_query(wt_post)
 
-	title_score = [0]*len(megaList)
-	blogger_score = [0]*len(megaList)
-	post_score = [0]*len(megaList)
+	title_score = [0]*(len(megaList)+1)
+	blogger_score = [0]*(len(megaList)+1)
+	post_score = [0]*(len(megaList)+1)
+	doc_score = [0]*(len(megaList)+1)
+
+	for word in wt_title:
+		if word in tf_title.keys():
+			for doc in tf_title[word]:
+				title_score[doc] = wt_title[word]*tf_title[word][doc]*TITLE
+	for word in wt_blogger:
+		if word in tf_blogger.keys():
+			for doc in tf_blogger[word]:
+				blogger_score[doc] = wt_blogger[word]*tf_blogger[word][doc]*BLOGGER
+	for word in wt_post:
+		if word in tf_post.keys():
+			for doc in tf_post[word]:
+				post_score[doc] = wt_post[word]*tf_post[word][doc]*POST
+
+	for i in xrange(len(doc_score)-1):
+		doc_score[i+1] = title_score[i+1] + blogger_score[i+1] + post_score[i+1]
+
+	print doc_score
+
 
 
 
