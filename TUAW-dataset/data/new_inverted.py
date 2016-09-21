@@ -33,9 +33,9 @@ for row in megaList:
 	for j in row[4]:
 		ultraPost.append(j)
 
-# ultraTitle = make_unique(ultraTitle)
-# dictTitle = {}
-# dictTitle = index1(ultraTitle,dictTitle,0)
+ultraTitle = make_unique(ultraTitle)
+dictTitle = {}
+dictTitle = index1(ultraTitle,dictTitle,0)
 
 # ultraBlogger = make_unique(ultraBlogger)
 # dictBlogger = {}

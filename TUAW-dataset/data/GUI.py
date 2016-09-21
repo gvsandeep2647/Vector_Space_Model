@@ -3,6 +3,10 @@ import ttk
 import datetime
 import time
 from new_inverted import ultraCategories
+from main import megaList,normalizer
+from stemming import *
+from nltk.tokenize import RegexpTokenizer
+from new_inverted import dictTitle
 
 query = ""
 selection =""
@@ -92,4 +96,49 @@ endDate = time.mktime(endDate)
 if endDate < startDate :
 	endDate = time.strptime("January 2008","%B %Y")
 	endDate = time.mktime(endDate)
-print query,selection,startDate,endDate
+
+def positionalintersect(q1,q2,k):
+	answer = []
+	key = dictTitle[q1].keys()
+	key2 = dictTitle[q2].keys()
+	c = 0
+	a = 0
+	while c<len(key) and a<len(key2):
+		if key[c]==key2[a]:
+			l = []
+			pp1 = dictTitle[q1][key[c]]
+			pp2 = dictTitle[q2][key2[a]]
+			for i in pp1:
+				for j in pp2:
+					if abs(i-j)<=k:
+						l.append(j)
+					elif j>i:
+						break
+				while l and abs(l[0] - i)>k:
+					l.remove(l[0])
+				for ps in l:
+					answer.append([key[c],i,ps])
+			c = c+1
+			a = a+1
+		elif key[c]<key[a]:
+			c = c+1
+		else:
+			a = a+1
+	result = []
+	for i in answer:
+		result.append(i[0])
+
+	return result
+phrase = 0
+if query[0]=='"' and query[len(query)-1]=='"':
+	phrase = 1
+	query = query[1:-1]
+
+PS = PorterStemmer()
+tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+')
+query = tokenizer.tokenize(query)
+query = [x.strip('-.?/') for x in query]
+query = filter(None,query)
+l = normalizer(query)
+if phrase == 1 :
+	print positionalintersect(l[0],l[1],1)

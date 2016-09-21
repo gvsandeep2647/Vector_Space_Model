@@ -31,7 +31,16 @@ def positionalintersect(q1,q2,k):
 			c = c+1
 		else:
 			a = a+1
-	return answer
+	return answer 
+				
+				
+		
+
+
+
+
+
+
 
 #Input from GUI.py
 
