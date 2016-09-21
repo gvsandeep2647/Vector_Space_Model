@@ -1,6 +1,8 @@
 from new_inverted import dictTitle, dictBlogger, dictCategories, dictPost
-from main import megaList
-from math import log
+from main import megaList, unique_megaList
+from math import log, pow, sqrt
+
+unique_megaList = []
 
 #dictionaries to hold idf values for tokens in title, blogger, categories and post 
 idf_title = {}
@@ -14,6 +16,16 @@ tf_blogger = {}
 tf_categories = {}
 tf_post = {}
 
+def normalize(wt):
+	l = 0.0
+	for word in wt.keys():
+		l = l + pow(wt[word],2)
+	l = sqrt(l)
+	for word in wt.keys():
+		if l != 0:
+			wt[word] = wt[word]/l
+		else:
+			wt[word] = 0.0
 
 
 def calc_tf_idf(tf,idf,org,N): 		#tf-dict to hold tf values, idf-dict to hold idf values, org-positional index dict, N-no of total documents

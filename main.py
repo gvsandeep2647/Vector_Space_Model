@@ -42,6 +42,13 @@ import re
 '''
 PS = PorterStemmer()
 
+TITLE = 0.25
+BLOGGER = 0.2
+POST = 0.16
+INLINKS = 0.09
+OUTLINKS = 0.2
+COMMENTS = 0.1
+
 """ 
     Normalizer :Parameter : A list
                 Returns : A list
@@ -77,10 +84,11 @@ def escape(data):
         .replace("and#39", "'").replace('andquot', '"')
         )
 
-megaList = []  # Will hold the corpus
+megaList = []   # Will hold the corpus
+unique_megaList = []  
 with open('posts.csv','rb',) as readfile:
     reader = csv.reader(readfile, skipinitialspace=False,delimiter=',', quoting=csv.QUOTE_NONE)
-    tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+') #holds the reguular expression which would be used to tokenize words 
+    tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+') #holds the regular expression which would be used to tokenize words 
     for row in reader:
         ultraList = [] #One Row of the CSV File
                 
@@ -172,3 +180,4 @@ with open('posts.csv','rb',) as readfile:
         ultraList.append(permalink)
 
         megaList.append(ultraList)
+        unique_megaList.append(ultraList)
