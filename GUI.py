@@ -55,9 +55,9 @@ def process_query():
 	#print wt_blogger
 	#print wt_post
 
-	normalize(wt_title)
-	normalize(wt_blogger)
-	normalize(wt_post)
+	normalize_query(wt_title)
+	normalize_query(wt_blogger)
+	normalize_query(wt_post)
 
 	title_score = [0]*len(megaList)
 	blogger_score = [0]*len(megaList)

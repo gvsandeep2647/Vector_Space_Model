@@ -84,20 +84,21 @@ def escape(data):
         .replace("and#39", "'").replace('andquot', '"')
         )
 
-megaList = []   # Will hold the corpus
-unique_megaList = []  
+megaList = []   # Will hold the corpus  
 with open('posts.csv','rb',) as readfile:
     reader = csv.reader(readfile, skipinitialspace=False,delimiter=',', quoting=csv.QUOTE_NONE)
     tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+') #holds the regular expression which would be used to tokenize words 
     for row in reader:
         ultraList = [] #One Row of the CSV File
-                
+        smaller_ultraList = []
         #title will finally hold the normalized list of words of the row's title.
         title = re.sub('[^\x00-\x7F]','',escape(decode_unicode_references(row[0])))
         title = tokenizer.tokenize(str(title))
         title = [x.strip('-.?/') for x in title]  
         title = filter(None,title)
-        ultraList.append(normalizer(title))
+        title = normalizer(title)
+        ultraList.append(title)
+        
         
         #date will finally hold a UNIX friendly timestamp
         date = row[1].split()
@@ -180,4 +181,3 @@ with open('posts.csv','rb',) as readfile:
         ultraList.append(permalink)
 
         megaList.append(ultraList)
-        unique_megaList.append(ultraList)

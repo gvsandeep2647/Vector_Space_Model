@@ -21,8 +21,7 @@ def index1(l,d,k):
 			if temp :
 				d[i+1] = temp
 		occurences[word] = d
-	
-	return occurences
+	return occurences	
 
 for row in megaList:
 	for j in row[0]:
