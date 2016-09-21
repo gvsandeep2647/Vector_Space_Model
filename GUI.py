@@ -1,4 +1,7 @@
 from Tkinter import *
+import ttk
+import datetime
+import time
 from new_inverted import ultraCategories
 
 query = ""
@@ -37,8 +40,56 @@ for i in xrange(len(ultraCategories)):
 		i.grid(row=count/10, column = count%10, sticky = W)
 
 
+dateFrame = Frame(root)
+dateFrame.pack(side=TOP)
+Range = []
+for i in range(2004,2008):
+	for j in range(1,13):
+		month = datetime.date(1900, j, 1).strftime('%B')
+		month = month + " " +str(i)
+		Range.append(month)
+
+Label(dateFrame, text="Select Date Range").grid(row=0,column=1)
+startDate = "January 2004"
+endDate = "January 2008"
+
+var = StringVar(dateFrame)
+var.set(Range[0]) # initial value
+
+w = ttk.Combobox(dateFrame, textvariable=var, values=Range)
+w.grid(row = 1 , column = 0)
+
+
+
+var1 = StringVar(dateFrame)
+var1.set(Range[0]) # initial value
+
+w1 = ttk.Combobox(dateFrame, textvariable=var1, values=Range)
+w1.grid(row=1,column = 2)
+
+def ok():
+	global startDate
+	global endDate
+	startDate = var.get()
+	endDate = var1.get()
+
+button = Button(dateFrame, text="OK", command=ok)
+button.grid(row=2,column=1)
+
+
 bottomFrame = Frame(root)
 bottomFrame.pack(side=TOP)
 searchButton = Button(bottomFrame,text='Submit', command=show_entry_fields)
 searchButton.pack(side = TOP)
 root.mainloop()
+
+startDate = time.strptime(startDate,"%B %Y")
+startDate = time.mktime(startDate)
+
+endDate = time.strptime(endDate,"%B %Y")
+endDate = time.mktime(endDate)
+
+if endDate < startDate :
+	endDate = time.strptime("January 2008","%B %Y")
+	endDate = time.mktime(endDate)
+print query,selection,startDate,endDate
