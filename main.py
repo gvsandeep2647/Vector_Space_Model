@@ -90,8 +90,9 @@ with open('posts.csv','rb',) as readfile:
     tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+') #holds the regular expression which would be used to tokenize words 
     for row in reader:
         ultraList = [] #One Row of the CSV File
-        smaller_ultraList = []
+        
         #title will finally hold the normalized list of words of the row's title.
+        raw_title = row[0]
         title = re.sub('[^\x00-\x7F]','',escape(decode_unicode_references(row[0])))
         title = tokenizer.tokenize(str(title))
         title = [x.strip('-.?/') for x in title]  
@@ -179,5 +180,5 @@ with open('posts.csv','rb',) as readfile:
         #permalink contains the permalink of the document. 
         permalink = row[10]
         ultraList.append(permalink)
-
+        ultraList.append(raw_title)
         megaList.append(ultraList)

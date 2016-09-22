@@ -1,5 +1,6 @@
-from main import megaList
-from collections import defaultdict
+from main import *
+from collections import *
+
 
 ultraTitle = []
 ultraBlogger = []
@@ -11,7 +12,6 @@ def make_unique(l):
 	l = list(l)
 	return l
 
-
 def index1(l,d,k):
 	occurences = {}
 	for word in l:
@@ -19,10 +19,11 @@ def index1(l,d,k):
 		for i in xrange(len(megaList)):
 			temp = [j for j,val in enumerate(megaList[i][k]) if val==word]
 			if temp :
-				d[i+1] = temp
+				d[i] = temp
 		occurences[word] = d
-	return occurences	
-
+	
+	return occurences
+ 
 for row in megaList:
 	for j in row[0]:
 		ultraTitle.append(j)
@@ -41,11 +42,13 @@ ultraBlogger = make_unique(ultraBlogger)
 dictBlogger = {}
 dictBlogger = index1(ultraBlogger,dictBlogger,2)
 
+ultraPost = make_unique(ultraPost)
+dictPost = {}
+dictPost = index1(ultraPost,dictPost,4)
+
 ultraCategories = make_unique(ultraCategories)
 dictCategories = {}
 dictCategories = index1(ultraCategories,dictCategories,3)
 
-ultraPost = make_unique(ultraPost)
-dictPost = {}
-dictPost = index1(ultraPost,dictPost,4)
+
 
