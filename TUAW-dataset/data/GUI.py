@@ -2,18 +2,119 @@ from Tkinter import *
 import ttk
 import datetime
 import time
-from new_inverted import ultraCategories
-from main import megaList,normalizer
+from new_inverted import ultraCategories,dictTitle
+from main import *	
 from stemming import *
 from nltk.tokenize import RegexpTokenizer
-from new_inverted import dictTitle
+from tfidf import *
+from math import log
 
+tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+')
 query = ""
 selection =""
-
+temp = []
 def show_entry_fields():
-   global query
-   query = (e1.get())
+	global query
+	global temp
+	global flag
+	query = (e1.get())
+	phrase = 0
+	result = []
+	if query[0]=='"' and query[len(query)-1]=='"':
+		phrase = 1
+		query = query[1:-1]
+
+	PS = PorterStemmer()
+
+	query = tokenizer.tokenize(query)
+	query = [x.strip('-.?/') for x in query]
+	query = filter(None,query)
+	l = normalizer(query)
+	if phrase == 1 :	
+		try:
+			temp = positionalintersect(l[0],l[1],1)
+			if len(temp)==0:
+				result = process_query(l)
+			else:
+				for i in temp:
+					print megaList[i][9],megaList[i][8]
+		except :
+			result = process_query(l)		
+	else:
+		result = process_query(l)	
+
+	for i in xrange(10):
+		print megaList[result[i*2]][9]
+		print megaList[result[i*2]][8]
+		print result[i*2+1]
+		print "~~~~~~~~~~~~~~~~~~~"
+
+	print "=============================="
+
+def process_query(_query):
+	tf_query = {}
+	wt_title = {}
+	wt_blogger = {}
+	wt_post = {}
+	for token in _query:
+		if token not in tf_query:
+			tf_query[token] = 1
+		else:
+			tf_query[token] = tf_query[token] + 1
+	for word in tf_query.keys():
+		tf_query[word] = 1 + log(tf_query[word],10)
+		if word in idf_title.keys():
+			wt_title[word] = tf_query[word]*idf_title[word]
+		else:
+			wt_title[word] = 0.0
+		if word in idf_blogger.keys():
+			wt_blogger[word] = tf_query[word]*idf_blogger[word]
+		else:
+			wt_blogger[word] = 0.0
+		if word in idf_post.keys():
+			wt_post[word] = tf_query[word]*idf_post[word]
+		else:
+			wt_post[word] = 0.0
+
+	normalize_query(wt_title)
+	normalize_query(wt_blogger)
+	normalize_query(wt_post)
+
+	title_score = [0]*(len(megaList))
+	blogger_score = [0]*(len(megaList))
+	post_score = [0]*(len(megaList))
+	doc_score = [0]*(len(megaList))
+
+	for word in wt_title:
+		if word in tf_title.keys():
+			for doc in tf_title[word]:
+				title_score[doc] = wt_title[word]*tf_title[word][doc]*TITLE
+	for word in wt_blogger:
+		if word in tf_blogger.keys():
+			for doc in tf_blogger[word]:
+				blogger_score[doc] = wt_blogger[word]*tf_blogger[word][doc]*BLOGGER
+	for word in wt_post:
+		if word in tf_post.keys():
+			for doc in tf_post[word]:
+				post_score[doc] = wt_post[word]*tf_post[word][doc]*POST
+
+	for i in xrange(len(doc_score)):
+		doc_score[i] = title_score[i] + blogger_score[i] + post_score[i]
+	result = []
+	for i in xrange(10):
+		maxi = -1
+		maxind = -1
+		for j in xrange(len(doc_score)):
+			if doc_score[j]>maxi:
+				maxi = doc_score[j]
+				maxind = j	
+		doc_score[maxind] = -1
+		result.append(maxind)
+		result.append(maxi)
+
+	
+	return result
+	
 
 root = Tk()
 
@@ -57,10 +158,10 @@ Label(dateFrame, text="Select Date Range").grid(row=0,column=1)
 startDate = "January 2004"
 endDate = "January 2008"
 
-var2 = StringVar(dateFrame)
-var2.set(Range[0]) # initial value
+var = StringVar(dateFrame)
+var.set(Range[0]) # initial value
 
-w = ttk.Combobox(dateFrame, textvariable=var2, values=Range)
+w = ttk.Combobox(dateFrame, textvariable=var, values=Range)
 w.grid(row = 1 , column = 0)
 
 
@@ -74,7 +175,7 @@ w1.grid(row=1,column = 2)
 def ok():
 	global startDate
 	global endDate
-	startDate = var2.get()
+	startDate = var.get()
 	endDate = var1.get()
 
 button = Button(dateFrame, text="OK", command=ok)
@@ -85,7 +186,7 @@ bottomFrame = Frame(root)
 bottomFrame.pack(side=TOP)
 searchButton = Button(bottomFrame,text='Submit', command=show_entry_fields)
 searchButton.pack(side = TOP)
-root.mainloop()
+
 
 startDate = time.strptime(startDate,"%B %Y")
 startDate = time.mktime(startDate)
@@ -129,16 +230,8 @@ def positionalintersect(q1,q2,k):
 		result.append(i[0])
 
 	return result
-phrase = 0
-if query[0]=='"' and query[len(query)-1]=='"':
-	phrase = 1
-	query = query[1:-1]
 
-PS = PorterStemmer()
-tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+')
-query = tokenizer.tokenize(query)
-query = [x.strip('-.?/') for x in query]
-query = filter(None,query)
-l = normalizer(query)
-if phrase == 1 :
-	print positionalintersect(l[0],l[1],1)
+
+root.mainloop()
+
+

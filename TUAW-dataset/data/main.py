@@ -42,6 +42,13 @@ import re
 '''
 PS = PorterStemmer()
 
+TITLE = 0.25
+BLOGGER = 0.2
+POST = 0.16
+INLINKS = 0.09
+OUTLINKS = 0.2
+COMMENTS = 0.1
+
 """ 
     Normalizer :Parameter : A list
                 Returns : A list
@@ -70,18 +77,29 @@ def _callback(matches):
 def decode_unicode_references(data):
     return re.sub("and#(\d+)(;|(?=\s))|&#(\d+)(;|(?=\s))", _callback, data)
 
-megaList = []  # Will hold the corpus
-with open('sandeep.csv','rb',) as readfile:
+def escape(data):
+    """HTML-escape the text in `t`."""
+    return (data
+        .replace("andamp", "&").replace("andlt", "<").replace("andgt", ">")
+        .replace("and#39", "'").replace('andquot', '"')
+        )
+
+megaList = []   # Will hold the corpus  
+with open('testing.csv','rb',) as readfile:
     reader = csv.reader(readfile, skipinitialspace=False,delimiter=',', quoting=csv.QUOTE_NONE)
-    tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+') #holds the reguular expression which would be used to tokenize words 
+    tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+') #holds the regular expression which would be used to tokenize words 
     for row in reader:
         ultraList = [] #One Row of the CSV File
-                
+        
         #title will finally hold the normalized list of words of the row's title.
-        title = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[0]))
+        raw_title = row[0]
+        title = re.sub('[^\x00-\x7F]','',escape(decode_unicode_references(row[0])))
         title = tokenizer.tokenize(str(title))
         title = [x.strip('-.?/') for x in title]  
-        ultraList.append(normalizer(title))
+        title = filter(None,title)
+        title = normalizer(title)
+        ultraList.append(title)
+        
         
         #date will finally hold a UNIX friendly timestamp
         date = row[1].split()
@@ -95,23 +113,24 @@ with open('sandeep.csv','rb',) as readfile:
             ultraList.append(date)
 
         #blogger will finally hold the normalized list of words of the row's blogger.
-        blogger = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[2]))
+        blogger = re.sub('[^\x00-\x7F]','',escape(decode_unicode_references(row[2])))
         blogger = tokenizer.tokenize(str(blogger))
         blogger = [x.strip('-.?/') for x in blogger]
         blogger = filter(None,blogger)
         ultraList.append(blogger)
 
         #categories will finally hold the normalized list of words of the row's categories.
+        categories = re.sub('[^\x00-\x7F]','',escape(decode_unicode_references(row[3])))
         if not row[3]:
             categories = row[3].split()    
         else:
             categories = row[3].split(':&:')
         categories = [x.strip(' ') for x in categories]
         catergoies = filter(None,categories)
-        ultraList.append(categories)
+        ultraList.append(normalizer(categories))
 
         #posts will finally hold the normalized list of words of the row's posts.
-        post = re.sub('[^\x00-\x7F]','',decode_unicode_references(row[4]))
+        post = re.sub('[^\x00-\x7F]','',escape(decode_unicode_references(row[4])))
         post = tokenizer.tokenize(str(post))
         post = [x.strip('-.?/;') for x in post]
         post = filter(None,post)
@@ -161,5 +180,5 @@ with open('sandeep.csv','rb',) as readfile:
         #permalink contains the permalink of the document. 
         permalink = row[10]
         ultraList.append(permalink)
-
+        ultraList.append(raw_title)
         megaList.append(ultraList)

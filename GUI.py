@@ -2,13 +2,12 @@ from Tkinter import *
 import ttk
 import datetime
 import time
-from new_inverted import ultraCategories
+from new_inverted import ultraCategories,dictTitle
 from main import megaList,normalizer
 from stemming import *
 from nltk.tokenize import RegexpTokenizer
 from tfidf import *
 from math import log
-from new_inverted import dictTitle
 
 tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+')
 query = ""
@@ -55,9 +54,6 @@ def process_query():
 			wt_post[word] = tf_query[word]*idf_post[word]
 		else:
 			wt_post[word] = 0.0
-	#print wt_title
-	#print wt_blogger
-	#print wt_post
 
 	normalize_query(wt_title)
 	normalize_query(wt_blogger)
@@ -85,10 +81,6 @@ def process_query():
 		doc_score[i+1] = title_score[i+1] + blogger_score[i+1] + post_score[i+1]
 
 	print doc_score
-
-
-
-
 
 root = Tk()
 
