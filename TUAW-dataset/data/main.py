@@ -42,12 +42,12 @@ import re
 '''
 PS = PorterStemmer()
 
-TITLE = 0.25
+TITLE = 0.5
 BLOGGER = 0.2
-POST = 0.16
-INLINKS = 0.09
-OUTLINKS = 0.2
-COMMENTS = 0.1
+POST = 0.3
+INLINKS = 0.2
+OUTLINKS = 0.6
+COMMENTS = 0.2
 
 """ 
     Normalizer :Parameter : A list

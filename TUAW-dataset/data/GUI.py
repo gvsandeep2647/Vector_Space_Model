@@ -48,10 +48,9 @@ def show_entry_fields():
 			result = process_query(l)	
 
 		if len(temp)==0	:
-			for i in xrange(10):
-				print megaList[result[i*2]][9]
-				print megaList[result[i*2]][8]
-				print result[i*2+1]
+			for i in xrange(len(result)):
+				print megaList[result[i]][9]
+				print megaList[result[i]][8]
 				print "~~~~~~~~~~~~~~~~~~~"
 
 		print "=============================="
@@ -108,15 +107,44 @@ def process_query(_query):
 	result = []
 	for i in xrange(10):
 		maxi = -1
-		maxind = -1
+		maxind = []
 		for j in xrange(len(doc_score)):
 			if doc_score[j]>maxi and megaList[j][1] < endDate and megaList[j][1]> startDate and selection in megaList[j][3]:
 				maxi = doc_score[j]
-				maxind = j	
-		doc_score[maxind] = -1
-		result.append(maxind)
-		result.append(maxi)
+				maxind = []
+				maxind.append(j)
+			elif doc_score[j]==maxi and megaList[j][1] < endDate and megaList[j][1]> startDate and selection in megaList[j][3]:
+				maxind.append(j)
 
+		if len(maxind)>1:
+			doc_score_other = [0]*len(maxind)
+			for j in xrange(len(maxind)):
+				doc_score_other[j] = OUTLINKS*megaList[maxind[j]][5] + INLINKS*megaList[maxind[j]][6] + COMMENTS*megaList[maxind[j]][7]
+			if len(maxind) >= 10-len(result):
+				for k in xrange(10-len(result)):
+					maxj = -1
+					maxindj = -1
+					for kj in xrange(len(maxind)):
+						if doc_score_other[kj]>maxj:
+							maxj = doc_score_other[kj]
+							maxindj = kj
+					result.append(maxind[maxj])
+			else:
+				doc_score_other_temp = []
+				for k in xrange(len(doc_score_other)):
+					doc_score_other_temp[k] = doc_score_other[k]
+				sorted(doc_score_other_temp, reverse=True)
+				for k in xrange(len(doc_score_other_temp)):
+					ind = doc_score_other.index(doc_score_other_temp[k])
+					doc_score_other[ind] = -1
+					result.append(maxind[ind])
+
+		else:
+			if maxi != -1:
+				doc_score[maxind] = -1
+				result.append(maxind)
+			else:
+				break
 	
 	return result
 	
