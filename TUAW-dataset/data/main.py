@@ -57,6 +57,7 @@ COMMENTS = 0.1
 """
 def normalizer(l):
     for i in range(0,len(l)):
+        l[i] = l[i].lower()
         l[i] = PS.stem(l[i],0,len(l[i])-1)
 
     return l

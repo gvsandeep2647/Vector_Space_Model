@@ -44,11 +44,12 @@ def show_entry_fields():
 	else:
 		result = process_query(l)	
 
-	for i in xrange(10):
-		print megaList[result[i*2]][9]
-		print megaList[result[i*2]][8]
-		print result[i*2+1]
-		print "~~~~~~~~~~~~~~~~~~~"
+	if len(temp)==0	:
+		for i in xrange(10):
+			print megaList[result[i*2]][9]
+			print megaList[result[i*2]][8]
+			print result[i*2+1]
+			print "~~~~~~~~~~~~~~~~~~~"
 
 	print "=============================="
 
