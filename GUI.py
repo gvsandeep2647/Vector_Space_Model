@@ -33,10 +33,11 @@ def show_entry_fields():
 	if phrase == 1 :	
 		try:
 			temp = positionalintersect(l[0],l[1],1)
-			if len(temp)==0:
+			answer = finalquery(temp,l)
+			if len(answer)==0:
 				result = process_query(l)
 			else:
-				for i in temp:
+				for i in answer:
 					print megaList[i][9],megaList[i][8]
 		except :
 			result = process_query(l)		
@@ -230,6 +231,17 @@ def positionalintersect(q1,q2,k):
 		result.append(i[0])
 
 	return result
+
+def finalquery(temp,l):
+	answer=[]
+	for i in xrange(1,len(l)-1):
+		temp2 = positionalintersect(l[i],l[i+1],100)
+		for j in xrange(len(temp)):
+			for k in xrange(len(temp2)):
+				if temp2[j][0]==temp[k][0]:
+					answer.append(temp[k][0])
+	return answer
+
 
 
 root.mainloop()

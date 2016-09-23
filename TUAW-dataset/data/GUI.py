@@ -29,7 +29,10 @@ def show_entry_fields():
 
 		PS = PorterStemmer()
 
-		print "Your Query : "+query+" Category: "+selection+" Time Range: "+startDate+" to "+endDate
+		print "Your Query : "+query+" Category: *"+selection+"*"
+		if phrase == 1:
+			print "You Requested A Phrase Query"
+
 		query = tokenizer.tokenize(query)
 		query = [x.strip('-.?/') for x in query]
 		query = filter(None,query)
@@ -173,11 +176,13 @@ def sel():
 
 count = 0
 var = IntVar()
-var.set(0)
-for i in xrange(len(ultraCategories)):
-	count = count + 1 
+var.set(-1)
+for i in range(0,len(ultraCategories)-1):
+	if i==0:
+		ultraCategories[i]="All"
 	i = Radiobutton(midFrame,text=ultraCategories[i],variable=var,value=i,command=sel)
 	i.grid(row=count/10, column = count%10, sticky = W)
+	count = count + 1 
 
 
 dateFrame = Frame(root)
