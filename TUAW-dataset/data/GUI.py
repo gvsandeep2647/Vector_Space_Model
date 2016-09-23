@@ -72,6 +72,7 @@ def process_query(_query):
 		tf_query[word] = 1 + log(tf_query[word],10)
 		if word in idf_title.keys():
 			wt_title[word] = tf_query[word]*idf_title[word]
+			
 		else:
 			wt_title[word] = 0.0
 		if word in idf_blogger.keys():
@@ -80,12 +81,15 @@ def process_query(_query):
 			wt_blogger[word] = 0.0
 		if word in idf_post.keys():
 			wt_post[word] = tf_query[word]*idf_post[word]
+			
 		else:
 			wt_post[word] = 0.0
 
 	normalize_query(wt_title)
+	#print wt_title
 	normalize_query(wt_blogger)
 	normalize_query(wt_post)
+	#print wt_post
 
 	title_score = [0]*(len(megaList))
 	blogger_score = [0]*(len(megaList))
@@ -95,34 +99,37 @@ def process_query(_query):
 	for word in wt_title:
 		if word in tf_title.keys():
 			for doc in tf_title[word]:
-				title_score[doc] = wt_title[word]*tf_title[word][doc]*TITLE
+				title_score[doc] = title_score[doc]+ wt_title[word]*tf_title[word][doc]
 	for word in wt_blogger:
 		if word in tf_blogger.keys():
 			for doc in tf_blogger[word]:
-				blogger_score[doc] = wt_blogger[word]*tf_blogger[word][doc]*BLOGGER
+				blogger_score[doc] = blogger_score[doc] + wt_blogger[word]*tf_blogger[word][doc]
 	for word in wt_post:
 		if word in tf_post.keys():
 			for doc in tf_post[word]:
-				post_score[doc] = wt_post[word]*tf_post[word][doc]*POST
-
+				post_score[doc] = post_score[doc] + wt_post[word]*tf_post[word][doc]
+	
 	for i in xrange(len(doc_score)):
 		doc_score[i] = title_score[i] + blogger_score[i] + post_score[i]
 	result = []
+	#print doc_score
 	for i in xrange(10):
 		maxi = -1
 		maxind = []
 		for j in xrange(len(doc_score)):
-			if doc_score[j]>maxi and megaList[j][1] < endDate and megaList[j][1]> startDate and selection in megaList[j][3]:
+			if doc_score[j]>maxi: #and megaList[j][1] < endDate and megaList[j][1]> startDate and selection in megaList[j][3]:
 				maxi = doc_score[j]
 				maxind = []
 				maxind.append(j)
-			elif doc_score[j]==maxi and megaList[j][1] < endDate and megaList[j][1]> startDate and selection in megaList[j][3]:
+			elif doc_score[j]==maxi: #and megaList[j][1] < endDate and megaList[j][1]> startDate and selection in megaList[j][3]:
 				maxind.append(j)
-
+		#print maxi
+		#print maxind
 		if len(maxind)>1:
 			doc_score_other = [0]*len(maxind)
 			for j in xrange(len(maxind)):
 				doc_score_other[j] = OUTLINKS*megaList[maxind[j]][5] + INLINKS*megaList[maxind[j]][6] + COMMENTS*megaList[maxind[j]][7]
+			
 			if len(maxind) >= 10-len(result):
 				for k in xrange(10-len(result)):
 					maxj = -1
@@ -131,7 +138,9 @@ def process_query(_query):
 						if doc_score_other[kj]>maxj:
 							maxj = doc_score_other[kj]
 							maxindj = kj
-					result.append(maxind[maxj])
+					
+					doc_score_other[maxindj] = -1
+					result.append(maxind[maxindj])
 			else:
 				doc_score_other_temp = []
 				for k in xrange(len(doc_score_other)):
@@ -144,8 +153,9 @@ def process_query(_query):
 
 		else:
 			if maxi != -1:
-				doc_score[maxind] = -1
-				result.append(maxind)
+				#print str(doc_score[maxind[0]]) + ' ' + str(title_score[maxind[0]]) + ' '+ str(post_score[maxind[0]])
+				doc_score[maxind[0]] = -1
+				result.append(maxind[0])
 			else:
 				break
 	
