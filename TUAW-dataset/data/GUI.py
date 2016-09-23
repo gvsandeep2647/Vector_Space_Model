@@ -29,7 +29,10 @@ def show_entry_fields():
 
 		PS = PorterStemmer()
 
-		print "Your Query : "+query+" Category: "+selection+" Time Range: "+startDate+" to "+endDate
+		print "Your Query : "+query+" Category: *"+selection+"*"
+		if phrase == 1:
+			print "You Requested A Phrase Query"
+
 		query = tokenizer.tokenize(query)
 		query = [x.strip('-.?/') for x in query]
 		query = filter(None,query)
@@ -110,9 +113,14 @@ def process_query(_query):
 		maxi = -1
 		maxind = -1
 		for j in xrange(len(doc_score)):
-			if doc_score[j]>maxi and megaList[j][1] < endDate and megaList[j][1]> startDate and selection in megaList[j][3]:
-				maxi = doc_score[j]
-				maxind = j	
+			if doc_score[j]>maxi:
+				if var.get()==0:
+					maxi = doc_score[j]
+					maxind = j
+				elif ultraCategories[var.get()] in megaList[j][3]:
+					maxi = doc_score[j]
+					maxind = j
+
 		doc_score[maxind] = -1
 		result.append(maxind)
 		result.append(maxi)
@@ -145,11 +153,13 @@ def sel():
 
 count = 0
 var = IntVar()
-var.set(0)
-for i in xrange(len(ultraCategories)):
-	count = count + 1 
+var.set(-1)
+for i in range(0,len(ultraCategories)-1):
+	if i==0:
+		ultraCategories[i]="All"
 	i = Radiobutton(midFrame,text=ultraCategories[i],variable=var,value=i,command=sel)
 	i.grid(row=count/10, column = count%10, sticky = W)
+	count = count + 1 
 
 
 dateFrame = Frame(root)
