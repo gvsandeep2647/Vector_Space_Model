@@ -33,6 +33,29 @@ def positionalintersect(q1,q2,k):
 			a = a+1
 	return answer
 
+def finalquery(temp,l):
+	answer=[]
+	for i in xrange(1,len(l)-1):
+		temp2 = positionalintersect(l[i],l[i+1],100)
+		for j in xrange(len(temp)):
+			for k in xrange(len(temp2)):
+				if temp2[j][0]==temp[k][0]:
+					answer.append(temp[k][0])
+	return answer
+		
+'''		
+	changes made- returns document where it occurs
+	 
+				
+				
+		
+
+
+
+'''
+
+
+
 #Input from GUI.py
 
 PS = PorterStemmer()
@@ -41,6 +64,14 @@ Q = raw_input()
 tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+')
 Q = tokenizer.tokenize(Q)
 l = normalizer(Q)
-print positionalintersect(l[0],l[1],1)
+
+i = 0
+temp=(positionalintersect(l[0],l[1],100))
+'''while i<len(l)-1:
+	temp.append(positionalintersect(l[i],l[i+1],100))
+	i = i +1'''
+print finalquery(temp,l)
+print temp
+
 
 
