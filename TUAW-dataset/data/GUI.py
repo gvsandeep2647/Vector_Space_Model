@@ -18,40 +18,43 @@ def show_entry_fields():
 	global temp
 	global flag
 	query = (e1.get())
-	phrase = 0
-	result = []
-	if query[0]=='"' and query[len(query)-1]=='"':
-		phrase = 1
-		query = query[1:-1]
-
-	PS = PorterStemmer()
-
-	print "Your Query : "+query+" Category: "+selection+" Time Range: "+startDate+" to "+endDate
-	query = tokenizer.tokenize(query)
-	query = [x.strip('-.?/') for x in query]
-	query = filter(None,query)
-	l = normalizer(query)
-	if phrase == 1 :	
-		try:
-			temp = positionalintersect(l[0],l[1],1)
-			if len(temp)==0:
-				result = process_query(l)
-			else:
-				for i in temp:
-					print megaList[i][9],megaList[i][8]
-		except :
-			result = process_query(l)		
+	if len(query)==0:
+		print "Query Cannot Be Empty"
 	else:
-		result = process_query(l)	
+		phrase = 0
+		result = []
+		if query[0]=='"' and query[len(query)-1]=='"':
+			phrase = 1
+			query = query[1:-1]
 
-	if len(temp)==0	:
-		for i in xrange(10):
-			print megaList[result[i*2]][9]
-			print megaList[result[i*2]][8]
-			print result[i*2+1]
-			print "~~~~~~~~~~~~~~~~~~~"
+		PS = PorterStemmer()
 
-	print "=============================="
+		print "Your Query : "+query+" Category: "+selection+" Time Range: "+startDate+" to "+endDate
+		query = tokenizer.tokenize(query)
+		query = [x.strip('-.?/') for x in query]
+		query = filter(None,query)
+		l = normalizer(query)
+		if phrase == 1 :	
+			try:
+				temp = positionalintersect(l[0],l[1],1)
+				if len(temp)==0:
+					result = process_query(l)
+				else:
+					for i in temp:
+						print megaList[i][9],megaList[i][8]
+			except :
+				result = process_query(l)		
+		else:
+			result = process_query(l)	
+
+		if len(temp)==0	:
+			for i in xrange(10):
+				print megaList[result[i*2]][9]
+				print megaList[result[i*2]][8]
+				print result[i*2+1]
+				print "~~~~~~~~~~~~~~~~~~~"
+
+		print "=============================="
 
 def process_query(_query):
 	tf_query = {}
@@ -107,7 +110,7 @@ def process_query(_query):
 		maxi = -1
 		maxind = -1
 		for j in xrange(len(doc_score)):
-			if doc_score[j]>maxi:
+			if doc_score[j]>maxi and megaList[j][1] < endDate and megaList[j][1]> startDate and selection in megaList[j][3]:
 				maxi = doc_score[j]
 				maxind = j	
 		doc_score[maxind] = -1
@@ -171,7 +174,7 @@ w.grid(row = 1 , column = 0)
 
 
 var1 = StringVar(dateFrame)
-var1.set(Range[0]) # initial value
+var1.set(Range[len(Range)-1]) # initial value
 
 w1 = ttk.Combobox(dateFrame, textvariable=var1, values=Range)
 w1.grid(row=1,column = 2)
@@ -179,8 +182,18 @@ w1.grid(row=1,column = 2)
 def ok():
 	global startDate
 	global endDate
+
 	startDate = var2.get()
 	endDate = var1.get()
+	startDate = time.strptime(startDate,"%B %Y")
+	startDate = time.mktime(startDate)
+
+	endDate = time.strptime(endDate,"%B %Y")
+	endDate = time.mktime(endDate)
+
+	if endDate < startDate :
+		endDate = time.strptime("January 2008","%B %Y")
+		endDate = time.mktime(endDate)
 
 button = Button(dateFrame, text="OK", command=ok)
 button.grid(row=2,column=1)
@@ -191,16 +204,6 @@ bottomFrame.pack(side=TOP)
 searchButton = Button(bottomFrame,text='Submit', command=show_entry_fields)
 searchButton.pack(side = TOP)
 
-
-startDate = time.strptime(startDate,"%B %Y")
-startDate = time.mktime(startDate)
-
-endDate = time.strptime(endDate,"%B %Y")
-endDate = time.mktime(endDate)
-
-if endDate < startDate :
-	endDate = time.strptime("January 2008","%B %Y")
-	endDate = time.mktime(endDate)
 
 def positionalintersect(q1,q2,k):
 	answer = []
