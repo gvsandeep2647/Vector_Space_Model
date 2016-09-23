@@ -26,6 +26,7 @@ def show_entry_fields():
 
 	PS = PorterStemmer()
 
+	print "Your Query : "+query+" Category: "+selection+" Time Range: "+startDate+" to "+endDate
 	query = tokenizer.tokenize(query)
 	query = [x.strip('-.?/') for x in query]
 	query = filter(None,query)
@@ -136,13 +137,15 @@ midFrame.pack(side=TOP)
 def sel():
 	global selection
    	selection = ultraCategories[int(str(var.get()))]
+
+
 count = 0
 var = IntVar()
+var.set(0)
 for i in xrange(len(ultraCategories)):
-	if i :
-		count = count + 1 
-		i = Radiobutton(midFrame,text=ultraCategories[i],variable=var,value=i,command=sel)
-		i.grid(row=count/10, column = count%10, sticky = W)
+	count = count + 1 
+	i = Radiobutton(midFrame,text=ultraCategories[i],variable=var,value=i,command=sel)
+	i.grid(row=count/10, column = count%10, sticky = W)
 
 
 dateFrame = Frame(root)
@@ -158,10 +161,10 @@ Label(dateFrame, text="Select Date Range").grid(row=0,column=1)
 startDate = "January 2004"
 endDate = "January 2008"
 
-var = StringVar(dateFrame)
-var.set(Range[0]) # initial value
+var2 = StringVar(dateFrame)
+var2.set(Range[0]) # initial value
 
-w = ttk.Combobox(dateFrame, textvariable=var, values=Range)
+w = ttk.Combobox(dateFrame, textvariable=var2, values=Range)
 w.grid(row = 1 , column = 0)
 
 
@@ -175,7 +178,7 @@ w1.grid(row=1,column = 2)
 def ok():
 	global startDate
 	global endDate
-	startDate = var.get()
+	startDate = var2.get()
 	endDate = var1.get()
 
 button = Button(dateFrame, text="OK", command=ok)

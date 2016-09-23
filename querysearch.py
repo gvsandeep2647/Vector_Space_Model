@@ -42,19 +42,6 @@ def finalquery(temp,l):
 				if temp2[j][0]==temp[k][0]:
 					answer.append(temp[k][0])
 	return answer
-		
-'''		
-	changes made- returns document where it occurs
-	 
-				
-				
-		
-
-
-
-'''
-
-
 
 #Input from GUI.py
 
@@ -67,9 +54,6 @@ l = normalizer(Q)
 
 i = 0
 temp=(positionalintersect(l[0],l[1],100))
-'''while i<len(l)-1:
-	temp.append(positionalintersect(l[i],l[i+1],100))
-	i = i +1'''
 print finalquery(temp,l)
 print temp
 
