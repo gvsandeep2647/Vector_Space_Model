@@ -109,8 +109,8 @@ def show_entry_fields():
 		
 def printResult(searchResult):
 	global resultsFrame
-	text = Text(resultsFrame)
-
+	global text
+	text.delete("1.0",END)
 	for i in searchResult:
 		text.insert(END,i+'\n')
 	text.pack(side=TOP) 
@@ -380,6 +380,9 @@ def finalquery(temp,l):
 	return answer
 resultsFrame = Frame(root)
 resultsFrame.pack(side=TOP)
+text = Text(resultsFrame)
+
+
 root.mainloop()
 
 
