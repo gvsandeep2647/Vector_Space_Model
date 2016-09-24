@@ -9,11 +9,70 @@ from nltk.tokenize import RegexpTokenizer
 from tfidf import *
 from math import log
 
+import subprocess as sub
+
+
+
 tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+')
 query = ""
 selection =""
 temp = []
+def positionalintersect(q1,q2,k):
+	answer = []
+	key = dictTitle[q1].keys()
+	key2 = dictTitle[q2].keys()
+	key.sort()
+	key2.sort()
+	
+	c = 0
+	a = 0
+	while c<len(key) and a<len(key2):
+		if key[c]==key2[a]:
+			l = []
+			pp1 = dictTitle[q1][key[c]]
+			pp2 = dictTitle[q2][key2[a]]
+			for i in pp1:
+				for j in pp2:
+					if abs(i-j)<=k:
+						l.append(j)
+					elif j>i:
+						break
+				while l and abs(l[0] - i)>k:
+					l.remove(l[0])
+				for ps in l:
+					answer.append([key[c],i,ps])
+			c = c+1
+			a = a+1
+		elif key[c]<key2[a]:
+			c = c+1
+		else:
+			a = a+1
+	result = []
+	for i in answer:
+		result.append(i[0])
+
+	return result
+
+def finalquery(temp,l):
+	
+	answer=[]
+	i=1
+	while i<len(l)-1:
+		temp2 = positionalintersect(l[i],l[i+1],1)
+		
+		for j in xrange(len(temp)):
+			for k in xrange(len(temp2)):
+				if temp2[k]==temp[j]:
+					answer.append(temp[j])
+		i = i+1
+	
+	return answer
+
+
+
+	
 def show_entry_fields():
+	
 	global query
 	global temp
 	global flag
@@ -39,19 +98,21 @@ def show_entry_fields():
 		query = [x.strip('-.?/') for x in query]
 		query = filter(None,query)
 		l = normalizer(query)
+		#print l
 		if phrase == 1 :	
+			
 			try:
 				temp = positionalintersect(l[0],l[1],1)
-				#print temp
 				answer = finalquery(temp,l)
-				#print "here"
+				
 				if len(l)==2:
 					if len(temp)==0:
 						result = process_query(l)
 					else:
 						for i in temp:
-							print megaList[i][9],megaList[i][8]
+							print megaList[i][9], megaList[i][8]
 				else:
+				
 					if len(answer)==0:
 						result = process_query(l)
 					else:
@@ -70,6 +131,8 @@ def show_entry_fields():
 				print "~~~~~~~~~~~~~~~~~~~"
 
 		print "=============================="
+		
+		
 
 def process_query(_query):
 	tf_query = {}
@@ -259,51 +322,16 @@ bottomFrame = Frame(root)
 bottomFrame.pack(side=TOP)
 searchButton = Button(bottomFrame,text='Submit', command=show_entry_fields)
 searchButton.pack(side = TOP)
+'''
+p = sub.Popen(['python','GUI.py'],stdout=sub.PIPE, shell = True)
+output= p.stdout.read()
+text = Text(root)
+text.pack()
+text.delete("1.0",END)
+text.insert(INSERT,output)
+'''
 
 
-def positionalintersect(q1,q2,k):
-	answer = []
-	key = dictTitle[q1].keys()
-	key2 = dictTitle[q2].keys()
-	c = 0
-	a = 0
-	while c<len(key) and a<len(key2):
-		if key[c]==key2[a]:
-			l = []
-			pp1 = dictTitle[q1][key[c]]
-			pp2 = dictTitle[q2][key2[a]]
-			for i in pp1:
-				for j in pp2:
-					if abs(i-j)<=k:
-						l.append(j)
-					elif j>i:
-						break
-				while l and abs(l[0] - i)>k:
-					l.remove(l[0])
-				for ps in l:
-					answer.append([key[c],i,ps])
-			c = c+1
-			a = a+1
-		elif key[c]<key[a]:
-			c = c+1
-		else:
-			a = a+1
-	result = []
-	for i in answer:
-		result.append(i[0])
-
-	return result
-
-def finalquery(temp,l):
-	answer=[]
-	i=1
-	for i in xrange(1,len(l)-1):
-		temp2 = positionalintersect(l[i],l[i+1],1)
-		for j in xrange(len(temp)):
-			for k in xrange(len(temp2)):
-				if temp2[k][0]==temp[j][0]:
-					answer.append(temp2[k][0])
-	return answer
 
 
 root.mainloop()
