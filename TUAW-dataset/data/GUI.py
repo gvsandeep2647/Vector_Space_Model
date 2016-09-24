@@ -92,18 +92,15 @@ def show_entry_fields():
 
 		if len(temp)==0	:
 			for i in xrange(len(result)):
-<<<<<<< HEAD
 				if i%2 ==0 :
-					print megaList[result[i]][9]
-					print megaList[result[i]][8]
+					searchResult.append(megaList[i][9])
+					searchResult.append(megaList[i][8])
 				else:
-					print result[i]
-					print "~~~~~~~~~~~~~~~~~~~"
-=======
-				searchResult.append(megaList[i][9])
-				searchResult.append(megaList[i][8])
-				searchResult.append("~~~~~~~~~~~~~~~~~~~")
+					searchResult.append(result[i])
+					searchResult.append("~~~~~~~~~~~~~~~~~~~")
 
+				
+				
 		searchResult.append("==============================")
 		printResult(searchResult)
 		
@@ -114,8 +111,6 @@ def printResult(searchResult):
 	for i in searchResult:
 		text.insert(END,i+'\n')
 	text.pack(side=TOP) 
->>>>>>> 3b3c0147bb52a6b4d001c2fcc55c8edcbe32ac28
-
 
 def process_query(_query):
 	'''
