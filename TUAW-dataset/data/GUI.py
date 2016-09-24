@@ -1,3 +1,23 @@
+"""
+  ASSIGNMENT #1
+  Project : To build an IR model based on a vector space model 
+  
+  Instructor : Dr. Aruna Malapati
+  
+  Contributors : G V Sandeep 2014A7PS106H
+                 Kushagra Agrawal 2014AAPS334H
+                 Snehal Wadhwani 2014A7PS430H
+
+  Course No : CS F469 Information Retrieval
+
+  Working of GUI.py:
+    1. Prints all the unique categories and gives them radio buttons which user can select to narrow down results.
+    2. Similarly a drop down menu to select a date range
+    3. User can enter queries in two formats:
+    	a. In ("") quotes which willl trigger a phrase search and return a result a title containing that phase or else will process it is a normal query if no such title exists.
+    	b. Normally (without any quotes) in which case it will return top 10 results based on tf-idf score.    	
+
+"""
 from Tkinter import *
 import ttk
 import datetime
@@ -72,18 +92,23 @@ def finalquery(temp,l):
 
 	
 def show_entry_fields():
-	
+
+	'''
+		Global variables are used as the entry widgets in Tkinter Pyhton GUI do not catch the returned values of the function. Hence to preserve the values we store them in globally declared variables.
+		This calculates the final output set of documents.
+	'''
+
 	global query
 	global temp
 	global flag
 	temp = []
-	#query = ""
 	query = (e1.get())
 	if len(query)==0:
 		print "Query Cannot Be Empty"
 	else:
 		phrase = 0
 		result = []
+		#Phrase variable is set to one indicating that the query search is a phrase query. It is set to one if the string's first and last characters are  ' " '
 		if query[0]=='"' and query[len(query)-1]=='"':
 			phrase = 1
 			query = query[1:-1]
@@ -99,12 +124,17 @@ def show_entry_fields():
 		query = filter(None,query)
 		l = normalizer(query)
 		#print l
-		if phrase == 1 :	
+		if phrase == 1 :
 			
 			try:
 				temp = positionalintersect(l[0],l[1],1)
 				answer = finalquery(temp,l)
 				
+
+			# We are checking for exceptions as there might be phrase queries containing words which are not present in the dictionary
+			
+				
+
 				if len(l)==2:
 					if len(temp)==0:
 						result = process_query(l)
@@ -123,7 +153,6 @@ def show_entry_fields():
 		else:
 			result = process_query(l)	
 
-		#print result,phrase
 		if len(temp)==0	:
 			for i in xrange(len(result)):
 				print megaList[result[i]][9]
@@ -162,10 +191,8 @@ def process_query(_query):
 			wt_post[word] = 0.0
 
 	normalize_query(wt_title)
-	#print wt_title
 	normalize_query(wt_blogger)
 	normalize_query(wt_post)
-	#print wt_post
 
 	title_score = [0]*(len(megaList))
 	blogger_score = [0]*(len(megaList))
@@ -199,8 +226,8 @@ def process_query(_query):
 				maxind.append(j)
 			elif doc_score[j]==maxi: #and megaList[j][1] < endDate and megaList[j][1]> startDate and selection in megaList[j][3]:
 				maxind.append(j)
-		#print maxi
-		#print maxind
+
+
 		if len(maxind)>1:
 			doc_score_other = [0]*len(maxind)
 			for j in xrange(len(maxind)):
@@ -229,7 +256,6 @@ def process_query(_query):
 
 		else:
 			if maxi != -1:
-				#print str(doc_score[maxind[0]]) + ' ' + str(title_score[maxind[0]]) + ' '+ str(post_score[maxind[0]])
 				doc_score[maxind[0]] = -1
 				result.append(maxind[0])
 			else:
@@ -244,6 +270,7 @@ topFrame = Frame(root)
 topFrame.pack(side = TOP)
 
 root.wm_title("Vector Space Model")
+#setting the frame title
 
 intro = Label(topFrame,text="IR ASSIGNMENT # 1\n Vector Space Model",bg="grey",fg="black")
 intro.pack(fill=X)
@@ -251,11 +278,15 @@ intro.pack(fill=X)
 Label(topFrame, text="Query").pack(side = LEFT)
 e1 = Entry(topFrame)
 e1.pack(side = RIGHT)
+#the input bar
 
 midFrame = Frame(root)
 midFrame.pack(side=TOP)
 
 def sel():
+	'''
+		Assigns the global variable the name of the selected category
+	'''
 	global selection
    	selection = ultraCategories[int(str(var.get()))]
 
@@ -263,6 +294,7 @@ def sel():
 count = 0
 var = IntVar()
 var.set(-1)
+#lists out the unique categories on the screen
 for i in range(0,len(ultraCategories)-1):
 	if i==0:
 		ultraCategories[i]="All"
@@ -299,6 +331,9 @@ w1 = ttk.Combobox(dateFrame, textvariable=var1, values=Range)
 w1.grid(row=1,column = 2)
 
 def ok():
+	'''
+		Takes the date in the format : Month Year and converts it into an UNIX friendly time stamp which can be used easily for comparing
+	'''
 	global startDate
 	global endDate
 
