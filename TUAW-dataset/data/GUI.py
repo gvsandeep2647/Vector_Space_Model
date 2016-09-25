@@ -43,7 +43,7 @@ def positionalintersect(q1,q2,k):
 	key2 = dictTitle[q2].keys()
 	key.sort()
 	key2.sort()
-	
+	#print key2
 	c = 0
 	a = 0
 	while c<len(key) and a<len(key2):
@@ -70,20 +70,25 @@ def positionalintersect(q1,q2,k):
 	result = []
 	for i in answer:
 		result.append(i[0])
-
+	#print result
 	return result
 
 def finalquery(temp,l):
 	
 	answer=[]
 	i=1
+	flag =False
 	while i<len(l)-1:
 		temp2 = positionalintersect(l[i],l[i+1],1)
 		
 		for j in xrange(len(temp)):
+			flag = False
 			for k in xrange(len(temp2)):
 				if temp2[k]==temp[j]:
 					answer.append(temp[j])
+					flag = True
+			if flag == False:
+				answer = []		
 		i = i+1
 	
 	return answer
@@ -92,11 +97,6 @@ def finalquery(temp,l):
 
 	
 def show_entry_fields():
-
-	'''
-		Global variables are used as the entry widgets in Tkinter Pyhton GUI do not catch the returned values of the function. Hence to preserve the values we store them in globally declared variables.
-		This calculates the final output set of documents.
-	'''
 
 	global query
 	global temp
@@ -123,6 +123,7 @@ def show_entry_fields():
 		query = [x.strip('-.?/') for x in query]
 		query = filter(None,query)
 		l = normalizer(query)
+
 		#print l
 		if phrase == 1 :
 			
@@ -133,7 +134,7 @@ def show_entry_fields():
 
 			# We are checking for exceptions as there might be phrase queries containing words which are not present in the dictionary
 			
-				
+				#print answer
 
 				if len(l)==2:
 					if len(temp)==0:
@@ -149,6 +150,7 @@ def show_entry_fields():
 						for i in answer:
 							print megaList[i][9],megaList[i][8]
 			except :
+				#print "here"
 				result = process_query(l)		
 		else:
 			result = process_query(l)	
