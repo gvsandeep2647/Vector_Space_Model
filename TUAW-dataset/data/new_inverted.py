@@ -76,5 +76,3 @@ dictPost = {}
 dictPost = index1(ultraPost,dictPost,4)
 
 ultraCategories = make_unique(ultraCategories)
-dictCategories = {}
-dictCategories = index1(ultraCategories,dictCategories,3)
