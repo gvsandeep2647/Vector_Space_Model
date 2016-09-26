@@ -43,8 +43,8 @@ import re
 PS = PorterStemmer()
 
 #weights for inlinks, outlinks and comments
-INLINKS = 0.2
-OUTLINKS = 0.6
+INLINKS = 0.6
+OUTLINKS = 0.2
 COMMENTS = 0.2
 
 """ 
