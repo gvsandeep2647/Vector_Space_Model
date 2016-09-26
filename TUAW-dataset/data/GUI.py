@@ -39,6 +39,17 @@ selection =""
 temp = []
 searchResult= []
 def positionalintersect(q1,q2,k):
+	'''
+		The given function calculates the positional intersection of the words q1 and q2
+		within k distance of each other.
+		
+		The keys of the dictionaries q1 and q2 are first sorted by the doc id's
+		
+		the final list l is appended with the index whenever (i-j) is within k and the positions of the words 
+		of the two
+		
+		As we just need the position of the common docs, result list only takes in the first element
+	'''
 	answer = []
 	key = dictTitle[q1].keys()
 	key2 = dictTitle[q2].keys()
@@ -75,7 +86,13 @@ def positionalintersect(q1,q2,k):
 	return result
 
 def finalquery(temp,l):
-	
+	'''
+		This function finds the common docs containing the phrase queries.
+		It repeatedly calls positionalintersect() for consecutive words to find the common docs.
+		
+		If there is a common doc, it is appended
+		Else answer is emptied.
+	'''
 	answer=[]
 	i=1
 	flag =False
@@ -96,6 +113,9 @@ def finalquery(temp,l):
 	return answer
 
 def show_entry_fields():	
+	'''
+		This function is used to print the final output the results of the search to the GUI
+	'''
 	global query
 	global temp
 	global flag
@@ -164,6 +184,9 @@ def show_entry_fields():
 		printResult(searchResult)
 		
 def printResult(searchResult):
+	'''
+		This function is used to format the search results to be printed to the GUI
+	'''
 	global resultsFrame
 	global text
 	text.delete("1.0",END)
