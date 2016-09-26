@@ -37,6 +37,7 @@ for row in megaList:
 ultraTitle = make_unique(ultraTitle)
 dictTitle = {}
 dictTitle = index1(ultraTitle,dictTitle,0)
+print dictTitle
 
 ultraBlogger = make_unique(ultraBlogger)
 dictBlogger = {}
