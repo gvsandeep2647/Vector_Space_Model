@@ -266,7 +266,7 @@ def process_query(_query):
 						if doc_score_other[kj]>maxj:
 							maxj = doc_score_other[kj]
 							maxindj = kj
-					if doc_score_other[maxindj] != -1:
+					if maxind[maxindj] not in result:
 						doc_score_other[maxindj] = -1
 						result.append(maxind[maxindj])
 						result.append(doc_score[maxind[maxindj]])
@@ -280,7 +280,7 @@ def process_query(_query):
 				sorted(doc_score_other_temp, reverse=True)
 				for k in xrange(len(doc_score_other_temp)):
 					ind = doc_score_other.index(doc_score_other_temp[k])
-					if doc_score_other[ind] != -1:
+					if maxind[ind] not in result:
 						doc_score_other[ind] = -1
 						result.append(maxind[ind])
 						result.append(doc_score[maxind[ind]])
@@ -290,7 +290,7 @@ def process_query(_query):
 
 
 		else:
-			if maxi != -1:
+			if len(maxind)>0 and maxind[0] not in result:
 				doc_score[maxind[0]] = -1
 				result.append(maxind[0])
 				result.append(maxi)
