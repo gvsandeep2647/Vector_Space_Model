@@ -11,10 +11,10 @@
   Course No : CS F469 Information Retrieval
 
   Working of GUI.py:
-	1. Prints all the unique categories and gives them radio buttons which user can select to narrow down results.
+    1. Prints all the unique categories and gives them radio buttons which user can select to narrow down results.
     2. Similarly a drop down menu to select a date range
     3. User can enter queries in two formats:
-    	a. In ("") quotes which will trigger a phrase search and return a result a title containing that phase or else will process it is a normal query if no such title exists.
+    	a. In ("") quotes which willl trigger a phrase search and return a result a title containing that phase or else will process it is a normal query if no such title exists.
     	b. Normally (without any quotes) in which case it will return top 10 results based on tf-idf score.    	
 
 """
@@ -94,21 +94,17 @@ def finalquery(temp,l):
 	return answer
 
 
+
 	
-
-searchResult = []
-
 def show_entry_fields():
 
 	global query
 	global temp
 	global flag
-	global searchResult
 	temp = []
-	searchResult = []
 	query = (e1.get())
 	if len(query)==0:
-		searchResult.append("Query Cannot Be Empty")
+		print "Query Cannot Be Empty"
 	else:
 		phrase = 0
 		result = []
@@ -119,9 +115,9 @@ def show_entry_fields():
 
 		PS = PorterStemmer()
 
-		searchResult.append("Your Query : "+query+" Category: *"+selection+"*")
+		print "Your Query : "+query+" Category: *"+selection+"*"
 		if phrase == 1:
-			searchResult.append("You Requested A Phrase Query")
+			print "You Requested A Phrase Query"
 
 		query = tokenizer.tokenize(query)
 		query = [x.strip('-.?/') for x in query]
@@ -145,19 +141,14 @@ def show_entry_fields():
 						result = process_query(l)
 					else:
 						for i in temp:
-
 							print megaList[i][9], megaList[i][8]
-							searchResult.append(megaList[i][9])
-							searchResult.append(megaList[i][8])
-
 				else:
 				
 					if len(answer)==0:
 						result = process_query(l)
 					else:
 						for i in answer:
-							searchResult.append(megaList[i][9])
-							searchResult.append(megaList[i][8])
+							print megaList[i][9],megaList[i][8]
 			except :
 				#print "here"
 				result = process_query(l)		
@@ -166,7 +157,6 @@ def show_entry_fields():
 
 		if len(temp)==0	:
 			for i in xrange(len(result)):
-
 				print megaList[result[i]][9]
 				print megaList[result[i]][8]
 				print "~~~~~~~~~~~~~~~~~~~"
@@ -175,46 +165,16 @@ def show_entry_fields():
 		
 		
 
-				if i%2 ==0 :
-					searchResult.append(megaList[i][9])
-					searchResult.append(megaList[i][8])
-				else:
-					searchResult.append(result[i])
-					searchResult.append("~~~~~~~~~~~~~~~~~~~")
-
-				
-				
-		searchResult.append("==============================")
-		printResult(searchResult)
-		
-def printResult(searchResult):
-	global resultsFrame
-	global text
-	text.delete("1.0",END)
-	for i in searchResult:
-		text.insert(END,i+'\n')
-	text.pack(side=TOP) 
-
-
 def process_query(_query):
-	'''
-		takes in the tokenized, normalized form of the query and calculates the tf-idf score giving the query vector
-		after normalizing the query vector to a unit vector, calculates the cosine similarity with all documents based on title, blogger and post 
-		return top 10 documents after resolving scoring clashes by taking inlinks, outlinks and comments into consideration
-	'''
 	tf_query = {}
 	wt_title = {}
 	wt_blogger = {}
 	wt_post = {}
-
-	#calculating raw tf
 	for token in _query:
 		if token not in tf_query:
 			tf_query[token] = 1
 		else:
 			tf_query[token] = tf_query[token] + 1
-
-	#calculating total weight using the logarithmic formula for tf and multiplying with idf 
 	for word in tf_query.keys():
 		tf_query[word] = 1 + log(tf_query[word],10)
 		if word in idf_title.keys():
@@ -232,7 +192,6 @@ def process_query(_query):
 		else:
 			wt_post[word] = 0.0
 
-	#normalizing query vectors to unit vectors for title, blogger, post
 	normalize_query(wt_title)
 	normalize_query(wt_blogger)
 	normalize_query(wt_post)
@@ -242,31 +201,23 @@ def process_query(_query):
 	post_score = [0]*(len(megaList))
 	doc_score = [0]*(len(megaList))
 
-	#cosine similiarity with documents w.r.t. title
 	for word in wt_title:
 		if word in tf_title.keys():
 			for doc in tf_title[word]:
 				title_score[doc] = title_score[doc]+ wt_title[word]*tf_title[word][doc]
-
-	#cosine similarity with documents w.r.t blogger
 	for word in wt_blogger:
 		if word in tf_blogger.keys():
 			for doc in tf_blogger[word]:
 				blogger_score[doc] = blogger_score[doc] + wt_blogger[word]*tf_blogger[word][doc]
-	
-	#cosine similarity with documents w.r.t. post
 	for word in wt_post:
 		if word in tf_post.keys():
 			for doc in tf_post[word]:
 				post_score[doc] = post_score[doc] + wt_post[word]*tf_post[word][doc]
 	
-	#total document score 
 	for i in xrange(len(doc_score)):
 		doc_score[i] = title_score[i] + blogger_score[i] + post_score[i]
-	
-
-	#extracting top 10 documents
 	result = []
+	#print doc_score
 	for i in xrange(10):
 		maxi = -1
 		maxind = []
@@ -278,7 +229,7 @@ def process_query(_query):
 			elif doc_score[j]==maxi: #and megaList[j][1] < endDate and megaList[j][1]> startDate and selection in megaList[j][3]:
 				maxind.append(j)
 
-		#resolving score conflicts
+
 		if len(maxind)>1:
 			doc_score_other = [0]*len(maxind)
 			for j in xrange(len(maxind)):
@@ -295,7 +246,6 @@ def process_query(_query):
 					
 					doc_score_other[maxindj] = -1
 					result.append(maxind[maxindj])
-					result.append(doc_score[maxind[maxindj]])
 			else:
 				doc_score_other_temp = []
 				for k in xrange(len(doc_score_other)):
@@ -303,16 +253,13 @@ def process_query(_query):
 				sorted(doc_score_other_temp, reverse=True)
 				for k in xrange(len(doc_score_other_temp)):
 					ind = doc_score_other.index(doc_score_other_temp[k])
-					result.append(doc_score[maxind[ind]])
 					doc_score_other[ind] = -1
 					result.append(maxind[ind])
-
 
 		else:
 			if maxi != -1:
 				doc_score[maxind[0]] = -1
 				result.append(maxind[0])
-				result.append(maxi)
 			else:
 				break
 	
@@ -412,16 +359,19 @@ bottomFrame = Frame(root)
 bottomFrame.pack(side=TOP)
 searchButton = Button(bottomFrame,text='Submit', command=show_entry_fields)
 searchButton.pack(side = TOP)
+'''
+p = sub.Popen(['python','GUI.py'],stdout=sub.PIPE, shell = True)
+output= p.stdout.read()
+text = Text(root)
+text.pack()
+text.delete("1.0",END)
+text.insert(INSERT,output)
+'''
 
-
-
-
-resultsFrame = Frame(root)
-resultsFrame.pack(side=TOP)
-text = Text(resultsFrame)
 
 
 
 root.mainloop()
+
 
 
