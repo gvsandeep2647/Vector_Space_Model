@@ -145,8 +145,6 @@ def show_entry_fields():
 						result = process_query(l)
 					else:
 						for i in temp:
-
-							print megaList[i][9], megaList[i][8]
 							searchResult.append(megaList[i][9])
 							searchResult.append(megaList[i][8])
 
@@ -165,24 +163,13 @@ def show_entry_fields():
 			result = process_query(l)	
 
 		if len(temp)==0	:
-			for i in xrange(len(result)):
-
-				print megaList[result[i]][9]
-				print megaList[result[i]][8]
-				print "~~~~~~~~~~~~~~~~~~~"
-
-		print "=============================="
-		
-		
-
+			for i in xrange(len(result)):			
 				if i%2 ==0 :
 					searchResult.append(megaList[i][9])
 					searchResult.append(megaList[i][8])
 				else:
 					searchResult.append(result[i])
-					searchResult.append("~~~~~~~~~~~~~~~~~~~")
-
-				
+					searchResult.append("~~~~~~~~~~~~~~~~~~~")				
 				
 		searchResult.append("==============================")
 		printResult(searchResult)
