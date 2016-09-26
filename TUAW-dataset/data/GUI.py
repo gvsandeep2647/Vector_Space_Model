@@ -33,7 +33,6 @@ tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+')
 query = ""
 selection =""
 temp = []
-searchResult = []
 def show_entry_fields():
 	'''
 		Global variables are used as the entry widgets in Tkinter Pyhton GUI do not catch the returned values of the function. Hence to preserve the values we store them in globally declared variables.
@@ -42,12 +41,10 @@ def show_entry_fields():
 	global query
 	global temp
 	global flag
-	global searchResult
 	temp = []
-	searchResult = []
 	query = (e1.get())
 	if len(query)==0:
-		searchResult.append("Query Cannot Be Empty")
+		print "Query Cannot Be Empty"
 	else:
 		phrase = 0
 		result = []
@@ -58,9 +55,9 @@ def show_entry_fields():
 
 		PS = PorterStemmer()
 
-		searchResult.append("Your Query : "+query+" Category: *"+selection+"*")
+		print "Your Query : "+query+" Category: *"+selection+"*"
 		if phrase == 1:
-			searchResult.append("You Requested A Phrase Query")
+			print "You Requested A Phrase Query"
 
 		query = tokenizer.tokenize(query)
 		query = [x.strip('-.?/') for x in query]
@@ -76,15 +73,13 @@ def show_entry_fields():
 						result = process_query(l)
 					else:
 						for i in temp:
-							searchResult.append(megaList[i][9])
-							searchResult.append(megaList[i][8])
+							print megaList[i][9],megaList[i][8]
 				else:
 					if len(answer)==0:
 						result = process_query(l)
 					else:
 						for i in answer:
-							searchResult.append(megaList[i][9])
-							searchResult.append(megaList[i][8])
+							print megaList[i][9],megaList[i][8]
 			except :
 				result = process_query(l)		
 		else:
@@ -93,24 +88,13 @@ def show_entry_fields():
 		if len(temp)==0	:
 			for i in xrange(len(result)):
 				if i%2 ==0 :
-					searchResult.append(megaList[i][9])
-					searchResult.append(megaList[i][8])
+					print megaList[result[i]][9]
+					print megaList[result[i]][8]
 				else:
-					searchResult.append(result[i])
-					searchResult.append("~~~~~~~~~~~~~~~~~~~")
+					print result[i]
+					print "~~~~~~~~~~~~~~~~~~~"
 
-				
-				
-		searchResult.append("==============================")
-		printResult(searchResult)
-		
-def printResult(searchResult):
-	global resultsFrame
-	global text
-	text.delete("1.0",END)
-	for i in searchResult:
-		text.insert(END,i+'\n')
-	text.pack(side=TOP) 
+		print "=============================="
 
 def process_query(_query):
 	'''
@@ -373,9 +357,6 @@ def finalquery(temp,l):
 				if temp2[k][0]==temp[j][0]:
 					answer.append(temp2[k][0])
 	return answer
-resultsFrame = Frame(root)
-resultsFrame.pack(side=TOP)
-text = Text(resultsFrame)
 
 
 root.mainloop()
