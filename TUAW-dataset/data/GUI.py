@@ -225,12 +225,14 @@ def process_query(_query):
 		maxi = -1
 		maxind = []
 		for j in xrange(len(doc_score)):
-			if doc_score[j]>maxi: #and megaList[j][1] < endDate and megaList[j][1]> startDate and selection in megaList[j][3]:
-				maxi = doc_score[j]
-				maxind = []
-				maxind.append(j)
-			elif doc_score[j]==maxi: #and megaList[j][1] < endDate and megaList[j][1]> startDate and selection in megaList[j][3]:
-				maxind.append(j)
+			if doc_score[j]>maxi:
+				if (not selection or selection == "All" or selection in megaList[j][3])and (megaList[j][1]>=startDate and megaList[j][1]<=endDate): 
+					maxi = doc_score[j]
+					maxind = []
+					maxind.append(j)
+			elif doc_score[j]==maxi:
+				if (not selection or selection == "All" or selection in megaList[j][3])and (megaList[j][1]>=startDate and megaList[j][1]<=endDate): 
+					maxind.append(j)
 
 
 		if len(maxind)>1:
@@ -238,29 +240,35 @@ def process_query(_query):
 			for j in xrange(len(maxind)):
 				doc_score_other[j] = OUTLINKS*megaList[maxind[j]][5] + INLINKS*megaList[maxind[j]][6] + COMMENTS*megaList[maxind[j]][7]
 			
-			if len(maxind) >= 10-len(result):
-				for k in xrange(10-len(result)):
+			if len(maxind) >= 10-(len(result)/2):
+				for k in xrange(10-len(result)/2):
 					maxj = -1
 					maxindj = -1
 					for kj in xrange(len(maxind)):
 						if doc_score_other[kj]>maxj:
 							maxj = doc_score_other[kj]
 							maxindj = kj
-					
-					doc_score_other[maxindj] = -1
-					result.append(maxind[maxindj])
-					result.append(doc_score[maxind[maxindj]])
+					if doc_score_other[maxindj] != -1:
+						doc_score_other[maxindj] = -1
+						result.append(maxind[maxindj])
+						result.append(doc_score[maxind[maxindj]])
+						doc_score[maxind[maxindj]] = -1
+					else:
+						break
 			else:
-				doc_score_other_temp = []
+				doc_score_other_temp = [0]*len(doc_score_other)
 				for k in xrange(len(doc_score_other)):
 					doc_score_other_temp[k] = doc_score_other[k]
 				sorted(doc_score_other_temp, reverse=True)
 				for k in xrange(len(doc_score_other_temp)):
 					ind = doc_score_other.index(doc_score_other_temp[k])
-					f = doc_score[maxind[ind]]
-					doc_score_other[ind] = -1
-					result.append(maxind[ind])
-					result.append(f)
+					if doc_score_other[ind] != -1:
+						doc_score_other[ind] = -1
+						result.append(maxind[ind])
+						result.append(doc_score[maxind[ind]])
+						doc_score[maxind[ind]] = -1
+					else:
+						break
 
 
 		else:
@@ -271,7 +279,6 @@ def process_query(_query):
 			else:
 				break
 	return result
-	
 
 root = Tk()
 
