@@ -1,0 +1,121 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html><head><title>Python: module main</title>
+
+<meta charset="utf-8">
+
+</head><body bgcolor="#f0f0f8">
+
+
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+
+<tr bgcolor="#7799ee">
+
+<td valign=bottom>&nbsp;<br>
+
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>main</strong></big></big></font></td
+
+><td align=right valign=bottom
+
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/skywalker/Desktop/for_fict_data/TUAW-dataset/data/main.py">/home/skywalker/Desktop/for_fict_data/TUAW-dataset/data/main.py</a></font></td></tr></table>
+
+    <p><tt>ASSIGNMENT&nbsp;#1<br>
+Project&nbsp;:&nbsp;To&nbsp;build&nbsp;an&nbsp;IR&nbsp;model&nbsp;based&nbsp;on&nbsp;a&nbsp;vector&nbsp;space&nbsp;model&nbsp;<br>
+&nbsp;<br>
+Instructor&nbsp;:&nbsp;Dr.&nbsp;Aruna&nbsp;Malapati<br>
+&nbsp;<br>
+Contributors&nbsp;:&nbsp;G&nbsp;V&nbsp;Sandeep&nbsp;2014A7PS106H<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kushagra&nbsp;Agrawal&nbsp;2014AAPS334H<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Snehal&nbsp;Wadhwani&nbsp;2014A7PS430H<br>
+&nbsp;<br>
+Course&nbsp;No&nbsp;:&nbsp;CS&nbsp;F469&nbsp;Information&nbsp;Retrieval<br>
+&nbsp;<br>
+Working&nbsp;of&nbsp;main.py:<br>
+&nbsp;&nbsp;1.&nbsp;The&nbsp;entire&nbsp;corpus&nbsp;is&nbsp;read&nbsp;and&nbsp;each&nbsp;row&nbsp;is&nbsp;stored&nbsp;as&nbsp;a&nbsp;list.<br>
+&nbsp;&nbsp;2.&nbsp;Each&nbsp;list&nbsp;is&nbsp;broken&nbsp;down&nbsp;to&nbsp;it's&nbsp;attributes&nbsp;and&nbsp;appropriate&nbsp;tokenization&nbsp;and&nbsp;normalization&nbsp;is&nbsp;apllied.<br>
+&nbsp;&nbsp;3.&nbsp;The&nbsp;title,blogger's&nbsp;name&nbsp;and&nbsp;post&nbsp;is&nbsp;stripped&nbsp;of&nbsp;some&nbsp;special&nbsp;characters&nbsp;and&nbsp;then&nbsp;is&nbsp;stemmed&nbsp;using&nbsp;Porter's&nbsp;Stemming&nbsp;Algorithm<br>
+&nbsp;&nbsp;4.&nbsp;Date&nbsp;is&nbsp;converted&nbsp;to&nbsp;a&nbsp;floating&nbsp;point&nbsp;timestamp<br>
+&nbsp;&nbsp;5.&nbsp;Postlength&nbsp;and&nbsp;Comment&nbsp;URL&nbsp;have&nbsp;been&nbsp;ignored&nbsp;in&nbsp;the&nbsp;final&nbsp;processed&nbsp;dataset&nbsp;as&nbsp;they&nbsp;add&nbsp;no&nbsp;value&nbsp;to&nbsp;the&nbsp;corpus<br>
+&nbsp;&nbsp;6.&nbsp;No&nbsp;of&nbsp;inlinks,&nbsp;outlinks&nbsp;and&nbsp;comments&nbsp;have&nbsp;been&nbsp;normalized&nbsp;using&nbsp;the&nbsp;formula&nbsp;(1+log(num))&nbsp;where&nbsp;num&nbsp;is&nbsp;their&nbsp;value.&nbsp;This&nbsp;is&nbsp;because&nbsp;twice&nbsp;the&nbsp;number&nbsp;of&nbsp;comments&nbsp;do&nbsp;not&nbsp;increase&nbsp;the&nbsp;relevance&nbsp;of&nbsp;my&nbsp;document&nbsp;by&nbsp;twice.<br>
+&nbsp;<br>
+&nbsp;&nbsp;This&nbsp;list&nbsp;is&nbsp;then&nbsp;send&nbsp;to&nbsp;the&nbsp;new_inverted.py&nbsp;file&nbsp;which&nbsp;generates&nbsp;indexes.</tt></p>
+<p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+
+<tr bgcolor="#aa55cc">
+
+<td colspan=3 valign=bottom>&nbsp;<br>
+
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+
+    
+
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="csv.html">csv</a><br>
+<a href="math.html">math</a><br>
+</td><td width="25%" valign=top><a href="re.html">re</a><br>
+<a href="sys.html">sys</a><br>
+</td><td width="25%" valign=top><a href="time.html">time</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+
+<tr bgcolor="#eeaa77">
+
+<td colspan=3 valign=bottom>&nbsp;<br>
+
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+
+    
+
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-decode_unicode_references"><strong>decode_unicode_references</strong></a>(data)</dt><dd><tt>decodes&nbsp;unicode</tt></dd></dl>
+ <dl><dt><a name="-escape"><strong>escape</strong></a>(data)</dt><dd><tt>HTML-escape&nbsp;the&nbsp;text&nbsp;in&nbsp;`t`.</tt></dd></dl>
+ <dl><dt><a name="-normalizer"><strong>normalizer</strong></a>(l)</dt><dd><tt>Normalizer&nbsp;:Parameter&nbsp;:&nbsp;A&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns&nbsp;:&nbsp;A&nbsp;list<br>
+&nbsp;<br>
+Takes&nbsp;each&nbsp;word&nbsp;in&nbsp;the&nbsp;given&nbsp;list&nbsp;and&nbsp;stems&nbsp;it&nbsp;according&nbsp;to&nbsp;the&nbsp;Porter's&nbsp;Stemming&nbsp;Algorithm</tt></dd></dl>
+</td></tr></table><p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+
+<tr bgcolor="#55aa55">
+
+<td colspan=3 valign=bottom>&nbsp;<br>
+
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+
+    
+
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>COMMENTS</strong> = 0.2<br>
+<strong>INLINKS</strong> = 0.2<br>
+<strong>OUTLINKS</strong> = 0.6<br>
+<strong>PS</strong> = &lt;stemming.PorterStemmer instance&gt;<br>
+<strong>blogger</strong> = ['david', 'chartier']<br>
+<strong>categories</strong> = ['software', 'widgets']<br>
+<strong>catergoies</strong> = ['software', 'widgets']<br>
+<strong>commentNo</strong> = 1.4771212547196624<br>
+<strong>date</strong> = ['May', '24', '2006', '12:00']<br>
+<strong>inlinks</strong> = 1.6020599913279625<br>
+<strong>megaList</strong> = [[['isight', 'vs', 'firewir'], 1075444200.0, ['sean', 'bonner'], [''], ['macfixit', 'ha', 'just', 'post', 'a', 'littl', 'troubleshoot', 'help', 'for', 'peopl', 'have', 'firewir', '&amp;', 'isight', 'problem', 'iv', 'been', 'plug', 'in', 'my', ...], 1.3010299956639813, 0, 0, 'http://www.tuaw.com/2004/01/30/isight-vs-firewire/', 'isight vs. firewire '], [['idvd', 'help'], 1075444200.0, ['sean', 'bonner'], [''], ['jame', 'over', 'at', 'macmerc', 'ha', 'just', 'post', 'a', 'super', 'help', 'idvd', 'burn', 'faq', 'and', 'as', 'if', 'that', 'not', 'enough', 'he', ...], 1.4771212547196624, 0, 2.079181246047625, 'http://www.tuaw.com/2004/01/30/idvd-help/', 'idvd help '], [['macintosh', 'stori'], 1075444200.0, ['sean', 'bonner'], [''], ['folklor', 'org', 'is', 'collect', 'stori', 'and', 'anecdot', 'about', 'the', 'develop', 'of', 'appl', 'origin', 'macintosh', 'comput', 'and', 'the', 'peopl', 'who', 'creat', ...], 1.4771212547196624, 0, 0, 'http://www.tuaw.com/2004/01/30/macintosh-stories/', 'macintosh stories '], [['40', 'hour', 'ipod', 'batteri'], 1075444200.0, ['sean', 'bonner'], [''], ['ipod', 'hack', 'tip', 'us', 'off', 'to', 'thi', 'solut', 'for', 'everyon', 'complain', 'about', 'their', 'ipod', 'batteri', 'life', 'or', 'even', 'for', 'someon', ...], 1.3010299956639813, 0, 0, 'http://www.tuaw.com/2004/01/30/40-hour-ipod-battery/', '40 hour ipod battery '], [['hello', 'world'], 1075530600.0, ['sean', 'bonner'], [''], ['dear', 'weblog', 'inc', 'reader', 'hi', 'my', 'name', 'is', 'sean', 'bonner', 'you', 'might', 'rememb', 'me', 'from', 'such', 'websit', 'as', 'blog', 'la', ...], 1.6989700043360187, 0, 1.0, 'http://www.tuaw.com/2004/01/31/hello-world/', 'hello world. '], [['applescript', 'for', 'itun'], 1075530600.0, ['sean', 'bonner'], [''], ['want', 'itun', 'to', 'do', 'about', '10', 'ba', 'zillion', 'thing', 'it', 'doesnt', 'do', 'out', 'of', 'the', 'box', 'then', 'you', 'need', 'to', ...], 1.0, 0, 0, 'http://www.tuaw.com/2004/01/31/applescripts-for-itunes/', 'applescripts for itunes '], [['ipod', '10', '%', 'off'], 1075530600.0, ['sean', 'bonner'], [''], ['15', '20', 'and', '40', 'gb', 'model', 'plu', 'some', 'select', 'accessori', 'also', 'get', 'the', 'discount', 'the', 'catch', 'is', 'thi', 'offer', 'is', ...], 1.0, 0, 0, 'http://www.tuaw.com/2004/01/31/ipods-10-off/', 'ipods 10% off '], [['100', 'million', 'free', 'song', 'from', 'pepsi', 'and', 'itun'], 1075530600.0, ['sean', 'bonner'], [''], ['on', 'super', 'bowl', 'sundai', 'appl', 'and', 'pepsi', 'will', 'launch', 'a', 'histor', 'promot', 'to', 'legal', 'give', 'awai', '100', 'million', 'free', 'song', ...], 1.6989700043360187, 0, 1.3010299956639813, 'http://www.tuaw.com/2004/01/31/100-million-free-songs-from-pepsi-and-itunes/', '100 million free songs from pepsi and itunes '], [['saturdai', '7', '01', '31.04'], 1075530600.0, ['sean', 'bonner'], [''], ['i', 'figur', 'with', 'all', 'the', 'softwar', 'releas', 'everi', 'dai', 'i', 'can', 'find', 'at', 'least', 'on', 'cool', 'program', 'everi', '24', 'hour', ...], 1.845098040014257, 0, 1.3010299956639813, 'http://www.tuaw.com/2004/01/31/saturday-7-01-31-04/', 'saturday 7 - 01.31.04 '], [['better', 'togeth'], 1075530600.0, ['sean', 'bonner'], [''], ['need', 'a', 'new', 'comput', 'want', 'a', 'free', 'printer', 'to', 'go', 'with', 'it', 'lucki', 'for', 'you', 'appli', 'is', 'run', 'the', 'better', ...], 1.0, 0, 0, 'http://www.tuaw.com/2004/01/31/better-together/', 'better together '], [['1984', 'is', '#4'], 1075617000.0, ['sean', 'bonner'], [''], ['sinc', '1967', 'there', 'have', 'been', '37', 'super', 'bowl', 'with', 'approxim', '60', 'spot', 'each', 'total', 'more', 'than', '2200', 'super', 'bowl', 'commerci', ...], 1.0, 0, 1.3010299956639813, 'http://www.tuaw.com/2004/02/01/1984-is-4/', '1984 is #4 '], [['pepsi', 'itun', 'is', 'a', 'go', '!'], 1075617000.0, ['sean', 'bonner'], [''], ['while', 'the', 'commerci', 'havent', 'air', 'yet', 'the', 'green', 'dai', 'version', 'of', 'i', 'fought', 'the', 'law', 'is', 'alreadi', 'avail', 'from', 'the', ...], 1.6020599913279625, 0, 0, 'http://www.tuaw.com/2004/02/01/pepsi-itunes-is-a-go/', 'pepsi/itunes is a go! '], [['atom', 'ti', 'iphoto', 'to', 'typepad'], 1075617000.0, ['sean', 'bonner'], [''], ['jerri', 'steel', 'ha', 'been', 'work', 'on', 'a', 'script', 'us', 'the', 'atom', 'api', 'to', 'export', 'photo', 'from', 'iphoto', 'directli', 'into', 'hi', ...], 1.0, 0, 0, 'http://www.tuaw.com/2004/02/01/atom-ties-iphoto-to-typepad/', 'atom ties iphoto to typepad '], [['disk', 'util', 'from', 'the', 'termin'], 1075703400.0, ['sean', 'bonner'], [''], ['macmerc', 'provid', 'thi', 'tip', 'of', 'the', 'week', 'to', 'help', 'you', 'optim', 'your', 'hardriv', 'with', 'out', 'us', 'instal', 'disk', ':', 'how', ...], 1.3010299956639813, 0, 1.3010299956639813, 'http://www.tuaw.com/2004/02/02/disk-utility-from-the-terminal/', 'disk utility from the terminal '], [['appl', 'in', 'austin'], 1075703400.0, ['sean', 'bonner'], [''], ['macnn', 'report', 'that', 'appl', 'is', 'ey', 'retail', 'space', 'in', 'austin', 'tx', 'it', 'look', 'like', 'thei', 'ar', 'negoti', 'to', 'leas', 'roughli', ...], 1.3010299956639813, 0, 1.0, 'http://www.tuaw.com/2004/02/02/apple-in-austin/', 'apple in austin '], [['safari', '1', '2', 'releas'], 1075703400.0, ['sean', 'bonner'], [''], ['as', 'if', 'on', 'que', 'appl', 'releas', 'safari', '1', '2', 'avail', 'from', 'their', 'site', 'or', 'via', 'softwar', 'updat', 'it', 'got', 'a', ...], 1.0, 0, 0, 'http://www.tuaw.com/2004/02/02/safari-1-2-released/', 'safari 1.2 released '], [['need', 'a', 'new', 'browser'], 1075703400.0, ['sean', 'bonner'], [''], ['do', 'you', 'us', 'a', 'new', 'browser', 'everi', 'dai', 'bore', 'with', 'safari', 'crush', 'by', 'mozilla', 'burn', 'by', 'firebird', 'camino', 'no', 'sound', ...], 1.6989700043360187, 0, 1.0, 'http://www.tuaw.com/2004/02/02/need-a-new-browser/', 'need a new browser? '], [['on', 'music', 'file', 'to', 'rule', 'them', 'all'], 1075703400.0, ['sean', 'bonner'], [''], ['reuter', 'billboard', 'ar', 'report', 'that', 'appl', 'and', 'microsoft', 'ar', 'talk', 'about', 'how', 'to', 'unifi', 'the', 'world', 'of', 'digit', 'music', 'so', ...], 1.0, 0, 0, 'http://www.tuaw.com/2004/02/02/one-music-file-to-rule-them-all/', 'one music file to rule them all '], [['40mb', 'of', 'free', 'loop'], 1075703400.0, ['sean', 'bonner'], [''], ['macmerc', 'report', 'that', 'bitshift', 'audio', 'is', 'offer', '40mb', 'of', 'free', 'loop', 'for', 'garageband', 'our', 'resid', 'beat', 'programm', 'art', 'gillespi', 'aka', ...], 1.6020599913279625, 0, 0, 'http://www.tuaw.com/2004/02/02/40mb-of-free-loops/', '40mb of free loops '], [['googl', 'beat', 'out', 'appl', 'for', 'brand', 'of', 'the', 'year'], 1075789800.0, ['jason', 'mccabe', 'calacanis'], [''], ['googl', 'ha', 'beat', 'out', 'appl', 'and', 'even', 'my', 'mini', 'cooper', 'as', 'global', 'brand', 'of', 'the', 'year', '!'], 0, 0, 0, 'http://www.tuaw.com/2004/02/03/google-beats-out-apple-for-brand-of-the-year/', 'google beats out apple for brand of the year '], ...]<br>
+<strong>outlinks</strong> = 1.4771212547196624<br>
+<strong>permalink</strong> = 'http://www.tuaw.com/2006/05/24/widget-watch-istat-pro-and-nano-updated/'<br>
+<strong>post</strong> = ['two', 'of', 'my', 'favorit', 'system', 'monitor', 'widget', 'have', 'been', 'updat', ':', 'istat', 'pro', '2', '3', 'and', 'istat', 'nano', '1', '5', ...]<br>
+<strong>raw_title</strong> = 'widget watch: istat pro and nano updated '<br>
+<strong>reader</strong> = &lt;_csv.reader object&gt;<br>
+<strong>readfile</strong> = &lt;closed file 'corpus.csv', mode 'rb'&gt;<br>
+<strong>row</strong> = ['widget watch: istat pro and nano updated ', 'May 24 2006 12:00AM', 'david chartier', 'software:&amp;:widgets ', ' two of my favorite system monitor widgets have ...ated it to reflect these new additions just yet. ', '662', '3', '4', '3', ' http://www.tuaw.com/2006/05/24/widget-watch-istat-pro-and-nano-updated/#comments ', 'http://www.tuaw.com/2006/05/24/widget-watch-istat-pro-and-nano-updated/', '', '', '', '', '', '', '', '', '', ...]<br>
+<strong>secs</strong> = 1148452200.0<br>
+<strong>string</strong> = 'May 24 2006 12:00'<br>
+<strong>struct_time</strong> = time.struct_time(tm_year=2006, tm_mon=5, tm_mday...0, tm_sec=0, tm_wday=2, tm_yday=144, tm_isdst=-1)<br>
+<strong>title</strong> = ['widget', 'watch', ':', 'istat', 'pro', 'and', 'nano', 'updat']<br>
+<strong>tokenizer</strong> = RegexpTokenizer(pattern='\\w+|\\$[\\d\\.]+|\\S+', gaps=False, discard_empty=True, flags=56)<br>
+<strong>ultraList</strong> = [['widget', 'watch', ':', 'istat', 'pro', 'and', 'nano', 'updat'], 1148452200.0, ['david', 'chartier'], ['software', 'widgets'], ['two', 'of', 'my', 'favorit', 'system', 'monitor', 'widget', 'have', 'been', 'updat', ':', 'istat', 'pro', '2', '3', 'and', 'istat', 'nano', '1', '5', ...], 1.4771212547196624, 1.6020599913279625, 1.4771212547196624, 'http://www.tuaw.com/2006/05/24/widget-watch-istat-pro-and-nano-updated/', 'widget watch: istat pro and nano updated ']<br>
+<strong>x</strong> = '.'</td></tr></table>
+
+</body></html>

@@ -84,7 +84,7 @@ def escape(data):
         )
 
 megaList = []   # Will hold the corpus  
-with open('testing.csv','rb',) as readfile:
+with open('corpus.csv','rb',) as readfile:
     reader = csv.reader(readfile, skipinitialspace=False,delimiter=',', quoting=csv.QUOTE_NONE)
     tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+') #holds the regular expression which would be used to tokenize words 
     for row in reader:

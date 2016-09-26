@@ -42,12 +42,10 @@ import re
 '''
 PS = PorterStemmer()
 
-TITLE = 0.25
-BLOGGER = 0.2
-POST = 0.16
-INLINKS = 0.09
-OUTLINKS = 0.2
-COMMENTS = 0.1
+#weights for inlinks, outlinks and comments
+INLINKS = 0.2
+OUTLINKS = 0.6
+COMMENTS = 0.2
 
 """ 
     Normalizer :Parameter : A list
@@ -57,6 +55,7 @@ COMMENTS = 0.1
 """
 def normalizer(l):
     for i in range(0,len(l)):
+        l[i] = l[i].lower()
         l[i] = PS.stem(l[i],0,len(l[i])-1)
 
     return l
@@ -85,7 +84,7 @@ def escape(data):
         )
 
 megaList = []   # Will hold the corpus  
-with open('posts.csv','rb',) as readfile:
+with open('corpus.csv','rb',) as readfile:
     reader = csv.reader(readfile, skipinitialspace=False,delimiter=',', quoting=csv.QUOTE_NONE)
     tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+') #holds the regular expression which would be used to tokenize words 
     for row in reader:
@@ -127,7 +126,7 @@ with open('posts.csv','rb',) as readfile:
             categories = row[3].split(':&:')
         categories = [x.strip(' ') for x in categories]
         catergoies = filter(None,categories)
-        ultraList.append(normalizer(categories))
+        ultraList.append(categories)
 
         #posts will finally hold the normalized list of words of the row's posts.
         post = re.sub('[^\x00-\x7F]','',escape(decode_unicode_references(row[4])))

@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html><head><title>Python: module GUI</title>
+
+<meta charset="utf-8">
+
+</head><body bgcolor="#f0f0f8">
+
+
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+
+<tr bgcolor="#7799ee">
+
+<td valign=bottom>&nbsp;<br>
+
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>GUI</strong></big></big></font></td
+
+><td align=right valign=bottom
+
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/skywalker/Desktop/for_fict_data/TUAW-dataset/data/GUI.py">/home/skywalker/Desktop/for_fict_data/TUAW-dataset/data/GUI.py</a></font></td></tr></table>
+
+    <p><tt>ASSIGNMENT&nbsp;#1<br>
+Project&nbsp;:&nbsp;To&nbsp;build&nbsp;an&nbsp;IR&nbsp;model&nbsp;based&nbsp;on&nbsp;a&nbsp;vector&nbsp;space&nbsp;model&nbsp;<br>
+&nbsp;<br>
+Instructor&nbsp;:&nbsp;Dr.&nbsp;Aruna&nbsp;Malapati<br>
+&nbsp;<br>
+Contributors&nbsp;:&nbsp;G&nbsp;V&nbsp;Sandeep&nbsp;2014A7PS106H<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kushagra&nbsp;Agrawal&nbsp;2014AAPS334H<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Snehal&nbsp;Wadhwani&nbsp;2014A7PS430H<br>
+&nbsp;<br>
+Course&nbsp;No&nbsp;:&nbsp;CS&nbsp;F469&nbsp;Information&nbsp;Retrieval<br>
+&nbsp;<br>
+Working&nbsp;of&nbsp;GUI.py:<br>
+&nbsp;&nbsp;1.&nbsp;Prints&nbsp;all&nbsp;the&nbsp;unique&nbsp;categories&nbsp;and&nbsp;gives&nbsp;them&nbsp;radio&nbsp;buttons&nbsp;which&nbsp;user&nbsp;can&nbsp;select&nbsp;to&nbsp;narrow&nbsp;down&nbsp;results.<br>
+&nbsp;&nbsp;2.&nbsp;Similarly&nbsp;a&nbsp;drop&nbsp;down&nbsp;menu&nbsp;to&nbsp;select&nbsp;a&nbsp;date&nbsp;range<br>
+&nbsp;&nbsp;3.&nbsp;User&nbsp;can&nbsp;enter&nbsp;queries&nbsp;in&nbsp;two&nbsp;formats:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a.&nbsp;In&nbsp;("")&nbsp;quotes&nbsp;which&nbsp;willl&nbsp;trigger&nbsp;a&nbsp;phrase&nbsp;search&nbsp;and&nbsp;return&nbsp;a&nbsp;result&nbsp;a&nbsp;title&nbsp;containing&nbsp;that&nbsp;phase&nbsp;or&nbsp;else&nbsp;will&nbsp;process&nbsp;it&nbsp;is&nbsp;a&nbsp;normal&nbsp;query&nbsp;if&nbsp;no&nbsp;such&nbsp;title&nbsp;exists.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b.&nbsp;Normally&nbsp;(without&nbsp;any&nbsp;quotes)&nbsp;in&nbsp;which&nbsp;case&nbsp;it&nbsp;will&nbsp;return&nbsp;top&nbsp;10&nbsp;results&nbsp;based&nbsp;on&nbsp;tf-idf&nbsp;score.</tt></p>
+<p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+
+<tr bgcolor="#aa55cc">
+
+<td colspan=3 valign=bottom>&nbsp;<br>
+
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+
+    
+
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="csv.html">csv</a><br>
+<a href="datetime.html">datetime</a><br>
+<a href="math.html">math</a><br>
+</td><td width="25%" valign=top><a href="re.html">re</a><br>
+<a href="subprocess.html">subprocess</a><br>
+<a href="sys.html">sys</a><br>
+</td><td width="25%" valign=top><a href="time.html">time</a><br>
+<a href="_tkinter.html">_tkinter</a><br>
+<a href="ttk.html">ttk</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+
+<tr bgcolor="#eeaa77">
+
+<td colspan=3 valign=bottom>&nbsp;<br>
+
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+
+    
+
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-finalquery"><strong>finalquery</strong></a>(temp, l)</dt><dd><tt>This&nbsp;function&nbsp;finds&nbsp;the&nbsp;common&nbsp;docs&nbsp;containing&nbsp;the&nbsp;phrase&nbsp;queries.<br>
+It&nbsp;repeatedly&nbsp;calls&nbsp;<a href="#-positionalintersect">positionalintersect</a>()&nbsp;for&nbsp;consecutive&nbsp;words&nbsp;to&nbsp;find&nbsp;the&nbsp;common&nbsp;docs.<br>
+&nbsp;<br>
+If&nbsp;there&nbsp;is&nbsp;a&nbsp;common&nbsp;doc,&nbsp;it&nbsp;is&nbsp;appended<br>
+Else&nbsp;answer&nbsp;is&nbsp;emptied.</tt></dd></dl>
+ <dl><dt><a name="-log"><strong>log</strong></a>(...)</dt><dd><tt><a href="#-log">log</a>(x[,&nbsp;base])<br>
+&nbsp;<br>
+Return&nbsp;the&nbsp;logarithm&nbsp;of&nbsp;x&nbsp;to&nbsp;the&nbsp;given&nbsp;base.<br>
+If&nbsp;the&nbsp;base&nbsp;not&nbsp;specified,&nbsp;returns&nbsp;the&nbsp;natural&nbsp;logarithm&nbsp;(base&nbsp;e)&nbsp;of&nbsp;x.</tt></dd></dl>
+ <dl><dt><a name="-ok"><strong>ok</strong></a>()</dt><dd><tt>Takes&nbsp;the&nbsp;date&nbsp;in&nbsp;the&nbsp;format&nbsp;:&nbsp;Month&nbsp;Year&nbsp;and&nbsp;converts&nbsp;it&nbsp;into&nbsp;an&nbsp;UNIX&nbsp;friendly&nbsp;time&nbsp;stamp&nbsp;which&nbsp;can&nbsp;be&nbsp;used&nbsp;easily&nbsp;for&nbsp;comparing</tt></dd></dl>
+ <dl><dt><a name="-positionalintersect"><strong>positionalintersect</strong></a>(q1, q2, k)</dt><dd><tt>The&nbsp;given&nbsp;function&nbsp;calculates&nbsp;the&nbsp;positional&nbsp;intersection&nbsp;of&nbsp;the&nbsp;words&nbsp;q1&nbsp;and&nbsp;q2<br>
+within&nbsp;k&nbsp;distance&nbsp;of&nbsp;each&nbsp;other.<br>
+&nbsp;<br>
+The&nbsp;keys&nbsp;of&nbsp;the&nbsp;dictionaries&nbsp;q1&nbsp;and&nbsp;q2&nbsp;are&nbsp;first&nbsp;sorted&nbsp;by&nbsp;the&nbsp;doc&nbsp;id's<br>
+&nbsp;<br>
+the&nbsp;final&nbsp;list&nbsp;l&nbsp;is&nbsp;appended&nbsp;with&nbsp;the&nbsp;index&nbsp;whenever&nbsp;(i-j)&nbsp;is&nbsp;within&nbsp;k&nbsp;and&nbsp;the&nbsp;positions&nbsp;of&nbsp;the&nbsp;words&nbsp;<br>
+of&nbsp;the&nbsp;two<br>
+&nbsp;<br>
+As&nbsp;we&nbsp;just&nbsp;need&nbsp;the&nbsp;position&nbsp;of&nbsp;the&nbsp;common&nbsp;docs,&nbsp;result&nbsp;list&nbsp;only&nbsp;takes&nbsp;in&nbsp;the&nbsp;first&nbsp;element</tt></dd></dl>
+ <dl><dt><a name="-pow"><strong>pow</strong></a>(...)</dt><dd><tt><a href="#-pow">pow</a>(x,&nbsp;y)<br>
+&nbsp;<br>
+Return&nbsp;x**y&nbsp;(x&nbsp;to&nbsp;the&nbsp;power&nbsp;of&nbsp;y).</tt></dd></dl>
+ <dl><dt><a name="-printResult"><strong>printResult</strong></a>(searchResult)</dt><dd><tt>This&nbsp;function&nbsp;is&nbsp;used&nbsp;to&nbsp;format&nbsp;the&nbsp;search&nbsp;results&nbsp;to&nbsp;be&nbsp;printed&nbsp;to&nbsp;the&nbsp;GUI</tt></dd></dl>
+ <dl><dt><a name="-process_query"><strong>process_query</strong></a>(_query)</dt><dd><tt>takes&nbsp;in&nbsp;the&nbsp;tokenized,&nbsp;normalized&nbsp;form&nbsp;of&nbsp;the&nbsp;query&nbsp;and&nbsp;calculates&nbsp;the&nbsp;tf-idf&nbsp;score&nbsp;giving&nbsp;the&nbsp;query&nbsp;vector<br>
+after&nbsp;normalizing&nbsp;the&nbsp;query&nbsp;vector&nbsp;to&nbsp;a&nbsp;unit&nbsp;vector,&nbsp;calculates&nbsp;the&nbsp;cosine&nbsp;similarity&nbsp;with&nbsp;all&nbsp;documents&nbsp;based&nbsp;on&nbsp;title,&nbsp;blogger&nbsp;and&nbsp;post&nbsp;<br>
+return&nbsp;top&nbsp;10&nbsp;documents&nbsp;after&nbsp;resolving&nbsp;scoring&nbsp;clashes&nbsp;by&nbsp;taking&nbsp;inlinks,&nbsp;outlinks&nbsp;and&nbsp;comments&nbsp;into&nbsp;consideration</tt></dd></dl>
+ <dl><dt><a name="-sel"><strong>sel</strong></a>()</dt><dd><tt>Assigns&nbsp;the&nbsp;global&nbsp;variable&nbsp;the&nbsp;name&nbsp;of&nbsp;the&nbsp;selected&nbsp;category</tt></dd></dl>
+ <dl><dt><a name="-show_entry_fields"><strong>show_entry_fields</strong></a>()</dt><dd><tt>This&nbsp;function&nbsp;is&nbsp;used&nbsp;to&nbsp;print&nbsp;the&nbsp;final&nbsp;output&nbsp;the&nbsp;results&nbsp;of&nbsp;the&nbsp;search&nbsp;to&nbsp;the&nbsp;GUI</tt></dd></dl>
+ <dl><dt><a name="-sqrt"><strong>sqrt</strong></a>(...)</dt><dd><tt><a href="#-sqrt">sqrt</a>(x)<br>
+&nbsp;<br>
+Return&nbsp;the&nbsp;square&nbsp;root&nbsp;of&nbsp;x.</tt></dd></dl>
+</td></tr></table><p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+
+<tr bgcolor="#55aa55">
+
+<td colspan=3 valign=bottom>&nbsp;<br>
+
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+
+    
+
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>ACTIVE</strong> = 'active'<br>
+<strong>ALL</strong> = 'all'<br>
+<strong>ANCHOR</strong> = 'anchor'<br>
+<strong>ARC</strong> = 'arc'<br>
+<strong>BASELINE</strong> = 'baseline'<br>
+<strong>BEVEL</strong> = 'bevel'<br>
+<strong>BOTH</strong> = 'both'<br>
+<strong>BOTTOM</strong> = 'bottom'<br>
+<strong>BROWSE</strong> = 'browse'<br>
+<strong>BUTT</strong> = 'butt'<br>
+<strong>CASCADE</strong> = 'cascade'<br>
+<strong>CENTER</strong> = 'center'<br>
+<strong>CHAR</strong> = 'char'<br>
+<strong>CHECKBUTTON</strong> = 'checkbutton'<br>
+<strong>CHORD</strong> = 'chord'<br>
+<strong>COMMAND</strong> = 'command'<br>
+<strong>COMMENTS</strong> = 0.2<br>
+<strong>CURRENT</strong> = 'current'<br>
+<strong>DISABLED</strong> = 'disabled'<br>
+<strong>DOTBOX</strong> = 'dotbox'<br>
+<strong>E</strong> = 'e'<br>
+<strong>END</strong> = 'end'<br>
+<strong>EW</strong> = 'ew'<br>
+<strong>EXCEPTION</strong> = 8<br>
+<strong>EXTENDED</strong> = 'extended'<br>
+<strong>FALSE</strong> = 0<br>
+<strong>FIRST</strong> = 'first'<br>
+<strong>FLAT</strong> = 'flat'<br>
+<strong>GROOVE</strong> = 'groove'<br>
+<strong>HIDDEN</strong> = 'hidden'<br>
+<strong>HORIZONTAL</strong> = 'horizontal'<br>
+<strong>INLINKS</strong> = 0.2<br>
+<strong>INSERT</strong> = 'insert'<br>
+<strong>INSIDE</strong> = 'inside'<br>
+<strong>LAST</strong> = 'last'<br>
+<strong>LEFT</strong> = 'left'<br>
+<strong>MITER</strong> = 'miter'<br>
+<strong>MOVETO</strong> = 'moveto'<br>
+<strong>MULTIPLE</strong> = 'multiple'<br>
+<strong>N</strong> = 'n'<br>
+<strong>NE</strong> = 'ne'<br>
+<strong>NO</strong> = 0<br>
+<strong>NONE</strong> = 'none'<br>
+<strong>NORMAL</strong> = 'normal'<br>
+<strong>NS</strong> = 'ns'<br>
+<strong>NSEW</strong> = 'nsew'<br>
+<strong>NUMERIC</strong> = 'numeric'<br>
+<strong>NW</strong> = 'nw'<br>
+<strong>OFF</strong> = 0<br>
+<strong>ON</strong> = 1<br>
+<strong>OUTLINKS</strong> = 0.6<br>
+<strong>OUTSIDE</strong> = 'outside'<br>
+<strong>PAGES</strong> = 'pages'<br>
+<strong>PIESLICE</strong> = 'pieslice'<br>
+<strong>PROJECTING</strong> = 'projecting'<br>
+<strong>PS</strong> = &lt;stemming.PorterStemmer instance&gt;<br>
+<strong>RADIOBUTTON</strong> = 'radiobutton'<br>
+<strong>RAISED</strong> = 'raised'<br>
+<strong>READABLE</strong> = 2<br>
+<strong>RIDGE</strong> = 'ridge'<br>
+<strong>RIGHT</strong> = 'right'<br>
+<strong>ROUND</strong> = 'round'<br>
+<strong>Range</strong> = ['January 2004', 'February 2004', 'March 2004', 'April 2004', 'May 2004', 'June 2004', 'July 2004', 'August 2004', 'September 2004', 'October 2004', 'November 2004', 'December 2004', 'January 2005', 'February 2005', 'March 2005', 'April 2005', 'May 2005', 'June 2005', 'July 2005', 'August 2005', ...]<br>
+<strong>S</strong> = 's'<br>
+<strong>SCROLL</strong> = 'scroll'<br>
+<strong>SE</strong> = 'se'<br>
+<strong>SEL</strong> = 'sel'<br>
+<strong>SEL_FIRST</strong> = 'sel.first'<br>
+<strong>SEL_LAST</strong> = 'sel.last'<br>
+<strong>SEPARATOR</strong> = 'separator'<br>
+<strong>SINGLE</strong> = 'single'<br>
+<strong>SOLID</strong> = 'solid'<br>
+<strong>SUNKEN</strong> = 'sunken'<br>
+<strong>SW</strong> = 'sw'<br>
+<strong>StringTypes</strong> = (&lt;type 'str'&gt;, &lt;type 'unicode'&gt;)<br>
+<strong>TOP</strong> = 'top'<br>
+<strong>TRUE</strong> = 1<br>
+<strong>TclVersion</strong> = 8.6<br>
+<strong>TkVersion</strong> = 8.6<br>
+<strong>UNDERLINE</strong> = 'underline'<br>
+<strong>UNITS</strong> = 'units'<br>
+<strong>VERTICAL</strong> = 'vertical'<br>
+<strong>W</strong> = 'w'<br>
+<strong>WORD</strong> = 'word'<br>
+<strong>WRITABLE</strong> = 4<br>
+<strong>X</strong> = 'x'<br>
+<strong>Y</strong> = 'y'<br>
+<strong>YES</strong> = 1<br>
+<strong>blogger</strong> = ['david', 'chartier']<br>
+<strong>bottomFrame</strong> = &lt;Tkinter.Frame instance&gt;<br>
+<strong>button</strong> = &lt;Tkinter.Button instance&gt;<br>
+<strong>categories</strong> = ['software', 'widgets']<br>
+<strong>catergoies</strong> = ['software', 'widgets']<br>
+<strong>commentNo</strong> = 1.4771212547196624<br>
+<strong>count</strong> = 97<br>
+<strong>date</strong> = ['May', '24', '2006', '12:00']<br>
+<strong>dateFrame</strong> = &lt;Tkinter.Frame instance&gt;<br>
+<strong>dictBlogger</strong> = {'12': {3900: [3]}, '15': {3900: [1]}, '2007': {3900: [2]}, ':00AM': {3900: [4]}, 'Feb': {3900: [0]}, 'a': {620: [1], 621: [1], 622: [1], 623: [1], 624: [1], 625: [1], 626: [1], 627: [1], 628: [1], 629: [1], ...}, 'agreda': {3414: [1], 3481: [1], 3605: [1], 3615: [1], 3641: [1], 3642: [1], 3643: [1], 3648: [1], 3673: [1], 3692: [1], ...}, 'alberto': {77: [0], 95: [0], 101: [0], 102: [0], 103: [0], 117: [0], 181: [0], 182: [0], 233: [0], 339: [0], ...}, 'barb': {688: [0], 691: [0], 692: [0], 693: [0], 694: [0], 695: [0], 697: [0], 698: [0], 699: [0], 700: [0], ...}, 'barrett': {3392: [1], 3402: [1], 3478: [1], 3488: [1], 3511: [1], 3551: [1], 3561: [1], 3563: [1], 3566: [1], 3595: [1], ...}, ...}<br>
+<strong>dictPost</strong> = {'<font color="#c040c0">\x05</font>': {4036: [66]}, '!': {8: [147, 169, 278], 16: [51, 54], 19: [16], 20: [202], 25: [126], 29: [8, 55, 67], 37: [81], 45: [42], 47: [77], 49: [125], ...}, '!!': {153: [19], 226: [71], 787: [79], 802: [191], 812: [186], 852: [72], 899: [60], 903: [174], 916: [129], 942: [256], ...}, '!!!': {816: [88], 1059: [413], 1378: [264], 1601: [23], 1612: [12, 80, 89, 91], 2058: [96], 2514: [164, 166, 173, 200, 246], 3280: [87, 92]}, '!!!!': {3239: [61]}, '!!!!andnbsp;andnbsp': {2325: [71]}, '!!!:andnbsp': {1849: [76]}, '!!!put': {2309: [28]}, '!"': {2010: [130], 2031: [98], 2117: [93], 2383: [131], 2422: [12], 2448: [175], 2571: [110], 2595: [16], 2608: [161], 2630: [86, 90], ...}, '!""?"': {3401: [96]}, ...}<br>
+<strong>dictTitle</strong> = {'!': {11: [5], 29: [2], 85: [2], 122: [2], 135: [4], 154: [5], 159: [2], 177: [5], 179: [8], 180: [7], ...}, '!!': {99: [10], 122: [6]}, '!!!': {2017: [5], 2412: [3]}, '!";': {3039: [6, 10]}, '!:': {644: [5], 1465: [2]}, '!?!?!': {615: [11]}, '"': {3393: [1, 3], 3468: [6], 3490: [15], 3520: [1], 3690: [11], 3888: [9], 3995: [11], 4028: [2], 4039: [8]}, '";': {1968: [13], 2145: [7], 2418: [11], 2796: [7], 2833: [2], 2957: [7], 3210: [5]}, '";american': {3210: [3]}, '";befor': {2796: [5]}, ...}<br>
+<strong>e1</strong> = &lt;Tkinter.Entry instance&gt;<br>
+<strong>endDate</strong> = 1196447400.0<br>
+<strong>i</strong> = 2007<br>
+<strong>idf_blogger</strong> = {'12': 3.642365580844973, '15': 3.642365580844973, '2007': 3.642365580844973, ':00AM': 3.642365580844973, 'Feb': 3.642365580844973, 'a': 0.8613286422238414, 'agreda': 2.262154339133367, 'alberto': 2.411916659466699, 'barb': 0.939935044399448, 'barrett': 2.2999429000227667, ...}<br>
+<strong>idf_post</strong> = {'<font color="#c040c0">\x05</font>': 3.642365580844973, '!': 0.6573884544294799, '!!': 2.211001816685986, '!!!': 2.7392755938530295, '!!!!': 3.642365580844973, '!!!!andnbsp;andnbsp': 3.642365580844973, '!!!:andnbsp': 3.642365580844973, '!!!put': 3.642365580844973, '!"': 2.086063080077686, '!""?"': 3.642365580844973, ...}<br>
+<strong>idf_title</strong> = {'!': 1.4931464681895934, '!!': 3.341335585180992, '!!!': 3.341335585180992, '!";': 3.642365580844973, '!:': 3.341335585180992, '!?!?!': 3.642365580844973, '"': 2.688123071405648, '";': 2.7972675408307164, '";american': 3.642365580844973, '";befor': 3.642365580844973, ...}<br>
+<strong>inlinks</strong> = 1.6020599913279625<br>
+<strong>intro</strong> = &lt;Tkinter.Label instance&gt;<br>
+<strong>j</strong> = 12<br>
+<strong>megaList</strong> = [[['isight', 'vs', 'firewir'], 1075444200.0, ['sean', 'bonner'], [''], ['macfixit', 'ha', 'just', 'post', 'a', 'littl', 'troubleshoot', 'help', 'for', 'peopl', 'have', 'firewir', '&amp;', 'isight', 'problem', 'iv', 'been', 'plug', 'in', 'my', ...], 1.3010299956639813, 0, 0, 'http://www.tuaw.com/2004/01/30/isight-vs-firewire/', 'isight vs. firewire '], [['idvd', 'help'], 1075444200.0, ['sean', 'bonner'], [''], ['jame', 'over', 'at', 'macmerc', 'ha', 'just', 'post', 'a', 'super', 'help', 'idvd', 'burn', 'faq', 'and', 'as', 'if', 'that', 'not', 'enough', 'he', ...], 1.4771212547196624, 0, 2.079181246047625, 'http://www.tuaw.com/2004/01/30/idvd-help/', 'idvd help '], [['macintosh', 'stori'], 1075444200.0, ['sean', 'bonner'], [''], ['folklor', 'org', 'is', 'collect', 'stori', 'and', 'anecdot', 'about', 'the', 'develop', 'of', 'appl', 'origin', 'macintosh', 'comput', 'and', 'the', 'peopl', 'who', 'creat', ...], 1.4771212547196624, 0, 0, 'http://www.tuaw.com/2004/01/30/macintosh-stories/', 'macintosh stories '], [['40', 'hour', 'ipod', 'batteri'], 1075444200.0, ['sean', 'bonner'], [''], ['ipod', 'hack', 'tip', 'us', 'off', 'to', 'thi', 'solut', 'for', 'everyon', 'complain', 'about', 'their', 'ipod', 'batteri', 'life', 'or', 'even', 'for', 'someon', ...], 1.3010299956639813, 0, 0, 'http://www.tuaw.com/2004/01/30/40-hour-ipod-battery/', '40 hour ipod battery '], [['hello', 'world'], 1075530600.0, ['sean', 'bonner'], [''], ['dear', 'weblog', 'inc', 'reader', 'hi', 'my', 'name', 'is', 'sean', 'bonner', 'you', 'might', 'rememb', 'me', 'from', 'such', 'websit', 'as', 'blog', 'la', ...], 1.6989700043360187, 0, 1.0, 'http://www.tuaw.com/2004/01/31/hello-world/', 'hello world. '], [['applescript', 'for', 'itun'], 1075530600.0, ['sean', 'bonner'], [''], ['want', 'itun', 'to', 'do', 'about', '10', 'ba', 'zillion', 'thing', 'it', 'doesnt', 'do', 'out', 'of', 'the', 'box', 'then', 'you', 'need', 'to', ...], 1.0, 0, 0, 'http://www.tuaw.com/2004/01/31/applescripts-for-itunes/', 'applescripts for itunes '], [['ipod', '10', '%', 'off'], 1075530600.0, ['sean', 'bonner'], [''], ['15', '20', 'and', '40', 'gb', 'model', 'plu', 'some', 'select', 'accessori', 'also', 'get', 'the', 'discount', 'the', 'catch', 'is', 'thi', 'offer', 'is', ...], 1.0, 0, 0, 'http://www.tuaw.com/2004/01/31/ipods-10-off/', 'ipods 10% off '], [['100', 'million', 'free', 'song', 'from', 'pepsi', 'and', 'itun'], 1075530600.0, ['sean', 'bonner'], [''], ['on', 'super', 'bowl', 'sundai', 'appl', 'and', 'pepsi', 'will', 'launch', 'a', 'histor', 'promot', 'to', 'legal', 'give', 'awai', '100', 'million', 'free', 'song', ...], 1.6989700043360187, 0, 1.3010299956639813, 'http://www.tuaw.com/2004/01/31/100-million-free-songs-from-pepsi-and-itunes/', '100 million free songs from pepsi and itunes '], [['saturdai', '7', '01', '31.04'], 1075530600.0, ['sean', 'bonner'], [''], ['i', 'figur', 'with', 'all', 'the', 'softwar', 'releas', 'everi', 'dai', 'i', 'can', 'find', 'at', 'least', 'on', 'cool', 'program', 'everi', '24', 'hour', ...], 1.845098040014257, 0, 1.3010299956639813, 'http://www.tuaw.com/2004/01/31/saturday-7-01-31-04/', 'saturday 7 - 01.31.04 '], [['better', 'togeth'], 1075530600.0, ['sean', 'bonner'], [''], ['need', 'a', 'new', 'comput', 'want', 'a', 'free', 'printer', 'to', 'go', 'with', 'it', 'lucki', 'for', 'you', 'appli', 'is', 'run', 'the', 'better', ...], 1.0, 0, 0, 'http://www.tuaw.com/2004/01/31/better-together/', 'better together '], [['1984', 'is', '#4'], 1075617000.0, ['sean', 'bonner'], [''], ['sinc', '1967', 'there', 'have', 'been', '37', 'super', 'bowl', 'with', 'approxim', '60', 'spot', 'each', 'total', 'more', 'than', '2200', 'super', 'bowl', 'commerci', ...], 1.0, 0, 1.3010299956639813, 'http://www.tuaw.com/2004/02/01/1984-is-4/', '1984 is #4 '], [['pepsi', 'itun', 'is', 'a', 'go', '!'], 1075617000.0, ['sean', 'bonner'], [''], ['while', 'the', 'commerci', 'havent', 'air', 'yet', 'the', 'green', 'dai', 'version', 'of', 'i', 'fought', 'the', 'law', 'is', 'alreadi', 'avail', 'from', 'the', ...], 1.6020599913279625, 0, 0, 'http://www.tuaw.com/2004/02/01/pepsi-itunes-is-a-go/', 'pepsi/itunes is a go! '], [['atom', 'ti', 'iphoto', 'to', 'typepad'], 1075617000.0, ['sean', 'bonner'], [''], ['jerri', 'steel', 'ha', 'been', 'work', 'on', 'a', 'script', 'us', 'the', 'atom', 'api', 'to', 'export', 'photo', 'from', 'iphoto', 'directli', 'into', 'hi', ...], 1.0, 0, 0, 'http://www.tuaw.com/2004/02/01/atom-ties-iphoto-to-typepad/', 'atom ties iphoto to typepad '], [['disk', 'util', 'from', 'the', 'termin'], 1075703400.0, ['sean', 'bonner'], [''], ['macmerc', 'provid', 'thi', 'tip', 'of', 'the', 'week', 'to', 'help', 'you', 'optim', 'your', 'hardriv', 'with', 'out', 'us', 'instal', 'disk', ':', 'how', ...], 1.3010299956639813, 0, 1.3010299956639813, 'http://www.tuaw.com/2004/02/02/disk-utility-from-the-terminal/', 'disk utility from the terminal '], [['appl', 'in', 'austin'], 1075703400.0, ['sean', 'bonner'], [''], ['macnn', 'report', 'that', 'appl', 'is', 'ey', 'retail', 'space', 'in', 'austin', 'tx', 'it', 'look', 'like', 'thei', 'ar', 'negoti', 'to', 'leas', 'roughli', ...], 1.3010299956639813, 0, 1.0, 'http://www.tuaw.com/2004/02/02/apple-in-austin/', 'apple in austin '], [['safari', '1', '2', 'releas'], 1075703400.0, ['sean', 'bonner'], [''], ['as', 'if', 'on', 'que', 'appl', 'releas', 'safari', '1', '2', 'avail', 'from', 'their', 'site', 'or', 'via', 'softwar', 'updat', 'it', 'got', 'a', ...], 1.0, 0, 0, 'http://www.tuaw.com/2004/02/02/safari-1-2-released/', 'safari 1.2 released '], [['need', 'a', 'new', 'browser'], 1075703400.0, ['sean', 'bonner'], [''], ['do', 'you', 'us', 'a', 'new', 'browser', 'everi', 'dai', 'bore', 'with', 'safari', 'crush', 'by', 'mozilla', 'burn', 'by', 'firebird', 'camino', 'no', 'sound', ...], 1.6989700043360187, 0, 1.0, 'http://www.tuaw.com/2004/02/02/need-a-new-browser/', 'need a new browser? '], [['on', 'music', 'file', 'to', 'rule', 'them', 'all'], 1075703400.0, ['sean', 'bonner'], [''], ['reuter', 'billboard', 'ar', 'report', 'that', 'appl', 'and', 'microsoft', 'ar', 'talk', 'about', 'how', 'to', 'unifi', 'the', 'world', 'of', 'digit', 'music', 'so', ...], 1.0, 0, 0, 'http://www.tuaw.com/2004/02/02/one-music-file-to-rule-them-all/', 'one music file to rule them all '], [['40mb', 'of', 'free', 'loop'], 1075703400.0, ['sean', 'bonner'], [''], ['macmerc', 'report', 'that', 'bitshift', 'audio', 'is', 'offer', '40mb', 'of', 'free', 'loop', 'for', 'garageband', 'our', 'resid', 'beat', 'programm', 'art', 'gillespi', 'aka', ...], 1.6020599913279625, 0, 0, 'http://www.tuaw.com/2004/02/02/40mb-of-free-loops/', '40mb of free loops '], [['googl', 'beat', 'out', 'appl', 'for', 'brand', 'of', 'the', 'year'], 1075789800.0, ['jason', 'mccabe', 'calacanis'], [''], ['googl', 'ha', 'beat', 'out', 'appl', 'and', 'even', 'my', 'mini', 'cooper', 'as', 'global', 'brand', 'of', 'the', 'year', '!'], 0, 0, 0, 'http://www.tuaw.com/2004/02/03/google-beats-out-apple-for-brand-of-the-year/', 'google beats out apple for brand of the year '], ...]<br>
+<strong>midFrame</strong> = &lt;Tkinter.Frame instance&gt;<br>
+<strong>month</strong> = 'December 2007'<br>
+<strong>outlinks</strong> = 1.4771212547196624<br>
+<strong>permalink</strong> = 'http://www.tuaw.com/2006/05/24/widget-watch-istat-pro-and-nano-updated/'<br>
+<strong>post</strong> = ['two', 'of', 'my', 'favorit', 'system', 'monitor', 'widget', 'have', 'been', 'updat', ':', 'istat', 'pro', '2', '3', 'and', 'istat', 'nano', '1', '5', ...]<br>
+<strong>query</strong> = ['applescript', 'for', 'itun']<br>
+<strong>raw_title</strong> = 'widget watch: istat pro and nano updated '<br>
+<strong>reader</strong> = &lt;_csv.reader object&gt;<br>
+<strong>readfile</strong> = &lt;closed file 'corpus.csv', mode 'rb'&gt;<br>
+<strong>resultsFrame</strong> = &lt;Tkinter.Frame instance&gt;<br>
+<strong>root</strong> = &lt;Tkinter.Tk instance&gt;<br>
+<strong>row</strong> = ['widget watch: istat pro and nano updated ', 'May 24 2006 12:00AM', 'david chartier', 'software:&amp;:widgets ', ' two of my favorite system monitor widgets have ...ated it to reflect these new additions just yet. ', '662', '3', '4', '3', ' http://www.tuaw.com/2006/05/24/widget-watch-istat-pro-and-nano-updated/#comments ', 'http://www.tuaw.com/2006/05/24/widget-watch-istat-pro-and-nano-updated/', '', '', '', '', '', '', '', '', '', ...]<br>
+<strong>searchButton</strong> = &lt;Tkinter.Button instance&gt;<br>
+<strong>searchResult</strong> = ['Your Query : applescripts for itunes Category: *All*', 'You Requested A Phrase Query', 'applescripts for itunes ', 'http://www.tuaw.com/2004/01/31/applescripts-for-itunes/', '===========================================================', 'Your search takes : 0.000764846801758 seconds']<br>
+<strong>secs</strong> = 1148452200.0<br>
+<strong>selection</strong> = 'All'<br>
+<strong>startDate</strong> = 1072895400.0<br>
+<strong>string</strong> = 'May 24 2006 12:00'<br>
+<strong>struct_time</strong> = time.struct_time(tm_year=2006, tm_mon=5, tm_mday...0, tm_sec=0, tm_wday=2, tm_yday=144, tm_isdst=-1)<br>
+<strong>temp</strong> = [5]<br>
+<strong>text</strong> = &lt;Tkinter.Text instance&gt;<br>
+<strong>tf_blogger</strong> = {'12': {3900: 0.4472135954999579}, '15': {3900: 0.4472135954999579}, '2007': {3900: 0.4472135954999579}, ':00AM': {3900: 0.4472135954999579}, 'Feb': {3900: 0.4472135954999579}, 'a': {620: 0.5773502691896258, 621: 0.5773502691896258, 622: 0.5773502691896258, 623: 0.5773502691896258, 624: 0.5773502691896258, 625: 0.5773502691896258, 626: 0.5773502691896258, 627: 0.5773502691896258, 628: 0.5773502691896258, 629: 0.5773502691896258, ...}, 'agreda': {3414: 0.5773502691896258, 3481: 0.5773502691896258, 3605: 0.5773502691896258, 3615: 0.5773502691896258, 3641: 0.5773502691896258, 3642: 0.5773502691896258, 3643: 0.5773502691896258, 3648: 0.5773502691896258, 3673: 0.5773502691896258, 3692: 0.5773502691896258, ...}, 'alberto': {77: 0.7071067811865475, 95: 0.7071067811865475, 101: 0.7071067811865475, 102: 0.7071067811865475, 103: 0.7071067811865475, 117: 0.7071067811865475, 181: 0.7071067811865475, 182: 0.7071067811865475, 233: 0.7071067811865475, 339: 0.7071067811865475, ...}, 'barb': {688: 0.7071067811865475, 691: 0.7071067811865475, 692: 0.7071067811865475, 693: 0.7071067811865475, 694: 0.7071067811865475, 695: 0.7071067811865475, 697: 0.7071067811865475, 698: 0.7071067811865475, 699: 0.7071067811865475, 700: 0.7071067811865475, ...}, 'barrett': {3392: 0.7071067811865475, 3402: 0.7071067811865475, 3478: 0.7071067811865475, 3488: 0.7071067811865475, 3511: 0.7071067811865475, 3551: 0.7071067811865475, 3561: 0.7071067811865475, 3563: 0.7071067811865475, 3566: 0.7071067811865475, 3595: 0.7071067811865475, ...}, ...}<br>
+<strong>tf_post</strong> = {'<font color="#c040c0">\x05</font>': {4036: 0.10140303630190324}, '!': {8: 0.08784512331929044, 16: 0.18036726637542283, 19: 0.24253562503633297, 20: 0.06078536452659388, 25: 0.06851898952026834, 29: 0.1829458289296063, 37: 0.06398171007952565, 45: 0.15453428220711057, 47: 0.12001234886184764, 49: 0.07165723326189755, ...}, '!!': {153: 0.22360679774997896, 226: 0.07972453296085848, 787: 0.11627776467545017, 802: 0.08035148114944801, 812: 0.08096197657353145, 852: 0.12155782092155706, 899: 0.10717809020664458, 903: 0.0829784983550151, 916: 0.09669986575851978, 942: 0.06758377168865778, ...}, '!!!': {816: 0.11026229774284362, 1059: 0.05538125276641973, 1378: 0.06542137685081593, 1601: 0.08137889004008599, 1612: 0.17062298115481617, 2058: 0.10854430124342675, 2514: 0.11990879830644652, 3280: 0.10022363972525498}, '!!!!': {3239: 0.11214043268701336}, '!!!!andnbsp;andnbsp': {2325: 0.08188526479846306}, '!!!:andnbsp': {1849: 0.07637777847931927}, '!!!put': {2309: 0.15529861021574362}, '!"': {2010: 0.09290852121935844, 2031: 0.08375530648567996, 2117: 0.07842423317652397, 2383: 0.07938466363593533, 2422: 0.11154743643870689, 2448: 0.06904046334813174, 2571: 0.06132581107459086, 2595: 0.08392301895951447, 2608: 0.06390057172497189, 2630: 0.14492953360006525, ...}, '!""?"': {3401: 0.10873681633204729}, ...}<br>
+<strong>tf_title</strong> = {'!': {11: 0.4082482904638631, 29: 0.5773502691896258, 85: 0.5773502691896258, 122: 0.3865449471683684, 135: 0.4472135954999579, 154: 0.4082482904638631, 159: 0.5773502691896258, 177: 0.4082482904638631, 179: 0.3333333333333333, 180: 0.35355339059327373, ...}, '!!': {99: 0.30151134457776363, 122: 0.3865449471683684}, '!!!': {2017: 0.4082482904638631, 2412: 0.5}, '!";': {3039: 0.33505407553863165}, '!:': {644: 0.32120188391098314, 1465: 0.3779644730092272}, '!?!?!': {615: 0.2886751345948129}, '"': {3393: 0.6005883219864204, 3468: 0.3779644730092272, 3490: 0.2575298622286081, 3520: 0.3779644730092272, 3690: 0.2924441818357943, 3888: 0.31622776601683794, 3995: 0.2886751345948129, 4028: 0.5773502691896258, 4039: 0.3333333333333333}, '";': {1968: 0.27024382902813, 2145: 0.35355339059327373, 2418: 0.2886751345948129, 2796: 0.35355339059327373, 2833: 0.4472135954999579, 2957: 0.25, 3210: 0.35355339059327373}, '";american': {3210: 0.35355339059327373}, '";befor': {2796: 0.35355339059327373}, ...}<br>
+<strong>title</strong> = ['widget', 'watch', ':', 'istat', 'pro', 'and', 'nano', 'updat']<br>
+<strong>tokenizer</strong> = RegexpTokenizer(pattern='\\w+|\\$[\\d\\.]+|\\S+', gaps=False, discard_empty=True, flags=56)<br>
+<strong>topFrame</strong> = &lt;Tkinter.Frame instance&gt;<br>
+<strong>ultraBlogger</strong> = ['lurie', 'jason', 'pourhadi', 'caoloipod', 'liloia', 'sample', 'sadun', 'marchetti', 'pariah', 'scott', 'sean', 'bonner', 'Feb', 'granneman', 'erica', 'burke', 'dybwad', 'victor', 'han', 'duncan', ...]<br>
+<strong>ultraCategories</strong> = ['All', 'desktops', 'apple professional', 'steve jobs', 'xserve', 'apple corporate', 'its', 'apple', 'apple financial', 'family', 'the woz', 'apple tv', 'powerbook', 'wwdc', 'cool tools', 'blogging', 'bad apple', 'mods', 'books and blogs', 'tuaw business', ...]<br>
+<strong>ultraList</strong> = [['widget', 'watch', ':', 'istat', 'pro', 'and', 'nano', 'updat'], 1148452200.0, ['david', 'chartier'], ['software', 'widgets'], ['two', 'of', 'my', 'favorit', 'system', 'monitor', 'widget', 'have', 'been', 'updat', ':', 'istat', 'pro', '2', '3', 'and', 'istat', 'nano', '1', '5', ...], 1.4771212547196624, 1.6020599913279625, 1.4771212547196624, 'http://www.tuaw.com/2006/05/24/widget-watch-istat-pro-and-nano-updated/', 'widget watch: istat pro and nano updated ']<br>
+<strong>ultraPost</strong> = ['fawn', '";snow"', '$1.91', 'theyandrsquo', 'headband', 'l-o-w', 'mustachio', 'woodi', '$1.99', 'galactica', 'yellow', 'four', 'ofb', 'prefix', 'thirst', 'repetit', 'payoff', r'\""appl', 'authorit', 'forza', ...]<br>
+<strong>ultraTitle</strong> = ['ifm', 'convers', 'bear', 'yellow', 'hitch', 'four', 'lofi', 'protest', 'sleep', 'mansion', 'growltun', 'hate', 'chili', 'dybwad', 'accus', 'voter', 'bitstick', 'slashfood', 'intro', 'sorri', ...]<br>
+<strong>var</strong> = &lt;Tkinter.IntVar instance&gt;<br>
+<strong>var1</strong> = &lt;Tkinter.StringVar instance&gt;<br>
+<strong>var2</strong> = &lt;Tkinter.StringVar instance&gt;<br>
+<strong>w</strong> = &lt;ttk.Combobox instance&gt;<br>
+<strong>w1</strong> = &lt;ttk.Combobox instance&gt;<br>
+<strong>wantobjects</strong> = 1<br>
+<strong>x</strong> = '.'</td></tr></table>
+
+</body></html>
