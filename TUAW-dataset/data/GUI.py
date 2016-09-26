@@ -70,7 +70,8 @@ def positionalintersect(q1,q2,k):
 			a = a+1
 	result = []
 	for i in answer:
-		result.append(i[0])
+		if (not selection or selection == "All" or selection in megaList[j][3])and (megaList[j][1]>=startDate and megaList[j][1]<=endDate):
+			result.append(i[0])
 	return result
 
 def finalquery(temp,l):
@@ -94,8 +95,7 @@ def finalquery(temp,l):
 	answer = list(set(answer))
 	return answer
 
-def show_entry_fields():
-
+def show_entry_fields():	
 	global query
 	global temp
 	global flag
@@ -103,6 +103,7 @@ def show_entry_fields():
 	searchResult= []
 	temp = []
 	start_time = time.time()
+	query = ""
 	query = (e1.get())
 	if len(query)==0:
 		searchResult.append("Query Cannot Be Empty")
@@ -158,7 +159,7 @@ def show_entry_fields():
 					searchResult.append(result[i])
 					searchResult.append("~~~~~~~~~~~~~~~~~~~")				
 				
-		searchResult.append("==============================")
+		searchResult.append("===========================================================")
 		searchResult.append("Your search takes : %s seconds" % (time.time() - start_time))
 		printResult(searchResult)
 		
@@ -385,7 +386,7 @@ def ok():
 		endDate = time.strptime("January 2008","%B %Y")
 		endDate = time.mktime(endDate)
 
-button = Button(dateFrame, text="OK", command=ok)
+button = Button(dateFrame, text="Apply Date Range", command=ok)
 button.grid(row=2,column=1)
 
 
