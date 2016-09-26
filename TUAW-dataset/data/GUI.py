@@ -172,15 +172,24 @@ def printResult(searchResult):
 
 
 def process_query(_query):
+	'''
+		takes in the tokenized, normalized form of the query and calculates the tf-idf score giving the query vector
+		after normalizing the query vector to a unit vector, calculates the cosine similarity with all documents based on title, blogger and post 
+		return top 10 documents after resolving scoring clashes by taking inlinks, outlinks and comments into consideration
+	'''
 	tf_query = {}
 	wt_title = {}
 	wt_blogger = {}
 	wt_post = {}
+
+	#calculating raw tf
 	for token in _query:
 		if token not in tf_query:
 			tf_query[token] = 1
 		else:
 			tf_query[token] = tf_query[token] + 1
+
+	#calculating total weight using the logarithmic formula for tf and multiplying with idf 
 	for word in tf_query.keys():
 		tf_query[word] = 1 + log(tf_query[word],10)
 		if word in idf_title.keys():
@@ -198,6 +207,7 @@ def process_query(_query):
 		else:
 			wt_post[word] = 0.0
 
+	#normalizing query vectors to unit vectors for title, blogger, post
 	normalize_query(wt_title)
 	normalize_query(wt_blogger)
 	normalize_query(wt_post)
@@ -207,21 +217,29 @@ def process_query(_query):
 	post_score = [0]*(len(megaList))
 	doc_score = [0]*(len(megaList))
 
+	#cosine similiarity with documents w.r.t. title
 	for word in wt_title:
 		if word in tf_title.keys():
 			for doc in tf_title[word]:
 				title_score[doc] = title_score[doc]+ wt_title[word]*tf_title[word][doc]
+	
+	#cosine similarity with documents w.r.t blogger
 	for word in wt_blogger:
 		if word in tf_blogger.keys():
 			for doc in tf_blogger[word]:
 				blogger_score[doc] = blogger_score[doc] + wt_blogger[word]*tf_blogger[word][doc]
+	
+	#cosine similarity with documents w.r.t. post
 	for word in wt_post:
 		if word in tf_post.keys():
 			for doc in tf_post[word]:
 				post_score[doc] = post_score[doc] + wt_post[word]*tf_post[word][doc]
 	
+	#total document score 
 	for i in xrange(len(doc_score)):
 		doc_score[i] = title_score[i] + blogger_score[i] + post_score[i]
+	
+	#extracting top 10 documents
 	result = []
 	for i in xrange(10):
 		maxi = -1
@@ -236,7 +254,7 @@ def process_query(_query):
 				if (not selection or selection == "All" or selection in megaList[j][3])and (megaList[j][1]>=startDate and megaList[j][1]<=endDate): 
 					maxind.append(j)
 
-
+		#resolving score conflicts
 		if len(maxind)>1:
 			doc_score_other = [0]*len(maxind)
 			for j in xrange(len(maxind)):
@@ -250,7 +268,7 @@ def process_query(_query):
 						if doc_score_other[kj]>maxj:
 							maxj = doc_score_other[kj]
 							maxindj = kj
-					if doc_score_other[maxindj] != -1:
+					if maxind[maxindj] not in result:
 						doc_score_other[maxindj] = -1
 						result.append(maxind[maxindj])
 						result.append(doc_score[maxind[maxindj]])
@@ -264,7 +282,7 @@ def process_query(_query):
 				sorted(doc_score_other_temp, reverse=True)
 				for k in xrange(len(doc_score_other_temp)):
 					ind = doc_score_other.index(doc_score_other_temp[k])
-					if doc_score_other[ind] != -1:
+					if maxind[ind] not in result:
 						doc_score_other[ind] = -1
 						result.append(maxind[ind])
 						result.append(doc_score[maxind[ind]])
@@ -274,7 +292,7 @@ def process_query(_query):
 
 
 		else:
-			if maxi != -1:
+			if len(maxind)>0 and maxind[0] not in result:
 				doc_score[maxind[0]] = -1
 				result.append(maxind[0])
 				result.append(maxi)
