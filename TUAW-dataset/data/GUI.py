@@ -102,6 +102,7 @@ def show_entry_fields():
 	global searchResult
 	searchResult= []
 	temp = []
+	start_time = time.time()
 	query = (e1.get())
 	if len(query)==0:
 		searchResult.append("Query Cannot Be Empty")
@@ -158,6 +159,7 @@ def show_entry_fields():
 					searchResult.append("~~~~~~~~~~~~~~~~~~~")				
 				
 		searchResult.append("==============================")
+		searchResult.append("Your search takes : %s seconds" % (time.time() - start_time))
 		printResult(searchResult)
 		
 def printResult(searchResult):
