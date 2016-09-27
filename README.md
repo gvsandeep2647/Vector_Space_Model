@@ -29,4 +29,5 @@
 <h6>Setting it up:</h6>
 <ol>
 	<li>Extract the folder and then run GUI.py. That's it :D </li>
+	<li>It takes around 13 minutes for the GUI.py to pre-process the data.</li>
 </ol>
