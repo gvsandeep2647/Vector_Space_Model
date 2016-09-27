@@ -1,0 +1,82 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html><head><title>Python: module new_inverted</title>
+
+<meta charset="utf-8">
+
+</head><body bgcolor="#f0f0f8">
+
+
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+
+<tr bgcolor="#7799ee">
+
+<td valign=bottom>&nbsp;<br>
+
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>new_inverted</strong></big></big></font></td
+
+><td align=right valign=bottom
+
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/skywalker/Desktop/for_fict_data/TUAW-dataset/data/new_inverted.py">/home/skywalker/Desktop/for_fict_data/TUAW-dataset/data/new_inverted.py</a></font></td></tr></table>
+
+    <p><tt>ASSIGNMENT&nbsp;#1<br>
+Project&nbsp;:&nbsp;To&nbsp;build&nbsp;an&nbsp;IR&nbsp;model&nbsp;based&nbsp;on&nbsp;a&nbsp;vector&nbsp;space&nbsp;model&nbsp;<br>
+&nbsp;<br>
+Instructor&nbsp;:&nbsp;Dr.&nbsp;Aruna&nbsp;Malapati<br>
+&nbsp;<br>
+Contributors&nbsp;:&nbsp;G&nbsp;V&nbsp;Sandeep&nbsp;2014A7PS106H<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kushagra&nbsp;Agrawal&nbsp;2014AAPS334H<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Snehal&nbsp;Wadhwani&nbsp;2014A7PS430H<br>
+&nbsp;<br>
+Course&nbsp;No&nbsp;:&nbsp;CS&nbsp;F469&nbsp;Information&nbsp;Retrieval<br>
+&nbsp;<br>
+Working&nbsp;of&nbsp;new_inverted.py:<br>
+&nbsp;&nbsp;1.&nbsp;This&nbsp;python&nbsp;script&nbsp;creates&nbsp;an&nbsp;inverted&nbsp;index&nbsp;for&nbsp;title,posts&nbsp;and&nbsp;blogger<br>
+&nbsp;&nbsp;2.&nbsp;This&nbsp;done&nbsp;by&nbsp;first&nbsp;aggregating&nbsp;all&nbsp;the&nbsp;words&nbsp;in&nbsp;title,posts&nbsp;and&nbsp;blogger&nbsp;and&nbsp;making&nbsp;them&nbsp;unique&nbsp;(Eleminating&nbsp;the&nbsp;repeated&nbsp;values).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.&nbsp;The&nbsp;inbuilt&nbsp;facility&nbsp;of&nbsp;making&nbsp;a&nbsp;list&nbsp;a&nbsp;set&nbsp;and&nbsp;vice&nbsp;versa&nbsp;has&nbsp;been&nbsp;used&nbsp;to&nbsp;achive&nbsp;this&nbsp;task.</tt></p>
+<p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+
+<tr bgcolor="#aa55cc">
+
+<td colspan=3 valign=bottom>&nbsp;<br>
+
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+
+    
+
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="csv.html">csv</a><br>
+<a href="math.html">math</a><br>
+</td><td width="25%" valign=top><a href="re.html">re</a><br>
+<a href="sys.html">sys</a><br>
+</td><td width="25%" valign=top><a href="time.html">time</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+
+<tr bgcolor="#eeaa77">
+
+<td colspan=3 valign=bottom>&nbsp;<br>
+
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+
+    
+
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-index1"><strong>index1</strong></a>(l, d, k)</dt><dd><tt>Creates&nbsp;an&nbsp;inverted&nbsp;index.<br>
+It&nbsp;basically&nbsp;returns&nbsp;a&nbsp;dictionary&nbsp;with&nbsp;each&nbsp;key&nbsp;as&nbsp;a&nbsp;word<br>
+Each&nbsp;key&nbsp;then&nbsp;has&nbsp;a&nbsp;value&nbsp;as&nbsp;a&nbsp;dictionary&nbsp;with&nbsp;doc&nbsp;id&nbsp;as&nbsp;key&nbsp;and&nbsp;a&nbsp;list&nbsp;of&nbsp;positional&nbsp;occurences&nbsp;as&nbsp;value</tt></dd></dl>
+ <dl><dt><a name="-make_unique"><strong>make_unique</strong></a>(l)</dt><dd><tt>Making&nbsp;the&nbsp;list&nbsp;a&nbsp;set&nbsp;to&nbsp;eliminate&nbsp;all&nbsp;the&nbsp;duplicates&nbsp;and&nbsp;then&nbsp;converting&nbsp;it&nbsp;back&nbsp;to&nbsp;list</tt></dd></dl>
+</td></tr></table><p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+
+<tr bgcolor="#55aa55">
+
+<td colspan=3 valign=bottom>&nbsp;<br>
+</body></html>

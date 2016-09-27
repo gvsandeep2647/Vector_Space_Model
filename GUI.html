@@ -1,0 +1,115 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html><head><title>Python: module GUI</title>
+
+<meta charset="utf-8">
+
+</head><body bgcolor="#f0f0f8">
+
+
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+
+<tr bgcolor="#7799ee">
+
+<td valign=bottom>&nbsp;<br>
+
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>GUI</strong></big></big></font></td
+
+><td align=right valign=bottom
+
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/skywalker/Desktop/for_fict_data/TUAW-dataset/data/GUI.py">/home/skywalker/Desktop/for_fict_data/TUAW-dataset/data/GUI.py</a></font></td></tr></table>
+
+    <p><tt>ASSIGNMENT&nbsp;#1<br>
+Project&nbsp;:&nbsp;To&nbsp;build&nbsp;an&nbsp;IR&nbsp;model&nbsp;based&nbsp;on&nbsp;a&nbsp;vector&nbsp;space&nbsp;model&nbsp;<br>
+&nbsp;<br>
+Instructor&nbsp;:&nbsp;Dr.&nbsp;Aruna&nbsp;Malapati<br>
+&nbsp;<br>
+Contributors&nbsp;:&nbsp;G&nbsp;V&nbsp;Sandeep&nbsp;2014A7PS106H<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kushagra&nbsp;Agrawal&nbsp;2014AAPS334H<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Snehal&nbsp;Wadhwani&nbsp;2014A7PS430H<br>
+&nbsp;<br>
+Course&nbsp;No&nbsp;:&nbsp;CS&nbsp;F469&nbsp;Information&nbsp;Retrieval<br>
+&nbsp;<br>
+Working&nbsp;of&nbsp;GUI.py:<br>
+&nbsp;&nbsp;1.&nbsp;Prints&nbsp;all&nbsp;the&nbsp;unique&nbsp;categories&nbsp;and&nbsp;gives&nbsp;them&nbsp;radio&nbsp;buttons&nbsp;which&nbsp;user&nbsp;can&nbsp;select&nbsp;to&nbsp;narrow&nbsp;down&nbsp;results.<br>
+&nbsp;&nbsp;2.&nbsp;Similarly&nbsp;a&nbsp;drop&nbsp;down&nbsp;menu&nbsp;to&nbsp;select&nbsp;a&nbsp;date&nbsp;range<br>
+&nbsp;&nbsp;3.&nbsp;User&nbsp;can&nbsp;enter&nbsp;queries&nbsp;in&nbsp;two&nbsp;formats:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a.&nbsp;In&nbsp;("")&nbsp;quotes&nbsp;which&nbsp;willl&nbsp;trigger&nbsp;a&nbsp;phrase&nbsp;search&nbsp;and&nbsp;return&nbsp;a&nbsp;result&nbsp;a&nbsp;title&nbsp;containing&nbsp;that&nbsp;phase&nbsp;or&nbsp;else&nbsp;will&nbsp;process&nbsp;it&nbsp;is&nbsp;a&nbsp;normal&nbsp;query&nbsp;if&nbsp;no&nbsp;such&nbsp;title&nbsp;exists.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b.&nbsp;Normally&nbsp;(without&nbsp;any&nbsp;quotes)&nbsp;in&nbsp;which&nbsp;case&nbsp;it&nbsp;will&nbsp;return&nbsp;top&nbsp;10&nbsp;results&nbsp;based&nbsp;on&nbsp;tf-idf&nbsp;score.</tt></p>
+<p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+
+<tr bgcolor="#aa55cc">
+
+<td colspan=3 valign=bottom>&nbsp;<br>
+
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+
+    
+
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="csv.html">csv</a><br>
+<a href="datetime.html">datetime</a><br>
+<a href="math.html">math</a><br>
+</td><td width="25%" valign=top><a href="re.html">re</a><br>
+<a href="subprocess.html">subprocess</a><br>
+<a href="sys.html">sys</a><br>
+</td><td width="25%" valign=top><a href="time.html">time</a><br>
+<a href="_tkinter.html">_tkinter</a><br>
+<a href="ttk.html">ttk</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+
+<tr bgcolor="#eeaa77">
+
+<td colspan=3 valign=bottom>&nbsp;<br>
+
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+
+    
+
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-finalquery"><strong>finalquery</strong></a>(temp, l)</dt><dd><tt>This&nbsp;function&nbsp;finds&nbsp;the&nbsp;common&nbsp;docs&nbsp;containing&nbsp;the&nbsp;phrase&nbsp;queries.<br>
+It&nbsp;repeatedly&nbsp;calls&nbsp;<a href="#-positionalintersect">positionalintersect</a>()&nbsp;for&nbsp;consecutive&nbsp;words&nbsp;to&nbsp;find&nbsp;the&nbsp;common&nbsp;docs.<br>
+&nbsp;<br>
+If&nbsp;there&nbsp;is&nbsp;a&nbsp;common&nbsp;doc,&nbsp;it&nbsp;is&nbsp;appended<br>
+Else&nbsp;answer&nbsp;is&nbsp;emptied.</tt></dd></dl>
+ <dl><dt><a name="-log"><strong>log</strong></a>(...)</dt><dd><tt><a href="#-log">log</a>(x[,&nbsp;base])<br>
+&nbsp;<br>
+Return&nbsp;the&nbsp;logarithm&nbsp;of&nbsp;x&nbsp;to&nbsp;the&nbsp;given&nbsp;base.<br>
+If&nbsp;the&nbsp;base&nbsp;not&nbsp;specified,&nbsp;returns&nbsp;the&nbsp;natural&nbsp;logarithm&nbsp;(base&nbsp;e)&nbsp;of&nbsp;x.</tt></dd></dl>
+ <dl><dt><a name="-ok"><strong>ok</strong></a>()</dt><dd><tt>Takes&nbsp;the&nbsp;date&nbsp;in&nbsp;the&nbsp;format&nbsp;:&nbsp;Month&nbsp;Year&nbsp;and&nbsp;converts&nbsp;it&nbsp;into&nbsp;an&nbsp;UNIX&nbsp;friendly&nbsp;time&nbsp;stamp&nbsp;which&nbsp;can&nbsp;be&nbsp;used&nbsp;easily&nbsp;for&nbsp;comparing</tt></dd></dl>
+ <dl><dt><a name="-positionalintersect"><strong>positionalintersect</strong></a>(q1, q2, k)</dt><dd><tt>The&nbsp;given&nbsp;function&nbsp;calculates&nbsp;the&nbsp;positional&nbsp;intersection&nbsp;of&nbsp;the&nbsp;words&nbsp;q1&nbsp;and&nbsp;q2<br>
+within&nbsp;k&nbsp;distance&nbsp;of&nbsp;each&nbsp;other.<br>
+&nbsp;<br>
+The&nbsp;keys&nbsp;of&nbsp;the&nbsp;dictionaries&nbsp;q1&nbsp;and&nbsp;q2&nbsp;are&nbsp;first&nbsp;sorted&nbsp;by&nbsp;the&nbsp;doc&nbsp;id's<br>
+&nbsp;<br>
+the&nbsp;final&nbsp;list&nbsp;l&nbsp;is&nbsp;appended&nbsp;with&nbsp;the&nbsp;index&nbsp;whenever&nbsp;(i-j)&nbsp;is&nbsp;within&nbsp;k&nbsp;and&nbsp;the&nbsp;positions&nbsp;of&nbsp;the&nbsp;words&nbsp;<br>
+of&nbsp;the&nbsp;two<br>
+&nbsp;<br>
+As&nbsp;we&nbsp;just&nbsp;need&nbsp;the&nbsp;position&nbsp;of&nbsp;the&nbsp;common&nbsp;docs,&nbsp;result&nbsp;list&nbsp;only&nbsp;takes&nbsp;in&nbsp;the&nbsp;first&nbsp;element</tt></dd></dl>
+ <dl><dt><a name="-pow"><strong>pow</strong></a>(...)</dt><dd><tt><a href="#-pow">pow</a>(x,&nbsp;y)<br>
+&nbsp;<br>
+Return&nbsp;x**y&nbsp;(x&nbsp;to&nbsp;the&nbsp;power&nbsp;of&nbsp;y).</tt></dd></dl>
+ <dl><dt><a name="-printResult"><strong>printResult</strong></a>(searchResult)</dt><dd><tt>This&nbsp;function&nbsp;is&nbsp;used&nbsp;to&nbsp;format&nbsp;the&nbsp;search&nbsp;results&nbsp;to&nbsp;be&nbsp;printed&nbsp;to&nbsp;the&nbsp;GUI</tt></dd></dl>
+ <dl><dt><a name="-process_query"><strong>process_query</strong></a>(_query)</dt><dd><tt>takes&nbsp;in&nbsp;the&nbsp;tokenized,&nbsp;normalized&nbsp;form&nbsp;of&nbsp;the&nbsp;query&nbsp;and&nbsp;calculates&nbsp;the&nbsp;tf-idf&nbsp;score&nbsp;giving&nbsp;the&nbsp;query&nbsp;vector<br>
+after&nbsp;normalizing&nbsp;the&nbsp;query&nbsp;vector&nbsp;to&nbsp;a&nbsp;unit&nbsp;vector,&nbsp;calculates&nbsp;the&nbsp;cosine&nbsp;similarity&nbsp;with&nbsp;all&nbsp;documents&nbsp;based&nbsp;on&nbsp;title,&nbsp;blogger&nbsp;and&nbsp;post&nbsp;<br>
+return&nbsp;top&nbsp;10&nbsp;documents&nbsp;after&nbsp;resolving&nbsp;scoring&nbsp;clashes&nbsp;by&nbsp;taking&nbsp;inlinks,&nbsp;outlinks&nbsp;and&nbsp;comments&nbsp;into&nbsp;consideration</tt></dd></dl>
+ <dl><dt><a name="-sel"><strong>sel</strong></a>()</dt><dd><tt>Assigns&nbsp;the&nbsp;global&nbsp;variable&nbsp;the&nbsp;name&nbsp;of&nbsp;the&nbsp;selected&nbsp;category</tt></dd></dl>
+ <dl><dt><a name="-show_entry_fields"><strong>show_entry_fields</strong></a>()</dt><dd><tt>This&nbsp;function&nbsp;is&nbsp;used&nbsp;to&nbsp;print&nbsp;the&nbsp;final&nbsp;output&nbsp;the&nbsp;results&nbsp;of&nbsp;the&nbsp;search&nbsp;to&nbsp;the&nbsp;GUI</tt></dd></dl>
+ <dl><dt><a name="-sqrt"><strong>sqrt</strong></a>(...)</dt><dd><tt><a href="#-sqrt">sqrt</a>(x)<br>
+&nbsp;<br>
+Return&nbsp;the&nbsp;square&nbsp;root&nbsp;of&nbsp;x.</tt></dd></dl>
+</td></tr></table><p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+
+<tr bgcolor="#55aa55">
+
+<td colspan=3 valign=bottom>&nbsp;<br>
+</body></html>

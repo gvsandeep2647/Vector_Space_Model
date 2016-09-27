@@ -1,0 +1,86 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html><head><title>Python: module main</title>
+
+<meta charset="utf-8">
+
+</head><body bgcolor="#f0f0f8">
+
+
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+
+<tr bgcolor="#7799ee">
+
+<td valign=bottom>&nbsp;<br>
+
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>main</strong></big></big></font></td
+
+><td align=right valign=bottom
+
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/skywalker/Desktop/for_fict_data/TUAW-dataset/data/main.py">/home/skywalker/Desktop/for_fict_data/TUAW-dataset/data/main.py</a></font></td></tr></table>
+
+    <p><tt>ASSIGNMENT&nbsp;#1<br>
+Project&nbsp;:&nbsp;To&nbsp;build&nbsp;an&nbsp;IR&nbsp;model&nbsp;based&nbsp;on&nbsp;a&nbsp;vector&nbsp;space&nbsp;model&nbsp;<br>
+&nbsp;<br>
+Instructor&nbsp;:&nbsp;Dr.&nbsp;Aruna&nbsp;Malapati<br>
+&nbsp;<br>
+Contributors&nbsp;:&nbsp;G&nbsp;V&nbsp;Sandeep&nbsp;2014A7PS106H<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kushagra&nbsp;Agrawal&nbsp;2014AAPS334H<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Snehal&nbsp;Wadhwani&nbsp;2014A7PS430H<br>
+&nbsp;<br>
+Course&nbsp;No&nbsp;:&nbsp;CS&nbsp;F469&nbsp;Information&nbsp;Retrieval<br>
+&nbsp;<br>
+Working&nbsp;of&nbsp;main.py:<br>
+&nbsp;&nbsp;1.&nbsp;The&nbsp;entire&nbsp;corpus&nbsp;is&nbsp;read&nbsp;and&nbsp;each&nbsp;row&nbsp;is&nbsp;stored&nbsp;as&nbsp;a&nbsp;list.<br>
+&nbsp;&nbsp;2.&nbsp;Each&nbsp;list&nbsp;is&nbsp;broken&nbsp;down&nbsp;to&nbsp;it's&nbsp;attributes&nbsp;and&nbsp;appropriate&nbsp;tokenization&nbsp;and&nbsp;normalization&nbsp;is&nbsp;apllied.<br>
+&nbsp;&nbsp;3.&nbsp;The&nbsp;title,blogger's&nbsp;name&nbsp;and&nbsp;post&nbsp;is&nbsp;stripped&nbsp;of&nbsp;some&nbsp;special&nbsp;characters&nbsp;and&nbsp;then&nbsp;is&nbsp;stemmed&nbsp;using&nbsp;Porter's&nbsp;Stemming&nbsp;Algorithm<br>
+&nbsp;&nbsp;4.&nbsp;Date&nbsp;is&nbsp;converted&nbsp;to&nbsp;a&nbsp;floating&nbsp;point&nbsp;timestamp<br>
+&nbsp;&nbsp;5.&nbsp;Postlength&nbsp;and&nbsp;Comment&nbsp;URL&nbsp;have&nbsp;been&nbsp;ignored&nbsp;in&nbsp;the&nbsp;final&nbsp;processed&nbsp;dataset&nbsp;as&nbsp;they&nbsp;add&nbsp;no&nbsp;value&nbsp;to&nbsp;the&nbsp;corpus<br>
+&nbsp;&nbsp;6.&nbsp;No&nbsp;of&nbsp;inlinks,&nbsp;outlinks&nbsp;and&nbsp;comments&nbsp;have&nbsp;been&nbsp;normalized&nbsp;using&nbsp;the&nbsp;formula&nbsp;(1+log(num))&nbsp;where&nbsp;num&nbsp;is&nbsp;their&nbsp;value.&nbsp;This&nbsp;is&nbsp;because&nbsp;twice&nbsp;the&nbsp;number&nbsp;of&nbsp;comments&nbsp;do&nbsp;not&nbsp;increase&nbsp;the&nbsp;relevance&nbsp;of&nbsp;my&nbsp;document&nbsp;by&nbsp;twice.<br>
+&nbsp;<br>
+&nbsp;&nbsp;This&nbsp;list&nbsp;is&nbsp;then&nbsp;send&nbsp;to&nbsp;the&nbsp;new_inverted.py&nbsp;file&nbsp;which&nbsp;generates&nbsp;indexes.</tt></p>
+<p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+
+<tr bgcolor="#aa55cc">
+
+<td colspan=3 valign=bottom>&nbsp;<br>
+
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+
+    
+
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="csv.html">csv</a><br>
+<a href="math.html">math</a><br>
+</td><td width="25%" valign=top><a href="re.html">re</a><br>
+<a href="sys.html">sys</a><br>
+</td><td width="25%" valign=top><a href="time.html">time</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+
+<tr bgcolor="#eeaa77">
+
+<td colspan=3 valign=bottom>&nbsp;<br>
+
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+
+    
+
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-decode_unicode_references"><strong>decode_unicode_references</strong></a>(data)</dt></dl>
+ <dl><dt><a name="-escape"><strong>escape</strong></a>(data)</dt><dd><tt>HTML-escape&nbsp;the&nbsp;text&nbsp;in&nbsp;`t`.</tt></dd></dl>
+ <dl><dt><a name="-normalizer"><strong>normalizer</strong></a>(l)</dt></dl>
+</td></tr></table><p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+
+<tr bgcolor="#55aa55">
+
+<td colspan=3 valign=bottom>&nbsp;<br>
+</body></html>
