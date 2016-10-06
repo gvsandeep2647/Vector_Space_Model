@@ -1,4 +1,4 @@
-<h1>IR_Assignment1</h1>
+<h1>Vector Space Model</h1>
 
 <b>Course Number :</b> CS F469
 
