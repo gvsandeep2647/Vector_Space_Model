@@ -423,6 +423,3 @@ resultsFrame.pack(side=TOP)
 text = Text(resultsFrame)
 
 root.mainloop()
-
-
-

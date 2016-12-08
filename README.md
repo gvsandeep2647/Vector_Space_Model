@@ -31,3 +31,10 @@
 	<li>Extract the folder and then run GUI.py. That's it :D </li>
 	<li>It takes around 14 minutes for the GUI.py to pre-process the data.</li>
 </ol>
+
+
+<h3>Screenshots</h3>
+
+<img src="capture.png" alt="">
+<img src="caprture1.png" alt="">
+<img src="2.png" alt="">
