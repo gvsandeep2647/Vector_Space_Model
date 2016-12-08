@@ -35,6 +35,9 @@
 
 <h3>Screenshots</h3>
 
+<b>Normal Query</b>
 <img src="capture.png" alt="">
+<b>Phrase Query</b>
 <img src="caprture1.png" alt="">
+<b>Phrase Query with topic slicing</b>
 <img src="2.png" alt="">
